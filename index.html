@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vietnam Plastic Resin Market</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap');
+  :root{
+    --bg0:#0a2a3a; --bg1:#0e3d4d; --bg2:#1b3a6b; --bg3:#23306e;
+    --card:#0d2733; --card2:#10212e; --cardEdge:rgba(120,200,210,.16);
+    --ink:#eaf6f8; --ink-dim:#9fc0c8; --ink-faint:#6f97a1;
+    --coral:#ff5b6e; --coral-soft:#ff8a96;
+    --amber:#ffc857; --green:#46d6a0;
+    --dec:#ff6274; --inc:#46d6a0;   /* decrease=red(up arrow), increase=green(down arrow) */
+    --pp:#ff7e8a; --pe:#5fd0e6; --pvc:#ffc857;
+    --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg0);min-height:100%}
+  body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 12% -8%, #11556b 0%, transparent 55%),
+      radial-gradient(1100px 800px at 100% 110%, #2a2f7a 0%, transparent 55%),
+      linear-gradient(125deg,var(--bg0) 0%,var(--bg1) 32%,var(--bg2) 70%,var(--bg3) 100%);
+    background-repeat:no-repeat;background-size:cover;background-attachment:scroll;
+    min-height:100vh;padding:clamp(14px,3vw,34px);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto}
+  .masthead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:22px}
+  .title-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .pdf-btn{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-weight:600;font-size:13px;letter-spacing:.3px;color:var(--ink);background:linear-gradient(180deg,rgba(255,91,110,.18),rgba(255,91,110,.08));border:1px solid rgba(255,91,110,.45);border-radius:10px;padding:9px 15px;cursor:pointer;transition:.18s;white-space:nowrap}
+  .pdf-btn:hover{background:linear-gradient(180deg,rgba(255,91,110,.3),rgba(255,91,110,.15));border-color:var(--coral);transform:translateY(-1px)}
+  .pdf-btn:disabled{opacity:.6;cursor:wait}
+  .pdf-btn .pdf-ic{font-size:14px;font-weight:700}
+  .masthead h1{font-weight:800;font-size:clamp(22px,3.4vw,34px);letter-spacing:-.5px;line-height:1.05}
+  .masthead h1 span{color:#fff}
+  .dateline{text-align:right}
+  .dateline .d{font-family:var(--mono);font-size:13px;color:var(--ink-dim);letter-spacing:1px}
+  .dateline .sub{font-size:11.5px;color:var(--ink-faint);margin-top:3px;letter-spacing:.4px;text-transform:uppercase}
+  .legend-note{font-size:11px;color:var(--ink-faint);margin-top:6px;display:flex;gap:14px;align-items:center;justify-content:flex-end}
+  .legend-note .lg{display:inline-flex;align-items:center;gap:5px}
+  .legend-note .dec{color:var(--dec)} .legend-note .inc{color:var(--inc)}
+
+  .panel{background:linear-gradient(180deg,var(--card) 0%,var(--card2) 100%);
+    border:1px solid var(--cardEdge);border-radius:16px;padding:20px 22px;box-shadow:0 18px 40px -28px rgba(0,0,0,.8);}
+  .panel h2{font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink-dim);font-weight:700;margin-bottom:16px}
+  .section-label{font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink);font-weight:700;margin:0 2px 12px;display:flex;align-items:center;gap:10px}
+  .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--cardEdge),transparent)}
+  .section-label .stamp{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--ink-faint);text-transform:none}
+
+  .grid{display:grid;gap:14px}
+  .top{grid-template-columns:1.05fr 1.35fr;align-items:stretch}
+  @media(max-width:860px){.top{grid-template-columns:1fr}}
+
+  .ov-row{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+  .ov-row:last-child{border-bottom:none;padding-bottom:2px}
+  .ov-head{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 4px rgba(255,255,255,.04)}
+  .ov-title{font-weight:700;font-size:15px}
+  .ov-title small{font-weight:500;color:var(--ink-dim);font-size:12.5px;letter-spacing:.3px;opacity:.85}
+  .chev{margin-left:auto;color:var(--ink-faint);transition:transform .25s;font-size:12px}
+  .ov-row.open .chev{transform:rotate(90deg)}
+  .ov-body{max-height:0;overflow:hidden;transition:max-height .35s ease,margin .3s}
+  .ov-row.open .ov-body{max-height:260px;margin-top:10px}
+  .ov-body li{list-style:none;font-size:13.2px;line-height:1.55;padding-left:18px;position:relative;margin:5px 0;opacity:.92}
+  .ov-body li::before{content:'';position:absolute;left:3px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--secCol,var(--coral-soft));opacity:.95}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+  .stat{background:rgba(10,30,40,.5);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:15px 15px 14px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+  .stat:hover{border-color:var(--cardEdge);transform:translateY(-2px)}
+  .stat.active{border-color:var(--coral);box-shadow:0 0 0 1px var(--coral) inset}
+  .stat .lbl{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .stat .big{font-family:var(--mono);font-weight:700;font-size:clamp(20px,3vw,27px);color:var(--ink);margin-top:7px;line-height:1}
+  .stat .unit{font-size:11px;color:var(--ink-faint);font-weight:500}
+  .stat .delta{margin-top:8px;font-size:12px;font-family:var(--mono);display:flex;align-items:center;gap:5px}
+  .stats-2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px}
+  .stat .note{font-size:11.5px;color:var(--ink-dim);margin-top:7px;line-height:1.4}
+
+  /* unified change token: arrow + value. up=red, down=green */
+  .chg{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-weight:700;font-size:12px}
+  .chg .tri{font-size:8px;line-height:1}
+  .chg.dec{color:var(--dec)} .chg.inc{color:var(--inc)} .chg.flat{color:var(--ink-faint)}
+  .pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11.5px;font-weight:700;font-family:var(--mono)}
+  .pill.dec{background:rgba(255,98,116,.13);color:var(--dec)}
+  .pill.inc{background:rgba(70,214,160,.13);color:var(--inc)}
+  .pill.flat{background:rgba(255,255,255,.05);color:var(--ink-faint)}
+  .pill .tri{font-size:8px}
+
+  .chart-panel{margin-top:14px}
+  .chart-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:6px}
+  .seg{display:inline-flex;background:rgba(8,26,34,.7);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:4px;gap:3px}
+  .seg button{font-weight:600;font-size:12.5px;color:var(--ink-dim);background:none;border:none;padding:7px 15px;border-radius:8px;cursor:pointer;transition:.18s;letter-spacing:.4px}
+  .seg button.on{color:#06222c}
+  .seg button.on.pp{background:var(--pp)} .seg button.on.pe{background:var(--pe)} .seg button.on.pvc{background:var(--pvc)}
+  .chart-meta{font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
+  .chart-box{position:relative;height:300px;margin-top:8px}
+  .pick-hint{font-size:11.5px;color:var(--ink-faint);margin-top:4px}
+
+  /* date range controls */
+  .daterow{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:14px;padding:13px 15px;background:rgba(8,26,34,.5);border:1px solid rgba(255,255,255,.07);border-radius:12px}
+  .ctl{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .ctl label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .ctl .row{display:flex;align-items:center;gap:8px}
+  .ctl select{background:rgba(8,26,34,.9);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--ink);font-family:var(--mono);font-size:12.5px;padding:7px 9px;cursor:pointer}
+  .ctl select:focus{outline:none;border-color:var(--coral)}
+  .rng{display:flex;align-items:center;gap:8px;flex:1;min-width:200px}
+  .rng input[type=range]{flex:1;accent-color:var(--coral);height:4px}
+  .rng .v{font-family:var(--mono);font-size:12px;color:var(--ink-dim);min-width:42px;text-align:center}
+  .resetbtn{background:rgba(255,91,110,.12);border:1px solid rgba(255,91,110,.3);color:var(--coral-soft);font-size:11.5px;font-weight:600;padding:7px 12px;border-radius:8px;cursor:pointer;font-family:inherit}
+  .resetbtn:hover{background:rgba(255,91,110,.2)}
+  .cmp-tag{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+
+  .tbl-panel{margin-top:14px}
+  .tbl-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .search{flex:1;min-width:160px;background:rgba(8,26,34,.7);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:9px 13px;color:var(--ink);font-size:13px;font-family:inherit}
+  .search::placeholder{color:var(--ink-faint)} .search:focus{outline:none;border-color:var(--coral)}
+  table{width:100%;border-collapse:collapse}
+  thead th{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);font-weight:600;text-align:right;padding:8px 8px;cursor:pointer;user-select:none;white-space:nowrap}
+  thead th:first-child{text-align:left}
+  thead th:hover{color:var(--ink)}
+  thead th .ar{opacity:.5;font-size:9px}
+  tbody td{padding:11px 8px;text-align:right;font-family:var(--mono);font-size:13px;border-top:1px solid rgba(255,255,255,.045)}
+  tbody td:first-child{text-align:left;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-weight:500;color:var(--ink)}
+  tbody tr{transition:background .15s} tbody tr:hover{background:rgba(255,255,255,.03)}
+  tbody .muted{color:var(--ink-faint);opacity:.55}
+  .spark{display:block}
+  .tag{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:8px;vertical-align:middle}
+  @media(max-width:920px){.tbl-panel{overflow-x:auto} .tbl-panel table{min-width:820px}}
+
+  .reg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+  @media(max-width:760px){.reg-grid{grid-template-columns:repeat(2,1fr)}}
+  .reg{background:rgba(20,40,80,.4);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:14px 15px}
+  .reg .rl{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-dim);font-weight:600}
+  .reg .rv{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.3vw,20px);color:var(--ink);margin-top:9px}
+  .reg .rd{margin-top:8px}
+  /* report CTA inside domestic panel */
+  .report-cta{display:flex;align-items:center;gap:12px;margin-top:13px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
+  .rc-label{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .rc-btns{display:flex;gap:9px;flex:1}
+  .rc-btn{flex:1;font-family:inherit;font-weight:700;font-size:13px;letter-spacing:.5px;padding:11px 0;border-radius:10px;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(10,30,40,.6);color:var(--ink);transition:.18s;display:flex;align-items:center;justify-content:center;gap:7px}
+  .rc-btn::before{content:'';width:9px;height:9px;border-radius:50%}
+  .rc-btn.pp::before{background:var(--pp)} .rc-btn.pe::before{background:var(--pe)} .rc-btn.pvc::before{background:var(--pvc)}
+  .rc-btn:hover{transform:translateY(-2px);border-color:var(--cardEdge)}
+  .rc-btn.pp:hover{box-shadow:0 0 0 1px var(--pp) inset}
+  .rc-btn.pe:hover{box-shadow:0 0 0 1px var(--pe) inset}
+  .rc-btn.pvc:hover{box-shadow:0 0 0 1px var(--pvc) inset}
+
+  /* report modal */
+  .rpt-overlay{position:fixed;inset:0;background:rgba(4,16,22,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:clamp(12px,3vw,40px);z-index:50}
+  .rpt-overlay.open{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .rpt-modal{width:min(760px,100%);max-height:88vh;display:flex;flex-direction:column;background:linear-gradient(180deg,#0e2b38 0%,#0c1b27 100%);border:1px solid var(--cardEdge);border-radius:18px;box-shadow:0 30px 80px -30px rgba(0,0,0,.9);overflow:hidden;animation:rise .25s ease}
+  @keyframes rise{from{transform:translateY(14px);opacity:.6}to{transform:translateY(0);opacity:1}}
+  .rpt-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 0}
+  .rpt-tabs{display:inline-flex;background:rgba(8,26,34,.7);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:4px;gap:3px}
+  .rpt-tabs button{font-family:inherit;font-weight:700;font-size:13px;letter-spacing:.4px;color:var(--ink-dim);background:none;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;transition:.18s}
+  .rpt-tabs button.on{color:#06222c}
+  .rpt-tabs button.on.pp{background:var(--pp)} .rpt-tabs button.on.pe{background:var(--pe)} .rpt-tabs button.on.pvc{background:var(--pvc)}
+  .rpt-close{background:none;border:none;color:var(--ink-faint);font-size:30px;line-height:1;cursor:pointer;padding:0 6px;transition:.15s}
+  .rpt-close:hover{color:var(--ink)}
+  .rpt-stamp{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--ink-faint);padding:10px 20px 0;text-transform:uppercase}
+  .rpt-body{overflow-y:auto;padding:14px 22px 26px}
+  .rpt-body h3{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);font-weight:700;margin:18px 0 9px}
+  .rpt-body .sum li{list-style:none;position:relative;padding-left:18px;margin:7px 0;font-size:13.5px;line-height:1.55;color:var(--ink)}
+  .rpt-body .sum li::before{content:'';position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .rpt-body p{font-size:13.3px;line-height:1.62;color:var(--ink-dim);margin:10px 0}
+  .rpt-body .divider{height:1px;background:linear-gradient(90deg,var(--accent),transparent);opacity:.4;margin:16px 0 4px}
+  .foot{margin-top:22px;font-size:11px;color:var(--ink-faint);text-align:center;line-height:1.6;letter-spacing:.3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="title-wrap">
+      <h1>Vietnam Plastic Resin <span>Market</span></h1>
+      <button class="pdf-btn" id="pdfBtn" title="Download a 4-page A4 PDF">
+        <span class="pdf-ic">&#8595;</span> View in PDF
+      </button>
+    </div>
+    <div class="dateline">
+      <div class="d">JUN 9, 2026</div>
+      <div class="sub">PE / PP / PVC &middot; Daily prices</div>
+      <div class="legend-note">
+        <span class="lg dec">&#9660; decrease</span>
+        <span class="lg inc">&#9650; increase</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid top">
+    <div class="panel">
+      <h2>Market Overview</h2>
+      <div id="overview"></div>
+    </div>
+    <div class="panel">
+      <h2>Domestic Average &middot; VND/kg</h2>
+      <div class="stats" id="statRow"></div>
+      <div class="stats-2">
+        <div class="stat" style="cursor:default">
+          <div class="lbl">Products Changed</div>
+          <div class="big" id="changedBig"></div>
+          <div class="note" id="changedNote"></div>
+        </div>
+        <div class="stat" style="cursor:default">
+          <div class="lbl">Largest Drop</div>
+          <div class="big" id="largestBig" style="font-size:22px"></div>
+          <div class="note" id="largestNote"></div>
+        </div>
+      </div>
+      <div class="report-cta">
+        <span class="rc-label">Full report</span>
+        <div class="rc-btns">
+          <button class="rc-btn pp" data-r="PP">PP</button>
+          <button class="rc-btn pe" data-r="PE">PE</button>
+          <button class="rc-btn pvc" data-r="PVC">PVC</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel chart-panel">
+    <div class="chart-head">
+      <h2 style="margin:0">Price Trend &middot; group average</h2>
+      <div class="seg" id="grpSeg">
+        <button data-g="PP" class="on pp">PP</button>
+        <button data-g="PE" class="pe">PE</button>
+        <button data-g="PVC" class="pvc">PVC</button>
+      </div>
+    </div>
+    <div class="chart-meta" id="chartMeta"></div>
+    <div class="chart-box"><canvas id="chart"></canvas></div>
+
+    <!-- DATE FILTER -->
+    <div class="daterow">
+      <div class="rng">
+        <div class="ctl" style="flex:1">
+          <label>Chart range</label>
+          <div class="row">
+            <span class="v" id="rngFrom"></span>
+            <input type="range" id="rangeStart" min="0" value="0">
+            <input type="range" id="rangeEnd" min="0">
+            <span class="v" id="rngTo"></span>
+          </div>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>Table compares to</label>
+        <div class="row">
+          <select id="cmpDate"></select>
+          <button class="resetbtn" id="resetDates">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="pick-hint">Drag the range to zoom the chart. Tap a product row to overlay its price line. The table&rsquo;s <b>Change</b> &amp; <b>vs Compare</b> recompute against the selected date.</div>
+  </div>
+
+  <div class="panel tbl-panel">
+    <div class="chart-head"><h2 style="margin:0" id="tblTitle">PP Products</h2></div>
+    <div class="tbl-tools"><input class="search" id="search" placeholder="Filter grades&hellip;"></div>
+    <table>
+      <thead><tr>
+        <th data-k="p">Grade <span class="ar"></span></th>
+        <th data-k="v">Price <span class="ar"></span></th>
+        <th data-k="c">Change <span class="ar"></span></th>
+        <th data-k="vsl" id="thVsl">vs Compare <span class="ar"></span></th>
+        <th data-k="pw">Pre-war <span class="ar"></span></th>
+        <th data-k="ytd">YTD <span class="ar"></span></th>
+        <th data-k="yoy">YOY <span class="ar"></span></th>
+        <th>Trend</th>
+      </tr></thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+  </div>
+
+  <div class="section-label" style="margin-top:24px">Regional References &middot; $/ton <span class="stamp">as of Jun 9</span></div>
+  <div class="reg-grid" id="regGrid"></div>
+
+  <div class="foot">
+    Domestic prices in VND/kg incl. VAT &middot; regional references in USD/ton CFR/CIF. Daily series sourced from the Vietnam Resin Reports (Mar&ndash;Jun 9, 2026).<br>
+    Change colours: <span style="color:var(--dec)">red &#9660;</span> = price fell, <span style="color:var(--inc)">green &#9650;</span> = price rose. Figures are market assessments for reference only.
+  </div>
+
+  <!-- REPORT MODAL -->
+  <div class="rpt-overlay" id="rptOverlay" aria-hidden="true">
+    <div class="rpt-modal" role="dialog" aria-modal="true">
+      <div class="rpt-head">
+        <div class="rpt-tabs" id="rptTabs">
+          <button data-r="PP" class="pp">PP</button>
+          <button data-r="PE" class="pe">PE</button>
+          <button data-r="PVC" class="pvc">PVC</button>
+        </div>
+        <button class="rpt-close" id="rptClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="rpt-stamp">Vietnam Resin Report &middot; Jun 9, 2026</div>
+      <div class="rpt-body" id="rptBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {"labels": ["3/23", "3/24", "3/25", "3/26", "3/27", "3/30", "3/31", "4/1", "4/2", "4/3", "4/6", "4/7", "4/8", "4/9", "4/10", "4/13", "4/14", "4/15", "4/16", "4/17", "4/20", "4/21", "4/22", "4/23", "4/24", "4/28", "4/29", "5/4", "5/5", "5/6", "5/7", "5/8", "5/11", "5/12", "5/13", "5/14", "5/15", "5/18", "5/19", "5/20", "5/21", "5/22", "5/25", "5/26", "5/27", "5/28", "5/29", "6/1", "6/2", "6/3", "6/4", "6/5", "6/8", "6/9"], "groupavg": {"PP": [26.49, 26.53, 41.84, 41.81, 41.9, 41.95, 41.95, 41.92, 42.05, 42.22, 42.86, 43.04, 43.32, 43.34, 43.32, 43.36, 43.34, 43.27, 43.25, 43.22, 43.09, 42.98, 42.44, 42.38, 41.81, 41.78, 41.76, 41.73, 41.81, 41.8, 41.82, 41.85, 41.79, 41.72, 41.45, 41.42, 41.25, 41.21, 41.1, 40.96, 40.72, 40.58, 40.55, 40.46, 40.41, 40.03, 39.81, 39.79, 39.69, 39.56, 39.54, 39.38, 39.21, 38.97], "PE": [44.65, 44.6, 45.11, 45.54, 45.54, 45.63, 45.6, 45.69, 45.7, 45.64, 46.16, 46.28, 46.31, 46.48, 46.53, 46.58, 46.59, 46.56, 46.45, 46.39, 46.36, 46.31, 46.05, 45.31, 44.74, 44.7, 44.68, 44.64, 44.71, 44.67, 44.5, 44.31, 44.21, 44.21, 44.1, 44.08, 44.02, 43.93, 43.66, 43.16, 43.09, 42.86, 42.48, 42.34, 42.22, 41.84, 41.78, 41.72, 41.59, 41.59, 41.52, 41.4, 41.16, 41.14], "PVC": [32.65, 32.72, 32.77, 32.77, 32.73, 32.78, 32.73, 32.56, 32.51, 32.36, 32.32, 32.3, 32.12, 32.12, 31.97, 31.92, 31.78, 31.06, 31.04, 31.0, 30.16, 29.69, 29.62, 29.5, 29.35, 28.95, 28.52, 28.49, 28.39, 28.19, 28.19, 28.13, 27.93, 27.9, 27.9, 27.85, 27.79, 27.79, 26.39, 26.13, 26.39, 26.13, 25.9, 25.66, 25.21, 25.16, 25.16, 25.09, 25.06, 24.94, 24.94, 24.92, 24.88, 24.83]}, "meta": {"PP": [{"p": "PP yarn/injection I3110/T3034", "series": [25.7, 25.7, 41.2, 41.2, 41.0, 41.0, 41.2, 41.2, 41.0, 41.5, 41.5, 41.5, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 41.5, 41.0, 40.5, 40.5, 40.1, 40.0, 40.0, 39.8, 39.8, 39.8, 39.8, 39.5, 39.5, 39.2, 39.0, 39.0, 39.0, 39.0, 38.5, 38.5, 38.2, 38.0, 37.8, 37.3, 37.3, 36.7, 36.7, 36.5, 36.5, 36.5, 36.5, 36.3, 36.3, 35.5], "pwBase": 25.8, "ytdBase": 24.8, "yoyBase": 27.1}, {"p": "PP yarn/inj 1146/105G", "series": [25.5, 25.5, 40.0, 40.0, 40.0, 40.5, 40.5, 40.5, 40.5, 41.0, 41.0, 41.0, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.0, 41.0, 41.0, 40.0, 39.7, 39.7, 39.5, 39.5, 39.5, 39.3, 39.3, 39.3, 39.3, 38.5, 38.2, 38.0, 38.0, 38.0, 38.0, 38.0, 37.8, 37.8, 37.4, 37.2, 37.0, 36.7, 36.5, 36.1, 36.1, 36.0, 35.2, 35.2, 35.2, 35.0, 34.3, 34.3], "pwBase": 26.0, "ytdBase": 24.3, "yoyBase": 26.6}, {"p": "PP yarn F501N", "series": [25.8, 25.8, 44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 46.0, 46.0, 46.0, 47.0, 47.0, 47.0, 47.0, 47.0, 47.0, 47.0, 47.0, 46.7, 46.5, 46.5, 46.5, 46.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 40.5, 41.3, 41.3, 41.3, 41.0, 41.0, 39.5, 39.5, 39.5, 39.5, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 37.2, 37.2, 37.2, 37.2, 37.2, 36.8, 36.8, 36.8], "pwBase": 25.8, "ytdBase": 25.0, "yoyBase": 27.5}, {"p": "PP homo J700N/800N/900N", "series": [26.2, 26.2, 44.5, 44.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 46.5, 48.0, 48.0, 48.0, 48.0, 48.0, 48.0, 47.7, 47.7, 47.7, 47.0, 47.0, 45.0, 45.0, 42.2, 42.2, 42.2, 42.2, 42.2, 42.2, 41.2, 42.0, 42.0, 42.0, 42.0, 41.7, 40.5, 40.5, 40.5, 40.5, 40.0, 38.7, 38.7, 38.7, 38.7, 38.7, 38.0, 38.0, 38.0, 38.0, 38.0, 37.5, 37.5, 37.5], "pwBase": 26.3, "ytdBase": 25.5, "yoyBase": 28.0}, {"p": "PP yarn/injection P400S/P700J", "series": [25.3, 25.8, 45.7, 45.7, 45.7, 45.7, 45.2, 45.2, 45.2, 45.2, 45.2, 45.2, 45.5, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 42.2, 42.2, 44.2, 44.2, 44.2, 44.2, 40.5, 40.5, 40.5, 40.5, 40.5, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.6, 38.6, 38.6, 38.6], "pwBase": 25.6, "ytdBase": 24.2, "yoyBase": null}, {"p": "PP yarn S1003/T03", "series": [25.3, 25.3, 38.5, 38.0, 38.0, 38.0, 38.0, 37.8, 37.8, 38.3, 38.3, 38.5, 38.5, 38.5, 38.5, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.7, 38.7, 39.0, 39.0, 38.7, 38.7, 38.5, 38.5, 38.5, 38.0, 38.0, 37.5, 37.5, 37.5, 37.2, 37.2, 37.0, 36.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.0, 35.0, 35.0], "pwBase": 25.5, "ytdBase": 24.5, "yoyBase": 26.7}, {"p": "PP yarn HGX-030SP", "series": [25.6, 25.6, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.8, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.8, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.2, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 38.5, 38.5], "pwBase": 25.8, "ytdBase": 25.3, "yoyBase": 27.5}, {"p": "PP yarn 1102K-APC", "series": [26.0, 26.0, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.8, 42.8, 42.8, 42.5, 42.5, 42.0, 42.0, 42.0, 41.8, 41.8, 41.3, 41.3, 41.3, 41.0, 40.7, 40.7, 40.7, 40.7, 39.7], "pwBase": 26.2, "ytdBase": 25.7, "yoyBase": 28.5}, {"p": "PP yarn 1102K-IRPC", "series": [26.2, 26.2, 41.5, 41.5, 41.5, 41.5, 41.7, 41.7, 41.7, 42.0, 42.0, 42.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.0, 42.0, 41.5, 41.5, 41.5, 41.5, 41.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5], "pwBase": 26.2, "ytdBase": 25.6, "yoyBase": 28.6}, {"p": "PP yarn GY130", "series": [25.6, 25.6, 39.7, 39.7, 39.7, 39.7, 39.7, 39.5, 39.5, 40.0, 40.0, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.0, 39.7, 39.7, 39.7, 39.7, 39.7, 39.7, 39.7, 39.7, 39.0, 39.0, 39.0, 38.7, 38.7, 38.7, 38.7, 38.7, 38.5, 38.5, 38.5, 38.0, 38.0, 37.5], "pwBase": 25.6, "ytdBase": 25.0, "yoyBase": 27.3}, {"p": "PP yarn H550", "series": [25.4, 25.5, 37.3, 37.3, 37.0, 37.0, 37.0, 37.0, 37.0, 37.5, 37.5, 37.5, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3], "pwBase": 25.5, "ytdBase": 25.4, "yoyBase": 27.5}, {"p": "PP non-woven H563S", "series": [26.5, 26.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.2, 41.2, 41.2, 41.2, 41.2, 41.2, 41.0, 41.0, 41.0, 41.0, 41.0, 41.0, 41.0, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5], "pwBase": 26.5, "ytdBase": 26.5, "yoyBase": 28.6}, {"p": "PP copo J340N/440N/640N", "series": [27.5, 27.5, 45.5, 45.5, 46.5, 46.5, 46.5, 46.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.3, 47.3, 47.3, 47.3, 47.3, 45.5, 45.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.0, 44.0, 43.4, 43.4, 43.4, 43.4, 43.4, 43.2, 43.2, 43.2, 43.2, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.0, 41.5, 41.5], "pwBase": 27.3, "ytdBase": 27.4, "yoyBase": 29.8}, {"p": "PP block copo 36MK10R/BJ550", "series": [27.9, 27.9, 43.5, 43.5, 44.0, 44.5, 44.5, 44.3, 44.3, 44.8, 44.8, 44.8, 44.8, 44.8, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.0, 44.0, 44.0, 44.0, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.0, 42.0], "pwBase": 27.9, "ytdBase": 27.2, "yoyBase": 29.7}, {"p": "PP transparent M9600", "series": [30.2, 30.2, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 52.0, 52.0, 52.0, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 49.5, 49.5, 49.5, 49.5, 49.5], "pwBase": 30.5, "ytdBase": 30.0, "yoyBase": 33.2}, {"p": "PP 1126NK", "series": [28.4, 28.4, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 45.5, 45.5, 45.5, 45.5, 45.5, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 45.8, 45.8, 45.8, 45.8, 45.8, 45.8, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.2, 45.2, 44.5, 44.5, 44.5, 44.0, 44.0, 44.0, 44.0, 44.0, 43.0], "pwBase": 28.4, "ytdBase": 28.6, "yoyBase": 31.3}, {"p": "PP H100EY", "series": [28.3, 28.3, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.0, 44.0, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 42.5, 42.5, 42.5, 42.5, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.8, 41.5], "pwBase": 28.3, "ytdBase": 28.5, "yoyBase": 30.6}, {"p": "PP copo P604", "series": [25.5, 25.6, 37.5, 37.5, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 36.8, 36.8, 36.8, 36.8, 37.0, 37.0, 37.0, 36.8, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.0, 36.0, 35.7, 35.7, 35.7, 35.5, 35.5, 35.2, 35.2, 35.2, 35.2, 35.2, 35.2, 35.2, 35.2], "pwBase": 25.6, "ytdBase": 25.1, "yoyBase": 27.8}, {"p": "PP random P208", "series": [26.5, 26.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 37.7, 37.7, 37.7, 37.7, 37.7, 37.2, 37.2, 37.2, 37.2, 37.2, 37.0, 37.0, 37.0], "pwBase": 26.5, "ytdBase": 26.5, "yoyBase": 28.3}], "PE": [{"p": "LDPE Film 2426K/2426H", "series": [53.5, 53.5, 53.0, 55.0, 55.0, 55.0, 55.0, 55.5, 55.5, 55.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 56.5, 55.5, 55.5, 55.5, 55.0, 55.0, 55.0, 55.0, 55.0, 54.8, 54.8, 54.8, 54.8, 54.8, 54.5, 53.5, 52.5, 52.5, 52.5, 51.5, 51.5, 51.5, 50.5, 50.5, 50.5, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0], "pwBase": 31.8, "ytdBase": 31.3, "yoyBase": 34.0}, {"p": "LDPE Film 260GG", "series": [53.5, 53.5, 53.5, 54.5, 54.5, 54.8, 54.8, 55.3, 55.3, 55.3, 57.3, 57.3, 57.3, 57.3, 57.3, 57.3, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 56.5, 55.5, 55.5, 55.0, 55.0, 55.0, 55.0, 55.0, 54.5, 54.5, 54.5, 54.5, 54.5, 54.0, 54.0, 52.5, 51.5, 51.5, 51.5, 50.5, 50.5, 50.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5], "pwBase": 31.8, "ytdBase": 31.3, "yoyBase": 34.3}, {"p": "LDPE Film 4025AS/1925AS", "series": [52.0, 52.0, 52.0, 54.0, 54.0, 54.0, 54.0, 54.5, 54.5, 54.5, 56.5, 56.5, 56.5, 57.0, 57.0, 57.0, 57.0, 57.0, 57.0, 56.5, 56.5, 56.5, 56.0, 56.0, 54.0, 54.0, 54.0, 54.0, 54.0, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.0, 52.5, 51.5, 51.5, 51.5, 50.5, 50.5, 50.5, 49.5, 49.5, 49.5, 49.5, 49.0, 49.0, 49.0, 48.7, 48.7], "pwBase": 31.7, "ytdBase": 30.7, "yoyBase": 33.6}, {"p": "LDPE Film 4024WN", "series": [51.5, 51.5, 51.5, 53.5, 53.5, 54.0, 54.0, 54.5, 54.5, 54.5, 56.5, 56.5, 56.5, 57.0, 57.0, 57.0, 57.0, 57.0, 57.0, 56.5, 56.5, 56.5, 56.0, 55.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.2, 53.2, 52.0, 51.0, 51.0, 51.0, 50.0, 50.0, 50.0, 49.0, 49.0, 49.0, 49.0, 49.0, 48.7, 48.7, 48.7, 48.7], "pwBase": 31.7, "ytdBase": 31.0, "yoyBase": 33.9}, {"p": "LDPE Film FT6236", "series": [51.0, 51.0, 51.0, 53.0, 53.0, 53.5, 53.5, 53.5, 53.5, 53.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 52.5, 51.5, 50.5, 50.5, 50.5, 49.5, 49.5, 49.5, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0], "pwBase": 31.1, "ytdBase": 30.5, "yoyBase": 33.5}, {"p": "HDPE Blow 5502BN", "series": [40.0, 40.0, 40.0, 40.0, 40.0, 40.5, 40.5, 41.0, 41.0, 41.0, 42.0, 42.0, 42.0, 42.0, 42.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.5, 42.5, 42.0, 42.0, 41.5, 41.5, 41.0, 41.0, 41.0, 41.0, 41.0, 40.5, 40.5, 40.0, 40.0, 39.5, 39.5, 39.5, 39.0, 38.8, 38.8], "pwBase": 27.2, "ytdBase": 26.0, "yoyBase": 26.1}, {"p": "HDPE Film FJ0952", "series": [43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 43.0, 43.0, 43.0, 42.8, 42.8, 42.8, 42.8, 42.5, 42.5, 41.0, 41.0, 41.0, 40.5, 40.5, 40.2, 40.2, 40.2, 40.0, 40.0, 39.2, 39.2], "pwBase": 27.9, "ytdBase": 27.2, "yoyBase": 27.2}, {"p": "HDPE Film TR144 / bimodal TR155", "series": [43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.2, 43.2, 43.2, 43.2, 43.2, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 42.0, 42.0, 42.0, 41.5, 41.5, 41.0, 41.0, 41.5, 41.5, 41.5, 41.5, 41.5], "pwBase": 27.5, "ytdBase": 27.0, "yoyBase": 27.1}, {"p": "HDPE Film HD6888", "series": [43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.5, 41.0, 41.0, 40.5, 40.5, 40.2, 40.2, 40.2, 40.0, 40.0, 39.5, 39.5], "pwBase": 27.8, "ytdBase": 27.1, "yoyBase": 27.1}, {"p": "HDPE Yarn 5000S", "series": [44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.0, 44.0, 44.0, 43.5, 43.5, 43.5, 42.5, 42.5, 42.5], "pwBase": 28.5, "ytdBase": 27.7, "yoyBase": 28.6}, {"p": "HDPE Film H5604F", "series": [42.0, 42.0, 45.8, 45.8, 45.8, 45.8, 45.6, 45.6, 45.6, 45.6, 45.6, 45.6, 46.0, 46.8, 46.8, 46.8, 46.8, 46.8, 46.8, 46.8, 46.8, 46.5, 46.5, 42.5, 42.5, 42.5, 42.5, 42.5, 43.2, 43.2, 44.2, 44.2, 44.2, 44.2, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 42.4, 42.4, 42.4, 42.4, 42.4, 42.4, 41.7, 41.7, 41.7, 41.7], "pwBase": 28.4, "ytdBase": 24.8, "yoyBase": 27.5}, {"p": "HDPE Yarn", "series": [42.3, 42.3, 45.8, 45.8, 45.8, 45.8, 46.3, 46.3, 46.3, 46.3, 46.3, 46.3, 46.3, 47.2, 47.2, 47.2, 47.2, 47.2, 47.2, 47.2, 47.2, 47.0, 47.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.5, 43.5, 44.5, 44.5, 44.5, 44.5, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5], "pwBase": 29.1, "ytdBase": 26.3, "yoyBase": 28.7}, {"p": "LLDPE Film J1220E", "series": [41.5, 41.5, 45.5, 45.5, 45.5, 45.5, 45.4, 45.4, 45.4, 45.4, 45.4, 45.4, 45.7, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 42.0, 42.0, 42.0, 42.0, 42.0, 42.5, 42.5, 43.5, 43.5, 43.5, 43.5, 42.5, 42.5, 42.5, 42.5, 42.5, 39.0, 39.0, 39.0, 39.0, 39.0, 38.8, 38.8, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5], "pwBase": 27.9, "ytdBase": 24.7, "yoyBase": 31.5}, {"p": "LLDPE Film 20211", "series": [40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.3, 39.6, 39.6, 39.6, 39.6, 39.6, 39.6, 40.3, 40.3, 40.3, 40.3, 40.0, 40.0, 40.0, 40.0, 39.5, 39.0, 38.5, 38.5, 38.5, 38.5, 38.5, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 37.0, 37.0, 37.0, 37.0, 36.0, 36.0, 36.0, 36.0, 36.0, 35.3, 35.3, 35.3, 35.3, 35.3, 35.0], "pwBase": 26.0, "ytdBase": 25.0, "yoyBase": 28.4}, {"p": "LLDPE Film 222WJ", "series": [42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.3, 42.3, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.5, 41.5, 41.5, 41.0, 41.0, 41.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 39.0, 38.7, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.3, 38.3, 38.3, 37.5, 37.3, 37.3, 37.3, 37.0, 37.0, 37.0, 36.9, 36.9, 36.9, 36.5, 36.2, 36.2], "pwBase": 27.0, "ytdBase": 25.6, "yoyBase": 29.2}, {"p": "LLDPE 3518CN (C6)", "series": [43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.0, 41.0, 41.0, 41.0, 41.0, 41.0, 40.5, 40.5], "pwBase": 27.5, "ytdBase": 27.3, "yoyBase": 30.5}, {"p": "LLDPE Film FD21HS/FD21HN", "series": [42.5, 42.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.7, 41.7, 41.5, 41.5, 40.5, 40.5, 40.5, 40.2, 40.2, 40.2, 40.0, 40.0, 39.0, 38.7, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.3, 38.3, 37.5, 37.3, 37.3, 37.3, 37.0, 37.0, 37.0, 36.8, 36.8, 36.8, 36.8, 36.3, 36.3], "pwBase": 26.7, "ytdBase": 25.7, "yoyBase": 29.0}, {"p": "LLDPE Film 218WJ", "series": [42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.3, 42.3, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.7, 41.7, 41.5, 41.5, 40.5, 40.5, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 39.0, 38.7, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.3, 38.3, 37.5, 37.5, 37.3, 37.3, 37.0, 37.0, 37.0, 36.9, 36.9, 36.9, 36.7, 36.2, 36.2], "pwBase": 27.0, "ytdBase": 25.7, "yoyBase": 29.2}, {"p": "LLDPE Film 218BJ", "series": [42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.0, 42.0, 42.0, 42.0, 41.5, 41.5, 41.0, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.0, 38.7, 38.7, 38.7, 38.7, 38.7, 38.7, 38.7, 38.5, 38.5, 37.7, 37.7, 37.5, 37.5, 37.2, 37.2, 37.2, 37.0, 37.0, 37.0, 36.8, 36.5, 36.5], "pwBase": 27.1, "ytdBase": 25.8, "yoyBase": 29.4}, {"p": "LLDPE Film 218NJ", "series": [42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.3, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.7, 41.5, 41.5, 40.5, 40.5, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 39.0, 38.5, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 37.5, 37.3, 37.3, 37.3, 37.0, 37.0, 37.0, 36.9, 36.9, 36.9, 36.9, 36.2, 36.2], "pwBase": 27.0, "ytdBase": 25.7, "yoyBase": 29.2}, {"p": "LLDPE Film QH2018N", "series": [39.5, 39.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 40.5, 40.5, 40.5, 41.0, 41.0, 41.0, 40.7, 40.7, 40.5, 40.5, 40.5, 40.0, 40.0, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 38.5, 38.5, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.0, 37.3, 37.3, 37.3, 37.0, 36.7, 36.7, 36.7, 36.7, 36.7, 36.7, 36.5, 36.0, 36.0], "pwBase": 26.7, "ytdBase": 25.5, "yoyBase": 29.0}], "PVC": [{"p": "PVC S65", "series": [39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 38.5, 38.5, 38.5, 38.5, 38.5, 36.5, 36.5, 36.5, 36.5, 35.5, 35.5, 34.5, 34.5, 34.5, 33.5, 33.5, 33.0, 33.0, 33.0, 33.0, 33.0, 33.0, 33.0, 32.5, 32.5, 32.5, 31.8, 31.5, 31.8, 31.5, 31.5, 31.5, 29.5, 29.5, 29.5, 29.5, 29.5, 29.0, 29.0, 29.0, 29.0, 28.5], "pwBase": 21.0, "ytdBase": 19.5, "yoyBase": 20.7}, {"p": "PVC PR1000", "series": [32.5, 32.5, 33.0, 33.0, 33.0, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 32.0, 32.0, 32.0, 32.0, 31.5, 31.5, 31.5, 31.5, 30.5, 30.5, 30.5, 30.0, 30.0, 30.0, 30.0, 29.5, 29.5, 29.5, 29.5, 29.5, 29.5, 28.5, 27.5, 28.5, 27.5, 27.5, 27.5, 26.0, 26.0, 26.0, 26.0, 26.0, 25.5, 25.5, 25.5, 25.5, 25.5], "pwBase": 20.6, "ytdBase": 19.0, "yoyBase": 20.6}, {"p": "PVC S1000 Sinopec", "series": [31.5, 31.5, 31.5, 31.5, 31.5, 31.5, 31.5, 31.2, 31.2, 31.2, 31.2, 31.2, 31.2, 31.2, 31.2, 30.7, 30.7, 30.0, 30.0, 30.0, 30.0, 29.5, 29.5, 29.5, 29.5, 29.5, 29.5, 29.2, 29.2, 28.5, 28.5, 28.5, 28.0, 28.0, 28.0, 28.0, 28.0, 28.0, 25.5, 25.5, 25.5, 25.5, 25.0, 25.0, 25.0, 25.0, 25.0, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5], "pwBase": 20.2, "ytdBase": 18.6, "yoyBase": 19.9}, {"p": "PVC Powder PM66R AGC", "series": [35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.3, 35.3, 35.3, 35.3, 35.3, 35.3, 35.0, 34.0, 34.0, 34.0, 31.0, 31.0, 30.5, 30.5, 30.5, 29.5, 28.7, 28.7, 28.7, 28.7, 28.7, 28.7, 28.5, 28.5, 28.5, 28.5, 28.3, 28.3, 26.3, 25.5, 26.3, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3, 25.3, 25.3, 25.3], "pwBase": 20.2, "ytdBase": 17.9, "yoyBase": 20.2}, {"p": "PVC SP660", "series": [35.8, 35.8, 35.8, 35.8, 35.8, 35.8, 35.8, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.2, 34.2, 34.2, 34.2, 31.5, 31.5, 31.5, 31.5, 31.0, 30.0, 29.0, 29.0, 29.0, 29.0, 29.0, 29.0, 28.7, 28.7, 28.7, 28.7, 28.5, 28.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3], "pwBase": 20.3, "ytdBase": 18.2, "yoyBase": 20.4}, {"p": "PVC SG660", "series": [36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.0, 35.7, 35.7, 35.7, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.2, 34.2, 34.2, 34.2, 31.5, 31.5, 31.5, 31.5, 31.0, 30.0, 29.0, 29.0, 29.0, 29.0, 29.0, 29.0, 28.7, 28.7, 28.7, 28.7, 28.5, 28.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3], "pwBase": 20.4, "ytdBase": 18.3, "yoyBase": 20.4}, {"p": "PVC SE950 Shintech", "series": [30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.3, 30.3, 30.3, 30.3, 30.3, 30.3, 30.3, 30.1, 30.1, 30.1, 29.7, 29.7, 29.5, 29.5, 29.5, 29.0, 29.0, 29.0, 27.7, 27.7, 27.5, 27.5, 27.5, 27.5, 27.5, 27.5, 27.5, 27.5, 27.0, 27.5, 27.0, 27.0, 26.0, 25.0, 25.0, 25.0, 24.8, 24.8, 24.8, 24.8, 24.6, 24.6, 24.6], "pwBase": 20.3, "ytdBase": 18.6, "yoyBase": 20.3}, {"p": "PVC SG-5 Erdos", "series": [29.0, 29.2, 29.2, 29.2, 29.0, 29.0, 29.0, 29.0, 28.5, 28.2, 28.2, 28.2, 27.7, 27.7, 27.2, 27.2, 27.2, 27.2, 27.2, 27.0, 27.0, 26.5, 26.5, 26.5, 26.0, 26.0, 26.0, 26.0, 26.0, 26.0, 26.0, 25.8, 25.8, 25.5, 25.5, 25.5, 25.5, 25.5, 25.0, 25.0, 25.0, 25.0, 24.3, 23.8, 23.8, 23.8, 23.8, 23.8, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5], "pwBase": 20.2, "ytdBase": 18.5, "yoyBase": 19.8}, {"p": "PVC SG-5 Zhongtai", "series": [28.2, 28.5, 28.5, 28.5, 28.5, 28.5, 28.5, 28.2, 28.2, 27.7, 27.7, 27.7, 27.2, 27.2, 26.7, 26.7, 26.5, 26.5, 26.5, 26.5, 26.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3, 25.3, 25.3, 25.3, 25.3, 25.3, 24.5, 24.5, 24.5, 24.5, 24.0, 23.5, 23.5, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2], "pwBase": 20.2, "ytdBase": 18.5, "yoyBase": 19.8}, {"p": "PVC SG-5 Yihua", "series": [28.0, 28.2, 28.2, 28.2, 28.0, 28.0, 28.0, 27.5, 27.5, 26.8, 26.8, 26.8, 26.5, 26.5, 26.0, 26.0, 25.7, 25.7, 25.7, 25.5, 25.5, 24.7, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.3, 24.3, 24.3, 24.3, 24.3, 24.3, 23.8, 23.8, 23.8, 23.8, 23.2, 22.8, 22.8, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6], "pwBase": 20.0, "ytdBase": 18.3, "yoyBase": 19.4}]}, "products": {"PP": [{"product": "PP yarn/injection I3110/T3034", "series": [25.7, 25.7, 41.2, 41.2, 41.0, 41.0, 41.2, 41.2, 41.0, 41.5, 41.5, 41.5, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 41.5, 41.0, 40.5, 40.5, 40.1, 40.0, 40.0, 39.8, 39.8, 39.8, 39.8, 39.5, 39.5, 39.2, 39.0, 39.0, 39.0, 39.0, 38.5, 38.5, 38.2, 38.0, 37.8, 37.3, 37.3, 36.7, 36.7, 36.5, 36.5, 36.5, 36.5, 36.3, 36.3, 35.5]}, {"product": "PP yarn/inj 1146/105G", "series": [25.5, 25.5, 40.0, 40.0, 40.0, 40.5, 40.5, 40.5, 40.5, 41.0, 41.0, 41.0, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.0, 41.0, 41.0, 40.0, 39.7, 39.7, 39.5, 39.5, 39.5, 39.3, 39.3, 39.3, 39.3, 38.5, 38.2, 38.0, 38.0, 38.0, 38.0, 38.0, 37.8, 37.8, 37.4, 37.2, 37.0, 36.7, 36.5, 36.1, 36.1, 36.0, 35.2, 35.2, 35.2, 35.0, 34.3, 34.3]}, {"product": "PP yarn F501N", "series": [25.8, 25.8, 44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 46.0, 46.0, 46.0, 47.0, 47.0, 47.0, 47.0, 47.0, 47.0, 47.0, 47.0, 46.7, 46.5, 46.5, 46.5, 46.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 40.5, 41.3, 41.3, 41.3, 41.0, 41.0, 39.5, 39.5, 39.5, 39.5, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 37.2, 37.2, 37.2, 37.2, 37.2, 36.8, 36.8, 36.8]}, {"product": "PP homo J700N/800N/900N", "series": [26.2, 26.2, 44.5, 44.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 46.5, 48.0, 48.0, 48.0, 48.0, 48.0, 48.0, 47.7, 47.7, 47.7, 47.0, 47.0, 45.0, 45.0, 42.2, 42.2, 42.2, 42.2, 42.2, 42.2, 41.2, 42.0, 42.0, 42.0, 42.0, 41.7, 40.5, 40.5, 40.5, 40.5, 40.0, 38.7, 38.7, 38.7, 38.7, 38.7, 38.0, 38.0, 38.0, 38.0, 38.0, 37.5, 37.5, 37.5]}, {"product": "PP yarn/injection P400S/P700J", "series": [25.3, 25.8, 45.7, 45.7, 45.7, 45.7, 45.2, 45.2, 45.2, 45.2, 45.2, 45.2, 45.5, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 42.2, 42.2, 44.2, 44.2, 44.2, 44.2, 40.5, 40.5, 40.5, 40.5, 40.5, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.6, 38.6, 38.6, 38.6]}, {"product": "PP yarn S1003/T03", "series": [25.3, 25.3, 38.5, 38.0, 38.0, 38.0, 38.0, 37.8, 37.8, 38.3, 38.3, 38.5, 38.5, 38.5, 38.5, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.8, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.7, 38.7, 39.0, 39.0, 38.7, 38.7, 38.5, 38.5, 38.5, 38.0, 38.0, 37.5, 37.5, 37.5, 37.2, 37.2, 37.0, 36.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.0, 35.0, 35.0]}, {"product": "PP yarn HGX-030SP", "series": [25.6, 25.6, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.8, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.8, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.2, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 38.5, 38.5]}, {"product": "PP yarn 1102K-APC", "series": [26.0, 26.0, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.8, 42.8, 42.8, 42.5, 42.5, 42.0, 42.0, 42.0, 41.8, 41.8, 41.3, 41.3, 41.3, 41.0, 40.7, 40.7, 40.7, 40.7, 39.7]}, {"product": "PP yarn 1102K-IRPC", "series": [26.2, 26.2, 41.5, 41.5, 41.5, 41.5, 41.7, 41.7, 41.7, 42.0, 42.0, 42.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.0, 42.0, 41.5, 41.5, 41.5, 41.5, 41.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5]}, {"product": "PP yarn GY130", "series": [25.6, 25.6, 39.7, 39.7, 39.7, 39.7, 39.7, 39.5, 39.5, 40.0, 40.0, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.2, 40.0, 39.7, 39.7, 39.7, 39.7, 39.7, 39.7, 39.7, 39.7, 39.0, 39.0, 39.0, 38.7, 38.7, 38.7, 38.7, 38.7, 38.5, 38.5, 38.5, 38.0, 38.0, 37.5]}, {"product": "PP yarn H550", "series": [25.4, 25.5, 37.3, 37.3, 37.0, 37.0, 37.0, 37.0, 37.0, 37.5, 37.5, 37.5, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3]}, {"product": "PP non-woven H563S", "series": [26.5, 26.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.2, 41.2, 41.2, 41.2, 41.2, 41.2, 41.2, 41.2, 41.0, 41.0, 41.0, 41.0, 41.0, 41.0, 41.0, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5]}, {"product": "PP copo J340N/440N/640N", "series": [27.5, 27.5, 45.5, 45.5, 46.5, 46.5, 46.5, 46.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.5, 47.3, 47.3, 47.3, 47.3, 47.3, 45.5, 45.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.0, 44.0, 43.4, 43.4, 43.4, 43.4, 43.4, 43.2, 43.2, 43.2, 43.2, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.0, 41.5, 41.5]}, {"product": "PP block copo 36MK10R/BJ550", "series": [27.9, 27.9, 43.5, 43.5, 44.0, 44.5, 44.5, 44.3, 44.3, 44.8, 44.8, 44.8, 44.8, 44.8, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.0, 44.0, 44.0, 44.0, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.0, 42.0]}, {"product": "PP transparent M9600", "series": [30.2, 30.2, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 52.0, 52.0, 52.0, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 51.8, 49.5, 49.5, 49.5, 49.5, 49.5]}, {"product": "PP 1126NK", "series": [28.4, 28.4, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 45.5, 45.5, 45.5, 45.5, 45.5, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 46.0, 45.8, 45.8, 45.8, 45.8, 45.8, 45.8, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.5, 45.2, 45.2, 44.5, 44.5, 44.5, 44.0, 44.0, 44.0, 44.0, 44.0, 43.0]}, {"product": "PP H100EY", "series": [28.3, 28.3, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.0, 44.0, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 42.5, 42.5, 42.5, 42.5, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.8, 41.5]}, {"product": "PP copo P604", "series": [25.5, 25.6, 37.5, 37.5, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.2, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 37.0, 36.8, 36.8, 36.8, 36.8, 37.0, 37.0, 37.0, 36.8, 36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.0, 36.0, 35.7, 35.7, 35.7, 35.5, 35.5, 35.2, 35.2, 35.2, 35.2, 35.2, 35.2, 35.2, 35.2]}, {"product": "PP random P208", "series": [26.5, 26.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 37.7, 37.7, 37.7, 37.7, 37.7, 37.2, 37.2, 37.2, 37.2, 37.2, 37.0, 37.0, 37.0]}], "PE": [{"product": "LDPE Film 2426K/2426H", "series": [53.5, 53.5, 53.0, 55.0, 55.0, 55.0, 55.0, 55.5, 55.5, 55.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 56.5, 55.5, 55.5, 55.5, 55.0, 55.0, 55.0, 55.0, 55.0, 54.8, 54.8, 54.8, 54.8, 54.8, 54.5, 53.5, 52.5, 52.5, 52.5, 51.5, 51.5, 51.5, 50.5, 50.5, 50.5, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0]}, {"product": "LDPE Film 260GG", "series": [53.5, 53.5, 53.5, 54.5, 54.5, 54.8, 54.8, 55.3, 55.3, 55.3, 57.3, 57.3, 57.3, 57.3, 57.3, 57.3, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 57.5, 56.5, 55.5, 55.5, 55.0, 55.0, 55.0, 55.0, 55.0, 54.5, 54.5, 54.5, 54.5, 54.5, 54.0, 54.0, 52.5, 51.5, 51.5, 51.5, 50.5, 50.5, 50.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5, 49.5]}, {"product": "LDPE Film 4025AS/1925AS", "series": [52.0, 52.0, 52.0, 54.0, 54.0, 54.0, 54.0, 54.5, 54.5, 54.5, 56.5, 56.5, 56.5, 57.0, 57.0, 57.0, 57.0, 57.0, 57.0, 56.5, 56.5, 56.5, 56.0, 56.0, 54.0, 54.0, 54.0, 54.0, 54.0, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.0, 52.5, 51.5, 51.5, 51.5, 50.5, 50.5, 50.5, 49.5, 49.5, 49.5, 49.5, 49.0, 49.0, 49.0, 48.7, 48.7]}, {"product": "LDPE Film 4024WN", "series": [51.5, 51.5, 51.5, 53.5, 53.5, 54.0, 54.0, 54.5, 54.5, 54.5, 56.5, 56.5, 56.5, 57.0, 57.0, 57.0, 57.0, 57.0, 57.0, 56.5, 56.5, 56.5, 56.0, 55.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 53.2, 53.2, 52.0, 51.0, 51.0, 51.0, 50.0, 50.0, 50.0, 49.0, 49.0, 49.0, 49.0, 49.0, 48.7, 48.7, 48.7, 48.7]}, {"product": "LDPE Film FT6236", "series": [51.0, 51.0, 51.0, 53.0, 53.0, 53.5, 53.5, 53.5, 53.5, 53.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 55.5, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 53.0, 52.5, 51.5, 50.5, 50.5, 50.5, 49.5, 49.5, 49.5, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0, 49.0]}, {"product": "HDPE Blow 5502BN", "series": [40.0, 40.0, 40.0, 40.0, 40.0, 40.5, 40.5, 41.0, 41.0, 41.0, 42.0, 42.0, 42.0, 42.0, 42.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.5, 42.5, 42.0, 42.0, 41.5, 41.5, 41.0, 41.0, 41.0, 41.0, 41.0, 40.5, 40.5, 40.0, 40.0, 39.5, 39.5, 39.5, 39.0, 38.8, 38.8]}, {"product": "HDPE Film FJ0952", "series": [43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 43.7, 44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 43.0, 43.0, 43.0, 42.8, 42.8, 42.8, 42.8, 42.5, 42.5, 41.0, 41.0, 41.0, 40.5, 40.5, 40.2, 40.2, 40.2, 40.0, 40.0, 39.2, 39.2]}, {"product": "HDPE Film TR144 / bimodal TR155", "series": [43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.2, 43.2, 43.2, 43.2, 43.2, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 42.0, 42.0, 42.0, 41.5, 41.5, 41.0, 41.0, 41.5, 41.5, 41.5, 41.5, 41.5]}, {"product": "HDPE Film HD6888", "series": [43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.5, 41.0, 41.0, 40.5, 40.5, 40.2, 40.2, 40.2, 40.0, 40.0, 39.5, 39.5]}, {"product": "HDPE Yarn 5000S", "series": [44.0, 44.0, 44.0, 44.0, 44.0, 44.0, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.5, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.3, 44.0, 44.0, 44.0, 43.5, 43.5, 43.5, 42.5, 42.5, 42.5]}, {"product": "HDPE Film H5604F", "series": [42.0, 42.0, 45.8, 45.8, 45.8, 45.8, 45.6, 45.6, 45.6, 45.6, 45.6, 45.6, 46.0, 46.8, 46.8, 46.8, 46.8, 46.8, 46.8, 46.8, 46.8, 46.5, 46.5, 42.5, 42.5, 42.5, 42.5, 42.5, 43.2, 43.2, 44.2, 44.2, 44.2, 44.2, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 42.4, 42.4, 42.4, 42.4, 42.4, 42.4, 41.7, 41.7, 41.7, 41.7]}, {"product": "HDPE Yarn", "series": [42.3, 42.3, 45.8, 45.8, 45.8, 45.8, 46.3, 46.3, 46.3, 46.3, 46.3, 46.3, 46.3, 47.2, 47.2, 47.2, 47.2, 47.2, 47.2, 47.2, 47.2, 47.0, 47.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.5, 43.5, 44.5, 44.5, 44.5, 44.5, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.8, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5, 43.5]}, {"product": "LLDPE Film J1220E", "series": [41.5, 41.5, 45.5, 45.5, 45.5, 45.5, 45.4, 45.4, 45.4, 45.4, 45.4, 45.4, 45.7, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 46.5, 42.0, 42.0, 42.0, 42.0, 42.0, 42.5, 42.5, 43.5, 43.5, 43.5, 43.5, 42.5, 42.5, 42.5, 42.5, 42.5, 39.0, 39.0, 39.0, 39.0, 39.0, 38.8, 38.8, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5]}, {"product": "LLDPE Film 20211", "series": [40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 39.3, 39.6, 39.6, 39.6, 39.6, 39.6, 39.6, 40.3, 40.3, 40.3, 40.3, 40.0, 40.0, 40.0, 40.0, 39.5, 39.0, 38.5, 38.5, 38.5, 38.5, 38.5, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 38.0, 37.0, 37.0, 37.0, 37.0, 36.0, 36.0, 36.0, 36.0, 36.0, 35.3, 35.3, 35.3, 35.3, 35.3, 35.0]}, {"product": "LLDPE Film 222WJ", "series": [42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.3, 42.3, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.5, 41.5, 41.5, 41.0, 41.0, 41.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 39.0, 38.7, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.3, 38.3, 38.3, 37.5, 37.3, 37.3, 37.3, 37.0, 37.0, 37.0, 36.9, 36.9, 36.9, 36.5, 36.2, 36.2]}, {"product": "LLDPE 3518CN (C6)", "series": [43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, 42.5, 42.5, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.0, 41.0, 41.0, 41.0, 41.0, 41.0, 40.5, 40.5]}, {"product": "LLDPE Film FD21HS/FD21HN", "series": [42.5, 42.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 41.5, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.7, 41.7, 41.5, 41.5, 40.5, 40.5, 40.5, 40.2, 40.2, 40.2, 40.0, 40.0, 39.0, 38.7, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.3, 38.3, 37.5, 37.3, 37.3, 37.3, 37.0, 37.0, 37.0, 36.8, 36.8, 36.8, 36.8, 36.3, 36.3]}, {"product": "LLDPE Film 218WJ", "series": [42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.3, 42.3, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.7, 41.7, 41.5, 41.5, 40.5, 40.5, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 39.0, 38.7, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.5, 38.3, 38.3, 37.5, 37.5, 37.3, 37.3, 37.0, 37.0, 37.0, 36.9, 36.9, 36.9, 36.7, 36.2, 36.2]}, {"product": "LLDPE Film 218BJ", "series": [42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.6, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.3, 42.0, 42.0, 42.0, 42.0, 41.5, 41.5, 41.0, 40.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.0, 38.7, 38.7, 38.7, 38.7, 38.7, 38.7, 38.7, 38.5, 38.5, 37.7, 37.7, 37.5, 37.5, 37.2, 37.2, 37.2, 37.0, 37.0, 37.0, 36.8, 36.5, 36.5]}, {"product": "LLDPE Film 218NJ", "series": [42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.5, 42.3, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 41.8, 41.8, 41.7, 41.5, 41.5, 40.5, 40.5, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 39.0, 38.5, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 38.3, 37.5, 37.3, 37.3, 37.3, 37.0, 37.0, 37.0, 36.9, 36.9, 36.9, 36.9, 36.2, 36.2]}, {"product": "LLDPE Film QH2018N", "series": [39.5, 39.5, 40.5, 40.5, 40.5, 40.5, 39.5, 39.5, 39.5, 39.5, 39.5, 40.5, 40.5, 40.5, 41.0, 41.0, 41.0, 40.7, 40.7, 40.5, 40.5, 40.5, 40.0, 40.0, 39.5, 39.5, 39.5, 39.5, 39.5, 39.5, 38.5, 38.5, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 38.0, 37.3, 37.3, 37.3, 37.0, 36.7, 36.7, 36.7, 36.7, 36.7, 36.7, 36.5, 36.0, 36.0]}], "PVC": [{"product": "PVC S65", "series": [39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 39.0, 38.5, 38.5, 38.5, 38.5, 38.5, 36.5, 36.5, 36.5, 36.5, 35.5, 35.5, 34.5, 34.5, 34.5, 33.5, 33.5, 33.0, 33.0, 33.0, 33.0, 33.0, 33.0, 33.0, 32.5, 32.5, 32.5, 31.8, 31.5, 31.8, 31.5, 31.5, 31.5, 29.5, 29.5, 29.5, 29.5, 29.5, 29.0, 29.0, 29.0, 29.0, 28.5]}, {"product": "PVC PR1000", "series": [32.5, 32.5, 33.0, 33.0, 33.0, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 33.5, 32.0, 32.0, 32.0, 32.0, 31.5, 31.5, 31.5, 31.5, 30.5, 30.5, 30.5, 30.0, 30.0, 30.0, 30.0, 29.5, 29.5, 29.5, 29.5, 29.5, 29.5, 28.5, 27.5, 28.5, 27.5, 27.5, 27.5, 26.0, 26.0, 26.0, 26.0, 26.0, 25.5, 25.5, 25.5, 25.5, 25.5]}, {"product": "PVC S1000 Sinopec", "series": [31.5, 31.5, 31.5, 31.5, 31.5, 31.5, 31.5, 31.2, 31.2, 31.2, 31.2, 31.2, 31.2, 31.2, 31.2, 30.7, 30.7, 30.0, 30.0, 30.0, 30.0, 29.5, 29.5, 29.5, 29.5, 29.5, 29.5, 29.2, 29.2, 28.5, 28.5, 28.5, 28.0, 28.0, 28.0, 28.0, 28.0, 28.0, 25.5, 25.5, 25.5, 25.5, 25.0, 25.0, 25.0, 25.0, 25.0, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5]}, {"product": "PVC Powder PM66R AGC", "series": [35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.3, 35.3, 35.3, 35.3, 35.3, 35.3, 35.0, 34.0, 34.0, 34.0, 31.0, 31.0, 30.5, 30.5, 30.5, 29.5, 28.7, 28.7, 28.7, 28.7, 28.7, 28.7, 28.5, 28.5, 28.5, 28.5, 28.3, 28.3, 26.3, 25.5, 26.3, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3, 25.3, 25.3, 25.3]}, {"product": "PVC SP660", "series": [35.8, 35.8, 35.8, 35.8, 35.8, 35.8, 35.8, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.2, 34.2, 34.2, 34.2, 31.5, 31.5, 31.5, 31.5, 31.0, 30.0, 29.0, 29.0, 29.0, 29.0, 29.0, 29.0, 28.7, 28.7, 28.7, 28.7, 28.5, 28.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3]}, {"product": "PVC SG660", "series": [36.5, 36.5, 36.5, 36.5, 36.5, 36.5, 36.0, 35.7, 35.7, 35.7, 35.5, 35.5, 35.5, 35.5, 35.5, 35.5, 35.2, 34.2, 34.2, 34.2, 31.5, 31.5, 31.5, 31.5, 31.0, 30.0, 29.0, 29.0, 29.0, 29.0, 29.0, 29.0, 28.7, 28.7, 28.7, 28.7, 28.5, 28.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3]}, {"product": "PVC SE950 Shintech", "series": [30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.3, 30.3, 30.3, 30.3, 30.3, 30.3, 30.3, 30.1, 30.1, 30.1, 29.7, 29.7, 29.5, 29.5, 29.5, 29.0, 29.0, 29.0, 27.7, 27.7, 27.5, 27.5, 27.5, 27.5, 27.5, 27.5, 27.5, 27.5, 27.0, 27.5, 27.0, 27.0, 26.0, 25.0, 25.0, 25.0, 24.8, 24.8, 24.8, 24.8, 24.6, 24.6, 24.6]}, {"product": "PVC SG-5 Erdos", "series": [29.0, 29.2, 29.2, 29.2, 29.0, 29.0, 29.0, 29.0, 28.5, 28.2, 28.2, 28.2, 27.7, 27.7, 27.2, 27.2, 27.2, 27.2, 27.2, 27.0, 27.0, 26.5, 26.5, 26.5, 26.0, 26.0, 26.0, 26.0, 26.0, 26.0, 26.0, 25.8, 25.8, 25.5, 25.5, 25.5, 25.5, 25.5, 25.0, 25.0, 25.0, 25.0, 24.3, 23.8, 23.8, 23.8, 23.8, 23.8, 23.5, 23.5, 23.5, 23.5, 23.5, 23.5]}, {"product": "PVC SG-5 Zhongtai", "series": [28.2, 28.5, 28.5, 28.5, 28.5, 28.5, 28.5, 28.2, 28.2, 27.7, 27.7, 27.7, 27.2, 27.2, 26.7, 26.7, 26.5, 26.5, 26.5, 26.5, 26.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.3, 25.3, 25.3, 25.3, 25.3, 25.3, 25.3, 24.5, 24.5, 24.5, 24.5, 24.0, 23.5, 23.5, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2, 23.2]}, {"product": "PVC SG-5 Yihua", "series": [28.0, 28.2, 28.2, 28.2, 28.0, 28.0, 28.0, 27.5, 27.5, 26.8, 26.8, 26.8, 26.5, 26.5, 26.0, 26.0, 25.7, 25.7, 25.7, 25.5, 25.5, 24.7, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.5, 24.3, 24.3, 24.3, 24.3, 24.3, 24.3, 23.8, 23.8, 23.8, 23.8, 23.2, 22.8, 22.8, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6]}]}, "summary": {"PP": {"avg": 38970, "delta": -242}, "PE": {"avg": 41140, "delta": -14}, "PVC": {"avg": 24830, "delta": -50}, "changed": 8, "total": 50, "largest": -1000, "largest_items": "PP yarn 1102K-APC / 1102K-IRPC, PP 1126NK"}};
+const REPORTS = {"PE": {"summary": ["Chinese LDPE Film offers to Vietnam edged slightly lower this week, while LLDPE and HDPE import offers also declined compared with the previous week.", "Sibur Russia cut its domestic LLDPE and HDPE offers at Hai Phong port by 400–700 VND/kg, and the overall PE price trend continued falling with wide gaps between suppliers.", "Domestic LLDPE settled as low as 35,500 VND/kg and HDPE as low as 38,300–38,500 VND/kg, while LDPE Film offered above 50,000 VND/kg struggled to close any deals."], "paras": ["Today, June 9, the import offer price for Sinopec China's LDPE Film 2426H to Vietnam was reported at 1,440 USD/ton CIF; the offer price for ZPC's LDPE Film 2426H/2420H was at 1,430 USD/ton CIF. The import offer price for Exxon – China's LDPE Film 2022.AC and 2022.BW was at 1,455 USD/ton CIF. In the previous week, the offer prices for LDPE Film grades 2426H/2420H from Yulong and Wanhua China were at 1,440–1,470 USD/ton CIF. Thus, the general level of LDPE offers from China this week edged down slightly.", "For LLDPE, today one distributor offered Petrochina China's LLDPE Film 7042/7042N to Vietnam at 1,120–1,130 USD/ton CIF, down 25 USD/ton compared with last week's offer. The offer price for Exxon Mobil US's LLDPE Film 2018AY (re-exported from China) to Vietnam was at 1,210 USD/ton CIF.", "For HDPE, the offer price for HDPE Film originating from BASF China was at 1,215 USD/ton CIF, and that originating from Baofeng China was at 1,240 USD/ton CIF. In addition, one distributor offered HDPE blow 5502 originating from Tricon US to Vietnam at 1,170 USD/ton CIF, and offered HDPE blow 5502H originating from Cynpol US at 1,190 USD/ton CIF. Overall, offer prices declined over last week.", "Domestically, at Hai Phong port, Sibur Russia's distributor today offered LLDPE Film to Vietnam at 34,200 VND/kg including VAT — down 400 VND/kg compared with last week; offered HDPE Film grades at 36,500 VND/kg including VAT — down 500 VND/kg compared with last week; offered HDPE yarn at 35,600 VND/kg including VAT — down 700 VND/kg compared with last week; and HDPE injection at 35,200–35,500 VND/kg including VAT — down 500 VND/kg compared with last week.", "In the domestic market, at the start of this week, the PE price trend continued to decline compared with the end of last week. The gap in offer prices between suppliers was quite large.", "For example, with LLDPE, Sabic's LLDPE Film 218WJ and Qamar's FD21HS recorded one distributor settling at 35,500 VND/kg including VAT — the lowest in the market; some trading companies settled at 36,000–36,400 VND/kg including VAT; but there were also small trading companies still holding offers up to 37,000 VND/kg including VAT.", "For HDPE, Sabic's HDPE Film FJ00952 and Qamar's F1 recorded some sellers offering at 39,500–40,000 VND/kg including VAT; however, one large distributor settled at 38,300–38,500 VND/kg including VAT — the lowest in the market at present.", "As for LDPE, the offer prices for LDPE Film grades at this time were generally in the range of 46,000–50,000 VND/kg including VAT; suppliers offering above 50,000 VND/kg including VAT almost failed to reach any deals..."]}, "PP": {"summary": ["Sabic settled its PP copo selling price at 1,200 USD/ton CIF, 50–60 USD/ton below yesterday's bid, while Chinese-origin PP offers stayed high and uncompetitive.", "Domestic and Russian PP homo supply led prices lower, with NSRP and Sibur grades undercutting the market and some sellers settling well below their offers.", "Imported grades had to slash prices to sell as buyers shifted to cheaper equivalent products like T3034, and Sabic PP copo settled in the south at 39,000 VND/kg, undercutting domestic producers."], "paras": ["Yesterday, June 8, Sabic's distributor announced new bid prices for PP copo and random grades to Vietnamese buyers, with goods from its plant in Saudi Arabia subject to a 3% import tax. Accordingly, the bid prices for Sabic's PP copo grades were at 1,250–1,260 USD/ton CIF, with shipments from Singapore.", "Today, June 9, Sabic continued to announce the settled selling price for a PP copo batch from its Saudi Arabian plant, subject to a 3% import tax. The settled price was at 1,200 USD/ton CIF, 50–60 USD/ton lower than the bid price for the batch announced yesterday.", "The supply of PP originating from China to Vietnam this week remained fairly abundant and diverse in grades, but the offer prices were assessed as relatively high compared with the general market and not very competitive.", "Accordingly, one distributor offered PP yarn/injection, BOPP, and PP Fibre from Oriental and Grand Resource in the range of 1,285–1,310 USD/ton FOB China; specifically, Jinneng's PP yarn HP500J was offered at 1,200 USD/ton FOB Qingdao. Oriental and CNPC's PP block copo was at 1,350–1,355 USD/ton FOB Ningbo. PPR offers from Oriental, Grand Resource, Chambroad, and Sinochem were generally at 1,315–1,360 USD/ton FOB. IPP and CPP from Chambroad and Grand Resource were offered at 1,320–1,360 USD/ton FOB. Typically, the CIF Vietnam price adds about 20–30 USD/ton to the FOB offer prices mentioned above.", "Domestically, today, the distributor of Sibur Russia offered PP yarn/injection and non-woven grades to Vietnamese buyers at 33,900–34,300 VND/kg including VAT at Hai Phong port, down sharply by 1,300–1,600 VND/kg compared with last week; PP copo was offered at 34,800 VND/kg including VAT at Hai Phong port, down 700 VND/kg compared with last week.", "NSRP's leading distributor, Marubeni, this week is offering NSRP's PP 114G at 34,000 VND/kg including VAT, while many trading companies in the north are also offering PP 114G at 34,000–34,200 VND/kg including VAT depending on quantity. However, the market recorded some sellers who accepted to settle this product at 33,400–33,600 VND/kg including VAT, and buyers purchasing in large quantities could potentially negotiate even better prices.", "Thus, for the PP homo line, NSRP's domestic goods and Sibur Russia's goods are being offered at prices cheaper than the market. PP originating from China also recorded some grades offered by sellers at 33,500–33,600 VND/kg including VAT, but the gap in offer prices between suppliers and between grades was still quite large.", "BSR's PP T3034 offered for sale in the south or shipped to the north had both dropped to 35,000 VND/kg including VAT, but goods sold in the north were hard to move due to the high price gap compared with NSRP's goods.", "In this context, many imported grades, despite low and even scarce ready-delivery inventory, still had to cut prices to meet consumption. A number of sellers reported that the capital cost of Thailand's PP 1102K or Saudi Arabia's new water-route batch was at 40,000–41,000 VND/kg including VAT, but to be consumed they also had to accept settling at only about 37,000–38,000 VND/kg including VAT, because buyers have recently switched to goods of equivalent quality such as T3034 to replace it in order to lower production costs.", "Similarly, for PP copo, the market recorded a seller in the south settling Sabic's PP copo at only 39,000 VND/kg including VAT, much lower than PP copo from domestic producers such as Hyosung Vina or LSP (still offered above and below 40,000 VND/kg including VAT).."]}, "PVC": {"summary": ["Formosa sharply cut its July PVC offer prices across all markets, lowering its offer to Vietnam to 810–820 USD/ton/CIF, while a separate supplier offered LG Chem and Hygain PVC to Vietnamese buyers at an even cheaper 720 USD/ton/CIF.", "Domestic carbide-based PVC SG-5 from Yihua and Xinfa held flat at 22,000–22,300 VND/kg including VAT for about 10 days, even as oil-based PVC prices kept declining.", "Oil-based Chinese PVC fell to 24,000 VND/kg including VAT and domestic or Thai grades were sold at 24,000–24,500 VND/kg including VAT, with the declines driven by cautious sentiment ahead of the low season."], "paras": ["Today, June 9, Formosa announced its PVC offer prices for cargo to be delivered in July 2026. Accordingly, Formosa's PVC offer price to India this month dropped sharply by 115 USD/ton compared with the settlement price of the previous month, falling to 815 USD/ton/CIF; the offer price to China dropped sharply by 120 USD/ton compared with last month's settlement price, falling to 760 USD/ton/CIF. Offer prices to other markets also fell by 120 USD/ton compared with the previous month, calculated at a FOB price of 730 USD/ton/FOB Taiwan, with a volume discount of 10 USD/ton.", "In the previous month, Formosa's PVC offer price to Vietnam was at 930–940 USD/ton, and with this month's announced price cut of 120 USD/ton, the offer price falls to 810–820 USD/ton/CIF. Although the FOB price is only at 730 USD/ton/FOB Taiwan, adding shipping costs to Vietnam brings the CIF price for Vietnam to around 770–780 USD/ton/CIF.", "In Vietnam, at the end of last week, a supplier offered PVC TL-1000 originating from LG Chem (whose factory is located in China) and PVC HS-1000R under the Hygain brand (produced by Haijing China) to Vietnamese buyers, both at 720 USD/ton/CIF, under EXW conditions (goods delivered at the seller's factory), at a bonded warehouse in Hai Phong, with an import tax of 5%. These offer prices dropped sharply by 70 USD/ton and 110 USD/ton respectively compared with the middle of last month. This is still the cheapest price level for oil-based imported PVC at the present time.", "In domestic trading, early this week, the selling offer price for PVC from traders dealing in spot cargo fell slightly compared with the end of last week. The selling price of PVC SG-5 (carbide-based) originating from Yihua and Xinfa China in the northern region is commonly at 22,000–22,300 VND/kg including VAT, a \"bottom\" level that has held flat for about 10 days, despite oil-based PVC prices continuing to decline steadily.", "Currently, oil-based PVC originating from China has fallen to a level of 24,000 VND/kg including VAT. PVC SG660/SP660, PM66R originating domestically or from Thailand has also been recorded with some sellers—large commercial traders—accepting settlement at a selling price of 24,000–24,500 VND/kg including VAT, lower than the settlement selling price set by the manufacturer at the end of May. The reason is the very cautious market sentiment as the low season approaches."]}};
+const S = DATA.summary;
+const L = DATA.labels;
+const NL = L.length;
+
+const GROUPS = {
+  PP:{color:'#ff7e8a', avg:S.PP.avg, delta:S.PP.delta, label:'PP'},
+  PE:{color:'#5fd0e6', avg:S.PE.avg, delta:S.PE.delta, label:'PE'},
+  PVC:{color:'#ffc857', avg:S.PVC.avg, delta:S.PVC.delta, label:'PVC'}
+};
+
+const OVERVIEW = [
+  {col:'#ff7e8a', title:'PP', sub:'Sharpest drop', pts:[
+    'Sabic copo settled $1,200 CIF, below its own bid.',
+    'NSRP &amp; Sibur homo undercut everyone; buyers chasing T3034.',
+    'Five grades fell up to &minus;1,000 &mdash; biggest mover today.']},
+  {col:'#5fd0e6', title:'PE', sub:'Still sliding', pts:[
+    'Chinese LDPE, LLDPE &amp; HDPE import offers all eased again.',
+    'Sibur cut Hai Phong PE offers 400&ndash;700 VND/kg.',
+    'LLDPE down to 35,500; HDPE 38,300&ndash;38,500; LDPE over 50,000 stalled.']},
+  {col:'#ffc857', title:'PVC', sub:'Imports cut, domestic flat', pts:[
+    'Formosa slashed July offer to VN to $810&ndash;820 CIF.',
+    'Carbide SG-5 held 22,000&ndash;22,300 for ~10 days.',
+    'Oil-based fell to 24,000; only S65 moved domestically.']}
+];
+
+const REGIONAL = [
+  {l:'SEA &middot; HD Film/Yarn', v:'1,310&ndash;1,320', d:-30},
+  {l:'SEA &middot; LL Film', v:'1,270', d:-30},
+  {l:'SEA &middot; LL C6', v:'1,420', d:-30},
+  {l:'SEA &middot; LD Film', v:'1,520', d:-30},
+  {l:'SEA &middot; PP Yarn/Inj', v:'1,240', d:-30},
+  {l:'SEA &middot; PP BOPP', v:'1,270', d:-20},
+  {l:'Formosa PVC &rarr; VN', v:'810&ndash;820', d:-120},
+  {l:'Cheapest oil PVC &rarr; VN', v:'720', d:-90}
+];
+
+let activeGroup='PP', sortKey='v', sortDir=-1, overlay=null;
+let rStart=0, rEnd=NL-1, cmpIdx=NL-2;   // default compare = prior day (Jun 8)
+
+/* ---- unified change token builder ---- */
+// decrease -> red down arrow ; increase -> green up arrow
+function chgToken(delta, text, pill){
+  // increase -> up arrow + green ; decrease -> down arrow + red
+  let cls,tri;
+  if(delta>0){cls='inc';tri='&#9650;';}
+  else if(delta<0){cls='dec';tri='&#9660;';}
+  else {cls='flat';tri='&#8226;';}
+  const t = pill?'pill':'chg';
+  return '<span class="'+t+' '+cls+'"><span class="tri">'+tri+'</span>'+text+'</span>';
+}
+function pctToken(pctVal){
+  if(pctVal==null) return '<span class="muted">&mdash;</span>';
+  return chgToken(pctVal, Math.abs(pctVal).toFixed(2)+'%', false);
+}
+
+/* ---- summary cards ---- */
+document.getElementById('changedBig').innerHTML = S.changed+' <span class="unit">/ '+S.total+'</span>';
+document.getElementById('changedNote').textContent = 'All moved down, mainly PP';
+document.getElementById('largestBig').innerHTML = '&#9660; '+Math.abs(S.largest).toLocaleString();
+document.getElementById('largestBig').style.color='var(--dec)';
+document.getElementById('largestNote').textContent = S.largest_items;
+
+/* ---- overview ---- */
+const ov=document.getElementById('overview');
+OVERVIEW.forEach((o,i)=>{
+  const row=document.createElement('div'); row.className='ov-row open';
+  row.style.setProperty('--secCol', o.col);
+  row.innerHTML='<div class="ov-head"><span class="dot" style="background:'+o.col+'"></span>'+
+    '<span class="ov-title" style="color:'+o.col+'">'+o.title+' <small>&mdash; '+o.sub+'</small></span>'+
+    '<span class="chev">&#9656;</span></div>'+
+    '<div class="ov-body"><ul>'+o.pts.map(p=>'<li style="color:'+o.col+'">'+p+'</li>').join('')+'</ul></div>';
+  row.querySelector('.ov-head').onclick=()=>row.classList.toggle('open');
+  ov.appendChild(row);
+});
+
+/* ---- stat cards (delta uses unified token; group avgs fell -> green) ---- */
+const sr=document.getElementById('statRow');
+Object.entries(GROUPS).forEach(([g,o])=>{
+  const card=document.createElement('div');
+  card.className='stat'+(g===activeGroup?' active':''); card.dataset.g=g;
+  card.innerHTML='<div class="lbl">'+o.label+' avg price</div>'+
+    '<div class="big">'+o.avg.toLocaleString('en-US')+'</div>'+
+    '<div class="delta">'+chgToken(o.delta, Math.abs(o.delta).toLocaleString()+' vs last', false)+'</div>';
+  card.onclick=()=>selectGroup(g);
+  sr.appendChild(card);
+});
+
+/* ---- regional ---- */
+const rg=document.getElementById('regGrid');
+REGIONAL.forEach(r=>{
+  const d=document.createElement('div'); d.className='reg';
+  d.innerHTML='<div class="rl">'+r.l+'</div><div class="rv">'+r.v+'</div>'+
+    '<div class="rd">'+chgToken(r.d, Math.abs(r.d)+' vs last', false)+'</div>';
+  rg.appendChild(d);
+});
+
+/* ---- chart ---- */
+const ctx=document.getElementById('chart'); let chart;
+function buildChart(){
+  const g=activeGroup, col=GROUPS[g].color;
+  const labs=L.slice(rStart,rEnd+1);
+  const avg=DATA.groupavg[g].slice(rStart,rEnd+1);
+  const ds=[{label:g+' average', data:avg, borderColor:col, backgroundColor:col+'22',
+    borderWidth:2.5, pointRadius:0, pointHoverRadius:4, tension:.32, fill:true, spanGaps:true}];
+  if(overlay){
+    const prod=DATA.products[g].find(p=>p.product===overlay);
+    if(prod) ds.push({label:overlay, data:prod.series.slice(rStart,rEnd+1), borderColor:'#ffffff',
+      borderWidth:1.6, borderDash:[5,4], pointRadius:0, pointHoverRadius:4, tension:.3, fill:false, spanGaps:true});
+  }
+  const cfg={type:'line',data:{labels:labs,datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#9fc0c8',font:{family:'system-ui',size:12},usePointStyle:true,pointStyleWidth:8}},
+        tooltip:{backgroundColor:'#06222c',borderColor:col,borderWidth:1,titleColor:'#eaf6f8',bodyColor:'#cfe6ea',padding:10,
+          callbacks:{label:c=>' '+c.dataset.label+': '+(c.parsed.y!=null?c.parsed.y.toFixed(1)+'k VND/kg':'\u2014')}}},
+      scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#6f97a1',font:{family:'JetBrains Mono',size:10},maxTicksLimit:11,autoSkip:true}},
+        y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#6f97a1',font:{family:'JetBrains Mono',size:10},callback:v=>v+'k'}}}}};
+  if(chart){chart.data=cfg.data;chart.options=cfg.options;chart.update();}else chart=new Chart(ctx,cfg);
+  document.getElementById('chartMeta').innerHTML=labs[0]+' \u2192 '+labs[labs.length-1]+
+    ' \u00b7 '+DATA.products[g].length+' grades'+(overlay?' \u00b7 overlay: '+overlay:'');
+}
+
+/* ---- sparkline (respects chart range) ---- */
+function sparkSVG(series,col){
+  const seg=series.slice(rStart,rEnd+1).filter(v=>v!=null);
+  if(seg.length<2) return '';
+  const w=84,h=24,pad=2,mn=Math.min(...seg),mx=Math.max(...seg),rng=(mx-mn)||1;
+  const pts=seg.map((v,i)=>{const x=pad+i*(w-2*pad)/(seg.length-1);const y=h-pad-((v-mn)/rng)*(h-2*pad);return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
+  return '<svg class="spark" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+}
+
+/* ---- helpers to find latest value at/<=rEnd and value at cmp ---- */
+function latestAt(series, idx){
+  for(let i=idx;i>=0;i--){ if(series[i]!=null) return {v:series[i],i}; }
+  return {v:null,i:-1};
+}
+function pct(l,b){ if(l==null||b==null||b===0) return null; return Math.round((l-b)/b*10000)/100; }
+
+/* ---- table ---- */
+const tbody=document.getElementById('tblBody');
+function computeRow(m){
+  // latest = value at rEnd (or nearest earlier non-null)
+  const lt=latestAt(m.series, rEnd);
+  const latest=lt.v;
+  // change (absolute, VND) vs the day before 'latest'
+  const prev=lt.i>0?latestAt(m.series, lt.i-1).v:null;
+  const chgAbs = (latest!=null&&prev!=null)?Math.round((latest-prev)*1000):0;
+  // vs compare date
+  const cmpVal=m.series[cmpIdx];
+  const vsl=pct(latest,cmpVal);
+  return {p:m.p, v:latest, c:chgAbs,
+    vsl:vsl, pw:pct(latest,m.pwBase), ytd:pct(latest,m.ytdBase), yoy:pct(latest,m.yoyBase),
+    series:m.series};
+}
+function renderTable(){
+  const g=activeGroup,col=GROUPS[g].color;
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  let rows=DATA.meta[g].map(computeRow);
+  if(q) rows=rows.filter(r=>r.p.toLowerCase().includes(q));
+  rows.sort((a,b)=>{let av=a[sortKey],bv=b[sortKey];
+    if(sortKey==='p'){av=av.toLowerCase();bv=bv.toLowerCase();return av<bv?-sortDir:av>bv?sortDir:0;}
+    if(av==null)av=-1e9; if(bv==null)bv=-1e9;
+    return (av-bv)*sortDir;});
+  tbody.innerHTML=rows.map(r=>{
+    const isOv=overlay===r.p;
+    const chgTxt = r.c===0?'0':Math.abs(r.c).toLocaleString();
+    return '<tr data-p="'+r.p+'" style="cursor:pointer;'+(isOv?'background:rgba(255,255,255,.06)':'')+'">'+
+      '<td><span class="tag" style="background:'+(isOv?'#fff':col)+'"></span>'+r.p+'</td>'+
+      '<td>'+(r.v!=null?Math.round(r.v*1000).toLocaleString('en-US'):'<span class="muted">&mdash;</span>')+'</td>'+
+      '<td>'+chgToken(r.c, chgTxt, true)+'</td>'+
+      '<td>'+pctToken(r.vsl)+'</td>'+
+      '<td>'+pctToken(r.pw)+'</td>'+
+      '<td>'+pctToken(r.ytd)+'</td>'+
+      '<td>'+pctToken(r.yoy)+'</td>'+
+      '<td>'+sparkSVG(r.series,col)+'</td></tr>';
+  }).join('');
+  tbody.querySelectorAll('tr').forEach(tr=>{tr.onclick=()=>{overlay=overlay===tr.dataset.p?null:tr.dataset.p;buildChart();renderTable();};});
+  document.getElementById('tblTitle').textContent=GROUPS[g].label+' Products';
+}
+
+/* ---- group switching ---- */
+function selectGroup(g){
+  activeGroup=g; overlay=null;
+  document.querySelectorAll('#grpSeg button').forEach(b=>b.classList.toggle('on',b.dataset.g===g));
+  document.querySelectorAll('#statRow .stat').forEach(s=>s.classList.toggle('active',s.dataset.g===g));
+  buildChart(); renderTable();
+}
+document.querySelectorAll('#grpSeg button').forEach(b=>b.onclick=()=>selectGroup(b.dataset.g));
+document.getElementById('search').oninput=renderTable;
+document.querySelectorAll('thead th[data-k]').forEach(th=>{
+  th.onclick=()=>{const k=th.dataset.k;
+    if(sortKey===k) sortDir*=-1; else {sortKey=k;sortDir=(k==='p')?1:-1;}
+    document.querySelectorAll('thead th .ar').forEach(a=>a.textContent='');
+    th.querySelector('.ar').innerHTML=sortDir<0?'&#9660;':'&#9650;'; renderTable();};
+});
+
+/* ---- date controls ---- */
+const rangeStart=document.getElementById('rangeStart'), rangeEnd=document.getElementById('rangeEnd');
+const cmpSel=document.getElementById('cmpDate');
+rangeStart.max=NL-1; rangeEnd.max=NL-1; rangeStart.value=0; rangeEnd.value=NL-1;
+L.forEach((lab,i)=>{const o=document.createElement('option');o.value=i;o.textContent=lab;cmpSel.appendChild(o);});
+cmpSel.value=cmpIdx;
+function updRangeLabels(){document.getElementById('rngFrom').textContent=L[rStart];document.getElementById('rngTo').textContent=L[rEnd];}
+function syncRange(){
+  let a=+rangeStart.value, b=+rangeEnd.value;
+  if(a>b){ if(document.activeElement===rangeStart) b=a; else a=b; rangeStart.value=a; rangeEnd.value=b; }
+  rStart=a; rEnd=b;
+  // keep compare date within or at edge of range; clamp display only (compare can be any date)
+  updRangeLabels(); buildChart(); renderTable();
+}
+rangeStart.oninput=syncRange; rangeEnd.oninput=syncRange;
+cmpSel.onchange=()=>{cmpIdx=+cmpSel.value; updCmpHead(); renderTable();};
+function updCmpHead(){document.getElementById('thVsl').firstChild.textContent='vs '+L[cmpIdx]+' ';}
+document.getElementById('resetDates').onclick=()=>{
+  rStart=0;rEnd=NL-1;cmpIdx=NL-2;
+  rangeStart.value=0;rangeEnd.value=NL-1;cmpSel.value=cmpIdx;
+  updRangeLabels();updCmpHead();buildChart();renderTable();
+};
+
+/* ---- report modal ---- */
+const RPTCOL={PP:'#ff7e8a',PE:'#5fd0e6',PVC:'#ffc857'};
+const rptOverlay=document.getElementById('rptOverlay');
+const rptBody=document.getElementById('rptBody');
+let rptGroup='PP';
+function renderReport(g){
+  rptGroup=g;
+  const r=REPORTS[g]; const col=RPTCOL[g];
+  rptBody.style.setProperty('--accent',col);
+  let html='<h3>Summary</h3><ul class="sum">'+r.summary.map(b=>'<li>'+b+'</li>').join('')+'</ul>';
+  html+='<div class="divider"></div><h3>Full report</h3>'+r.paras.map(p=>'<p>'+p+'</p>').join('');
+  rptBody.innerHTML=html;
+  document.querySelectorAll('#rptTabs button').forEach(b=>b.classList.toggle('on',b.dataset.r===g));
+  rptBody.scrollTop=0;
+}
+function openReport(g){ renderReport(g); rptOverlay.classList.add('open'); rptOverlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+function closeReport(){ rptOverlay.classList.remove('open'); rptOverlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+document.querySelectorAll('.rc-btn').forEach(b=>b.onclick=()=>openReport(b.dataset.r));
+document.querySelectorAll('#rptTabs button').forEach(b=>b.onclick=()=>renderReport(b.dataset.r));
+document.getElementById('rptClose').onclick=closeReport;
+rptOverlay.onclick=(e)=>{ if(e.target===rptOverlay) closeReport(); };
+document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'&&rptOverlay.classList.contains('open')) closeReport(); });
+
+/* ================= PDF EXPORT (Aptos-style embedded font) ================= */
+const FONT_REG_B64="AAEAAAAMAIAAAwBAR1BPU2wIeDgAACB8AAALRkdTVUL/bh+SAAArxAAAAMZPUy8yXvL1GgAAHYgAAABgY21hcEPe5kAAAB3oAAAAnGdseWaF1/lMAAAAzAAAGiZoZWFkFicIEgAAG8gAAAA2aGhlYQcmAqkAAB1kAAAAJGhtdHi0YhCdAAAcAAAAAWRsb2NhCa8QFwAAGxQAAAC0bWF4cAB5AgQAABr0AAAAIG5hbWUmRD4hAAAehAAAAdZwb3N0/4gAFAAAIFwAAAAgAAEAQgGaAIsCigADAAATIyczgjcJSQGa8AAAAQA6/3sBBAKRAA8AAAUVLgI1NDY2NxUGBhUUFgEEN1w3N1w3O0ZGWSwjc5pbXJl0Iiszt3Z2tgABABT/ewDeApEADwAAFzU2NjU0Jic1HgIVFAYGFDtGRjs4Wzc3W4UsM7Z2drczKyJ0mVxbmnMAAAEAKABTAeICGAALAAAlIzUjNTM1MxUzFSMBJ0S7u0S7u1PEPcTEPQABADf/igCvAGkAEAAAFyc2NjUmJjU0NjMyFhUUBgZcJBEhEyAgGyIbGiZ2DRM0GwEeGRggKBUjPTEAAQAjARABIwFRAAMAAAEhNSEBI/8AAQABEEEAAAEAN//4AKsAaQALAAA3FAYjIiY1NDYzMharIhgYIiIYGCIwGR8gGBkgIQAAAQAN/9gBxQKKAAMAABcjATNSRQFzRSgCsgACADX/9AIvAm4ACwAXAAAFIiY1NDYzMhYVFAYDIgYVFBYzMjY1NCYBMnWIiHV1iIh1W1ZWW1tWVgyjmpqjo5qaowI7h3d3h4d3d4cAAQAfAAABCwJiAAoAACEjEQYGJzUWNjczAQtLHFIzOlIdQwITJiACPwIsKgABACwAAAHLAm4AGQAAISE1NjY1NCYjIgYHNTY2MzIWFhUUDgIHIQHL/mGmo0tNMFQgGFg5UWIsMVRrOwE1OWmyWDxHFw9ECxY2WDM3ZVtSJAAAAQAk//QBuQJuACsAADc1FhYzMjY2NTQmJgc1FjY2NTQjIgYHNTY2MzIWFhUUBgcVFhYVFAYGIyImJCJcNShEKjheOTZWMogqXB8cXDc4WzZCMDZOOWI/PWEWQg8WFDUvMDITAj0BFDMtYRYPQQ0WIEQ4P0YOAghLQz9PJRQAAgAUAAACAAJiAAoADQAAISM1ITUBMxEzFSMnEQMBokr+vAFATl5eSvF/OAGr/ls+PgFH/rkAAQAu//QB1gJiAB0AADc1FhYzMjY1NCYjIgYHEyEVIQc2NjMyFhUUBiMiJi4gXypdVl1XM00aDQFq/tkIETwcdXSAeTBgEkIMFUBIRDsKBQE3QLICBmdVYmYSAAACADT/9AICAm4AHAAqAAABFSYmIyIGBzY2MzIWFhUUBgYjIiYmNTQ2NjMyFgEWFjMyNjY1NCYmIyIGAbwVPCZcaQIbYT1KWSg3YkBIbz5GeEwnQf7XBldOJUMqGT02N1sCUj8KE4F5IzI3WjRBXzJCiWpskUgT/pVTax1ANSRAKDQAAQAYAAABtQJiAAYAADMjEyE1IRXGTuv+tQGdAiJANwADADH/9AH0Am4AGQAmADMAAAEVFhYVFAYjIiY1NDY3NSYmNTQ2MzIWFRQGBwYGFRQWMzI2NjU0Jic+AjU0JiMiBhUUFgFYTFB1b2N8TVVTQHBfZW5Oiz1SU0YiRjFbLx83IkdDQUhRATcCDk87T1pTTD1REgISVzNFWFRIOkw2Dj8vODQVMCs4NEoMHy8kKzg5Kzg5AAACACz/9AH6Am4AHAAqAAA3NRYWMzI2NwYGIyImJjU0NjYzMhYWFRQGBiMiJgEmJiMiBgYVFBYWMzI2cxQ8JlxpAhtgPklaKDdiQEluPkZ4TCdBASkGV04lQyoZPjU3XBA/CxOCeCIyN1k0Ql4zQ4hqbJFIEgFsU2sdQDUkQCgzAAIASv/4AL4B2QALABcAADcUBiMiJjU0NjMyFhEUBiMiJjU0NjMyFr4iGBgiIhgYIiIYGCIiGBgiMBkfIBgZICEBWRkfHxkZHyAAAgBI/4oAwAHZAAsAHAAAExQGIyImNTQ2MzIWAyc2NjUmJjU0NjMyFhUUBga/IhgYIiIYGCJSJBEhEyAgGyIbGiYBoRkfHxkZHyD90Q0TNBsBHhkYICgVIz0xAAACACf/+AF/Am4AFQAhAAA3Iz4CNTQjIgYHNTY2MzIWFhUUBgYHFAYjIiY1NDYzMhbgRyZHLm4vUx0aVzkxTy40SRAiGBgjIxgYItciUVcsZBYOPA4XIEU2NFtOxhkfIBgZICEAAgAQAAACeAJiAAcADQAAISMnIQcjATMTJycjBwcCeFBB/rpBUAEKVF5UMwIzVJaWAmL+c8eDg8cAAAMATAAAAicCYgAQABsAJwAAISMRMzIWFRQGBxUWFhUUBgYnMzI2NjU0JiYjIzUzMhYXNjY1NCYjIwFH+/xYZCogODU9ZuurJUQsKkEjsrMMGAsbIDBDqgJiR1IwQxUCEU45QEkePg8uLzIuDD4BARY1JjAxAAABADP/9AI4Am4AHAAAJRUGBiMiJiY1NDY2MzIWFxUmJiMiBhUUFhYzMjYCOB5eQ1yUVlaVXkFUHSVSOHKLQXJKPFhoSxAZSo5lZI1MFg5JFhaCelFxOh0AAgBMAAACWgJiAAgAEQAANzMyNjU0JiMjEyMRMzIWFRQGmYp1dHNyjozZ3Y+iokF0gX1u/d8CYpiUm5sAAQBMAAABzwJiAAsAACEhESEVIRUhFSEVIQHP/n0Bg/7KARv+5QE2AmJBykDWAAEATAAAAc8CYgAJAAAlIRUjESEVIRUhAbv+3k0Bg/7KASL5+QJiQegAAAEAM//0Al0CbgAfAAAlNTMRBgYjIiYmNTQ2NjMyFhcVJiYjIgYGFRQWFjMyNgIRTChzRV2VWFqcYkNcHyZdOU54RUF0SjBCT+H+9BQcSo1jZo9LFw9IFRg5cFRSbzkOAAEATAAAAk4CYgALAAAhIxEhESMRMxEhETMCTk7+mk5OAWZOARb+6gJi/vUBCwABAE4AAACcAmIAAwAAMyMRM5xOTgJiAAABABz/9gEdAmIAEAAANxEzERQGIyImJzUWFjMyNjbPTlZTFDISDicaICwYsAGy/kliUwcFQQUIEzUAAQBMAAACCAJiAAoAACEjAREjETMRATMBAghb/utMTAEPWP7pATz+xAJi/u8BEf7mAAABAEwAAAG/AmIABQAAISERMxEhAb/+jU0BJgJi/d8AAAEANwAAAvkCYgAVAAAhIwMnIwcDIwMnIwcDIxMzExczNxMzAvlNHgkCOoxKjDoCCR5NPFmfLAIsn1kBWbCm/p0BY6aw/qcCYv5uiooBkgAAAQBMAAACVAJiABcAACEjAyYmJyMWFhURIxEzExYWFzMmJjURMwJUUO8kQxoCBQFMUO8kQxoCBQFMAUcwXywqVSv+qAJi/rkwXywqVSsBWAACADP/9AK9Am4ADwAfAAAlMjY2NTQmJiMiBgYVFBYWJRQGBiMiJiY1NDY2MzIWFgF4SW8+Pm9JSW8+Pm8BjleUWlqTWFiTWlqUVzU6cFJScDo6cFJScDr8ZI5LS45kZI5LS44AAgBMAAACEQJiAAgAEwAAEzMyNjU0JiMjESMRMzIWFRQGIyOZk0pPTkuTTeBud3dukwEjOkZFOv3eAmJbZGRcAAIAM/9gAr0CbgAcACoAAAUVBgYjJiYnLgI1NDY2MzIWFhUUBgYHFhYXMjYlMjY1NCYjIgYGFRQWFgKnEyIRUHMqWZJWWJNaW5NXRHZLGlY+ECD+4m6Hh25Jbz4+b1VGAwIBRk4CSo1jZI5LS45kVoNQDCouAQOQgXp7gTpwUlFwOgACAEwAAAIpAmIAFAAdAAAhIycmJiMjESMRMzIWFRQGBxUWFhclMzI2NTQmIyMCKVA0DDZAik3ccXVHNSExDv6njE1QUE2MqSow/v0CYlRVQ0wLAgowLY0zQT8sAAEALv/0AdUCbgAsAAA3NRYWMzI2NjU0JiYnLgI1NDYzMhYXFSYmIyIGFRQWFhceAxUUBgYjIiYuJ2E8J0QqLkkqJ1I4dF00VR0jTy9CRytFKB5BOSM7ZD9DZyFCFBwQKygkLyQSES1FNFBIEwxCDhQoMCAtIhMOICs8KjhIIhwAAQAZAAACFQJiAAcAACEjEQc1IRUnAT5O1wH81wIiAUFBAQAAAQBK//QCagJiABUAAAERMxEUBwYGIyImJyY1ETMRFBYzMjYCHU1II2Y/P2UjSU5eZGRfAQwBVv6jlj8gHBwgQJUBXf6qcmRkAAABABIAAAJaAmIACQAAISMDMxMXMzcTMwFeUPxRnjQCNJ5RAmL+fZqaAYMAAAEAFgAAA6QCYgAVAAAhIwMnIwcDIwMzExczNxMzExczNxMzAtVJjiACII5Jz1B9JwIqgUyBKgInfVABoXZ2/l8CYv6GlJQBev6GlJQBegAAAQAUAAACZgJiAAsAACEjAwMjEwMzFzczAwJmV9LSV/3vV8TEV/ABB/75ATkBKfb2/tcAAAEAFAAAAk4CYgALAAAhIzUDMxcXMzc3MwMBWE72UYFJBEmBUfbsAXbIeXnI/ooAAAEALQAAAgACYgAJAAAhITUBBTUhFQElAgD+LQFr/qIBtf6VAXw5AesCQDn+FgEAAAIALP/1AcABzgAMACwAACU1JiYjIgYVFBYzMjYXIycjBgYjIiY1NDY2MzIWFzU0JiMiBgc1NjYzMhYWFQF2GkQgQEU6MDxIXz0IAhNVQUtZM1k3KEgXQj4uUSIgVDU3VzSKSAcLLTItKjJgTSE3SEUzQiENByQ3NhcRPg4VIUxCAAABADD/9AG9Ac4AGwAAJRUGBiMiJiY1NDY2MzIWFxUmJiMiBhUUFhYzMgG9HUUzSnA+PW9KMkcaHUUrUF8rTzZOVT4REj5sRENrPhQOPxIVZE40US8AAAIAMv/0AeoCigAUACMAACEjJyMGBiMiJiY1NDY2MzIWFzMRMwM1JiYjIgYGFRQWFjMyNgHqPQgCFk86Ol85Ml9BOEsWAktLGUcwMUAgKUImNERNJDUyalNGajsuGgEE/gC9ISkvTjE/TyU1AAIAMP/0AesBzgAYAB8AACUVBgYjIiYmNTQ2NjMyFhUUBgchFhYzMjYlISYmIyIGAc4kVC1Rbzk2aUpjbwQD/pQEXlUpTP7UATABTkBIU1xAExU+bEVEaj1wZAsZDEdWGLhQSVYAAAEAFwAAAWEClgAXAAAzIxEjNTM1NDYzMhYXFSYmIyIGFRUzFSO3TFRUVE4XLg8OJBYzMZqYAYk5LVRTCAY8BQgvPio5AAABAEoAAAH8AooAEwAAISMRNCYjIgYHESMRMxE2NjMyFhUB/Ew5NjlRIUxMH14/TlwBE0I7MCP+wwKK/u8fNllZAAACADkAAACnAncAAwAPAAAzIxEzNxQGIyImNTQ2MzIWlkxMERscHBsbHBwbAcKCFhwcFhccHAAC/9//IACwAncAEQAdAAAHNRYWMzI2NREzERQOAiMiJhMUBiMiJjU0NjMyFiEMFg4mH0sFFzEtESXBGxwcGxscHBvWNQIBIyoCGf4UIUE0IAUDHxYcHBYXHBwAAAEASgAAAdACigAKAAAhIycVIxEzETczBwHQWeFMTNJY2uvrAor+ccfLAAEASgAAAJQCigADAAAzIxEzlEpKAooAAAEASAAAAw8BzgAlAAAhIxE0JiMiBgcUFhURIxE0JiMiBgcRIxEzFzM2NjMyFz4CMzIVAw9LKTMwSh4BSykzMEkdTEAIARpWOWwgEjdEJJgBGzw5MCMGDAf+3AEbPDkvI/7CAcJNIzZfGSsbrgAAAQBIAAAB+AHOABQAACEjETQmIyIGBxEjETMXMzY2MzIWFQH4Szc2OVEiTEAIAh5gQE5aARNCOzEk/sUBwk0gOVlZAAACADD/9AIaAc4ADwAfAAAlFAYGIyImJjU0NjYzMhYWBzI2NjU0JiYjIgYGFRQWFgIaPG5LS248PG5LS2489TNLKipLMzNLKipL4kJsQEBsQkNqPz9q9y9RNDRQLi5QNDRRLwAAAgBI/ykCAAHOABcAJQAAFyMRMxczNjYzMhYWFRQGBiMiJicjFhQXERUWFjMyNjU0JiYjIgaUTEIIAiFZMkBVKzNYNj1VGgICARVSNTZOGzwxMUzXAplLKyxDaTtTbDQvJhQmFwFCsSM2V18xTS4yAAIAMv8pAesBzgAXACYAAAUjNTQ2NyMGBiMiJiY1NDY2MzIWFzM3MwM1JiYjIgYGFRQWFjMyNgHrTAECAhVPNjlhOjJfQT5KFgIGQUwZRTIxQCApQyYzRdfKFC0UIjIzalNGaTs1HEX+xrghMC5OMT9QJjQAAQBIAAABZAHLABMAADMjETMXMz4CMzIWFxUmIyIGBgeUTD4LAg8vQSkIGAkWFSc/LxABwm4eNiMCA0oFIDIcAAEAKv/0AXoBzgAnAAA3NRYWMzI1NCYmJy4CNTQ2MzIWFxUmJiMiFRQWFhceAhUUBiMiJiodSyp2GjYqI0ApVFcqRBcXPiZuHTMgJEUuZk4wUxA9DBNAGx4XDg4fMys3QBELOwsTPBkeFQwMIDcuQDwRAAEAF//0AWcCUAAWAAAlFQYGIyImNTUjNTM3MxUzFSMVFBYzMgFnETEjUkVUVRQ1rq4qLjVDPAgLTVL2OY6OOfA7LgAAAQBG//QB5wHCABQAACEjJyMGBiMiJjURMxEUFjMyNjcRMwHnPwgCHFU/TlpLNzQ5TRpLTSI3U1cBJP7mQDY1IQE6AAABABQAAAHUAcIACQAAISMDMxcXMzc3MwEZSrtOXzICMl9OAcLykJDyAAABABgAAALUAcIAGQAAISMDJiYnIwYGBwMjAzMTFzM3EzMTFzM3EzMCOEdeCA0HAgcNCF5HnEpZGwIdXkZeHQIbWUoBGRozGhozGv7nAcL+7GpqART+7GpqARQAAAEAEQAAAeUBwgALAAAhIycHIzcnMxc3MwcB5VWVlVXAtFSKilS1urro2q2t2gABABP/HgHhAcIAFgAAFzcDMxcXMzc3MwMGBiMiJic1FhYzMja0JcZLazMCNWBO7Rg5OBcmDg0hGB0iXV0Bwv+Aj/D91To/CwY9Bg4lAAABACYAAAGiAcIACQAAISE1AQU1IRUBJQGi/oQBFv73AWL+6QEkNAFTATw0/q0BAAACAD4BmgEaAooAAwAHAAATIyczFyMnM343CUmKNwlJAZrw8PAAAAIAQP/4ALQCYgADAA8AADcjAzMTFAYjIiY1NDYzMhaYOw1UECIYGCIiGBgi1wGL/c4YICAYGSAgAAABADgA6QCuAVwACwAAEzIWFRQGIyImNTQ2cxohIRoaISEBXCAZGSEhGRkgAAQAPwAAAtYCYgADAA4AEQAcAAABASMBEyM1IzUTMxUzFSMnNQcnIxEGBic1FjY3MwKF/jk+AcpQN8jLNDw8N4v8OBEyIigzEjACYv2eAmL9nkokAQD5Kyu0tH8BLRcRATICHhoAAAMAPwAAAsQCYgADAA4AJgAAAQEjAQEjEQYGJzUWNjczASE1NjY1NCYjIgYHNTY2MzIWFRQGBgczAmf+OT4Byv6wOBEyIigzEjAB6P71ZGgtLhs4FRA6Ik5BME8vtQJi/Z4CYv6SAS0XEQEyAh4a/Z4rOWo0ICYPCS8HD0UuKkxBHAAEACkAAALWAmgAAwAOABEAOQAAAQEjARMjNSM1EzMVMxUjJzUHJTUWFjMyNjU0Jgc1FjY1NCYjIgYHNTY2MzIWFRQGBxUWFhUUBiMiJgKZ/jk+Aco8N8jLNDw8N4v+URc8ICU6Szc3QCgsGD4VET4hOE0lHCMqT0AmQAJi/Z4CYv2eSiQBAPkrK7S0jTEKDhsnJxoCKgIaKBobDgovCA4sMyIpCwEHLiM6Mw0AAQBBAHEBygH6AAsAACUnByc3JzcXNxcHFwGcl5ctlpYtl5cul5dxl5culpcul5cul5YAAAEAIwESAbYBTwADAAABITUhAbb+bQGTARI9AAABACMBEgLvAU8AAwAAASE1IQLv/TQCzAESPQAAAQBI/5wCGQLGADQAAAUjNS4CJzcWFjMyNjY1NCYmJy4DNTQ2NzUzFRYWFwcmJiMiBhUUFhYXHgMVFAYGBwFRNypRQxQdI2BFI0kyNlIrHkQ7JWtZNzxRHR0jUDZFTS5JJiBLQys1WzhkWgIUHg45GSMPKiglLyMSDR8qOSdKSgRZWgQgFDcXGigwICogEg4gLD4sM0QkBAACABcAAAH3ApUAFwAbAAAzIxEjNTM1NDYzMhYXFSYmIyIGFRUzFSMBIxEzt0xUVIFxLFEdIEYtVVqQjgFATEwBiTkVX18PCz0LDzxGFDn+dwHCAAABABcAAAH3ApUAGQAAISMRJiYjIgYVFTMVIxEjESM1MzU0NjMyFhcB90oQLBpQUpCOTFRUeW4wUyICUgIFPkUUOf53AYk5FV1hCggAAgAy/yoB6gHOAA4AMwAAJTUmJiMiBgYVFBYWMzI2FyMGBiMiJiY1NDY2MzIWFzM3MxEUBgYjIiYnNRYWMzI2NjU0NAGeGEgwMUAfKEImM0YaAhVPOThfOTJeQjhPFAIHQjpoRDRaIyRZMjBHJ4q0IzEvTjE/TyU0GyMzM2pTRmk7NB9H/jdLWykUEUITGRo/ORQoAAIASv/0AgICigATACEAADMjETMRMzY2MzIWFRQGBiMiJicjNxUWFjMyNjU0JiYjIgaIPkwCGlI8YGI0WDg8WBgCBhVSNTZOGzwxMUsCiv7xITJ/aVJsNDMm77MjNlZfMU4uMAACAC3/9AJxAm4AJgAwAAAhIycGBiMiJiY1NDY3JiY1NDYzMhYVIzQmIyIGFRQWFxc2NTMUBgcHJwYGFRQWFjMyAnFXRShnPT1kO0o/GzVbVFdYRTE4MDksGtwrSSQgWMMyOjBDHWNDJikmTDhBWCAaRy86TVhKMTkoJSM5GtZHa0JyLQHAF0MzLDATAAUAL//1AoUCbQADAA8AGwAnADMAADMjATMBIiY1NDYzMhYVFAYnMjY1NCYjIgYVFBYBIiY1NDYzMhYVFAYnMjY1NCYjIgYVFBaZPQHAPP5hQ0dHQ0NHR0MqLS0qKi0tAWxDR0dDQ0dHQyotLSoqLS0CYv7nUz8/U1M/P1MrNzAwNzcwMDf+gVM/P1NTPz9TKzcwMDc3MDA3AAAAAAEAAABZAb0AGQBFAAQAAQAAAAAAAAAAAAAAAAACAAEAAAAAAAAADQApAEUAWQB2AIQAmgCnAM0A4wEMAUsBZgGUAdUB5QIwAnAClQLDAvUDEgNNA3kDlwOuA8MD8wQKBBYEMwRMBFwEhASsBN4E/gU/BW0FrQW/BeQF+gYiBjwGVAZsBq0G2AcOB0EHZAeFB6AHzgfjB+8IJghICHoIsgjsCQwJRQlnCYkJngnMCeMKCgoiCjUKUgpoCpsK3AsyC0wLWgtoC7QL3gwEDE4MgAzGDRMAAQAAAAEAg+tp2gBfDzz1AAED6AAAAADOuSaUAAAAAOZNnaT9kP4pBHsETgAAAAMAAgAAAAAAAAIrAAABCAAAAM0AQgEYADoBGAAUAgoAKADkADcBRgAjAOIANwHSAA0CZAA1AWoAHwIBACwB8QAkAhwAFAINAC4CLgA0AdoAGAImADECLgAsAQgASgEIAEgBtgAnAogAEAJTAEwCaQAzAo0ATAIDAEwB9QBMAp0AMwKaAEwA6gBOAWcAHAIcAEwB2wBMAzAANwKgAEwC8AAzAjsATALwADMCSwBMAgUALgIuABkCtABKAmwAEgO6ABYCegAUAmIAFAIwAC0CBgAsAesAMAI0ADICFwAwAWsAFwJCAEoA4AA5AOr/3wHiAEoA3gBKA1UASAI+AEgCSgAwAjIASAIzADIBegBIAaYAKgGJABcCLwBGAegAFALsABgB9gARAfUAEwHMACYBWAA+APQAQADmADgC9wA/AvcAPwL3ACkCCgBBAdkAIwMSACMCZABIAkEAFwJBABcCMgAyAjQASgKDAC0CtAAvAAEAAARQ/jQAyASh/ZD/egR7AAEAAAAAAAAAAAAAAAAAAABZAAIB5gGQAAUABAKKAlgAAABLAooCWAAAAV4AFAEOAAACAAUDAAAAAgAEgAAAAwAAAAAAAAAAAAAAAENESwAAQAAgIBQDIP84AV4EUAHMAAAAAQAAAAABwgJiACAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABACIAAAAFgAQAAMABgAiACkAOwA/AFoAZwB6ALcA1yAU//8AAAAgACQAKwA/AEEAYQBoALcA1yAT//8AAAAA/9r/1//WAAD/zv+U/3jgPQABABYAGgAAAAAAAAAeAAAAAAAAAAAAAAABAEoASQBSAFgAVwACAAMABAAxAFYAMgAzADQANQBVAAAABwBaAAMAAQQJAAAAsgAAAAMAAQQJAAEABgCyAAMAAQQJAAIADgC4AAMAAQQJAAMAcADGAAMAAQQJAAQAFgE2AAMAAQQJAAUAGgFMAAMAAQQJAAYAFgFmAEMAbwBwAHkAcgBpAGcAaAB0ACAAKABjACkAIAAyADAAMQAzACAAYgB5ACAAQwBoAG8AcgBvAG4AZwAgAEsAaQBtACAAJgAgAEMAYQBkAHMAbwBuACAARABlAG0AYQBrACAAVABlAGEAbQAgAGYAbwByACAAUwBDAEcAIABHAHIAbwB1AHAALgAgAEEAbABsACAAcgBpAGcAaAB0AHMAIAByAGUAcwBlAHIAdgBlAGQALgBTAEMARwBSAGUAZwB1AGwAYQByAEMAaABvAHIAbwBuAGcASwBpAG0AJgBDAGEAZABzAG8AbgBEAGUAbQBhAGsAVABlAGEAbQBmAG8AcgBTAEMARwBHAHIAbwB1AHAAOgAgAFMAQwBHACAAUgBlAGcAdQBsAGEAcgA6ACAAMgAwADEAMwBTAEMARwAgAFIAZQBnAHUAbABhAHIAVgBlAHIAcwBpAG8AbgAgADEALgAwADAAMgBTAEMARwAtAFIAZQBnAHUAbABhAHIAAAADAAAAAAAA/4UAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAKAB4ALAABbGF0bgAIAAQAAAAA//8AAQAAAAFrZXJuAAgAAAABAAAAAQAEAAIAAAACAAoG0gABAHoABAAAADgGkgDeBpwA3gDwASYBNAFCAUwBWgFoAYIBiAGeAcgB3gIMAhICGAJeAnQCvAKGArwC2gMIAxYDgAOKA/gEWgSoBNoFhgTgBPIFhgU0BT4FTAWGBYYGqgaqBZgFngXQBd4GgAYEBkYGgAaSBpwGnAaqAAIAEAACAAIAAAAGAAoAAQAMAA4ABgAQABEACQATABMACwAXABgADAAaABoADgAcAB0ADwAgACMAEQAlADEAFQA0ADkAIgA7AEIAKABEAEcAMABJAEkANABQAFEANQBWAFYANwAEACr/pgAs/5sALf+dAEX/3gANABf/pgAZ//UAHf/1ACX/9QAn//UAMf/PADL/zwAz/88ANP/PAD3/zwA//88AQf/1AFX/zwADAAz/+gAN//MAEf/vAAMACv/6AAwACQAOAAsAAgAM//MADgALAAMAC//1AA4AEAASAAsAAwAN//MADgAEABP/9wAGAAsACwAMAAsADQALAA7/4wARABYAEwAGAAEADgAGAAUAKv+yACz/pgAt/6kARf/eAEYACwAKACr/7gAs//UALf/wAC7/2AAv/88ARP/qAEX/7gBG/+QAR//qAEj/+gAFACD/3gAq//MALP/hAC3/4wAu/9MACwAX/8wAIP+dACwACwAtABEALwALADL/9QAz//UANP/1AD3/9QA///UAVf/1AAEAL//1AAEAF//1ABEAFwALABn/yAAd/8gAJf/IACf/yAAr/+4ALP/qAC3/9QAy/+UAM//lADT/5QA9/+UAP//lAET/wQBF/8gAR//BAFX/5QAFACr/pgAs/6YALf+vAEL/6gBF/8oABAAs//AALf/zAC//7AAwAAsADQAG/70ACP+9AAn/wQAX/6wALv/PAC//9QAx/+oAMv/1ADP/9QA0//UAPf/1AD//9QBV//UABwAJ//UAIP/eACr/8wAs/+EALf/jAC7/0wBG//UACwAXAAsAGf/1AB3/9QAl//UAJ//1ACr/9QAs/+QALf/qAC//3gBE/+oAR//qAAMALP/vAC3/9QBF/+UAGgAG/6YAB//qAAj/pgAJ/8gAF/+yABn/8wAd//MAIP+dACX/8wAn//MAKgAWADH/2AAy/70AM/+9ADT/vQA7/9wAPP/cAD3/vQA+/9wAP/+9AED/3ABB/9gAQv/cAFD/6gBR/+oAVf+9AAIAIP/uAC7/8AAbAAb/mwAI/5sACf+mABf/pgAZ/+EAHf/hACD/ygAj//AAJf/hACf/4QAsABYALQANAC8AFgAx/8wAMv/IADP/yAA0/8gAO//sADz/7AA9/8gAPv/sAD//yABA/+wAQf/1AEL/7ABG//MAVf/IABgABv+dAAj/nQAJ/70AF/+pABn/4wAd/+MAIP/YACP/8wAl/+MAJ//jACwADQAtAAsALwAWADL/ygAz/8oANP/KADv/7gA8/+4APf/KAD7/7gA//8oAQP/uAEL/7gBV/8oAEwAH/+8AGf/TAB3/0wAl/9MAJ//TACv/8AAuAAsAMv/YADP/2AA0/9gAPf/YAD//2ABD//UARP/EAEX/zgBH/8QAUP/vAFH/7wBV/9gADAAJ/7IAIP+pACP/7AAsABYALQAWADv/wQA8/8EAPv/BAED/wQBC/8EARf/vAEb/5AABACMACwAEABf/9QBE//kARv/uAEf/+QAQAAb/xgAHAAsACP/GAAn/6gAqACIAMv/qADP/9QA0/+oANQAQAD3/6gA///UAUAALAFEACwBTABAAVAAQAFX/9QACAAIAFgBJABYAAwACABYAOAAWAEkAFgAOAAf/9QAZ/+8AHf/vACX/7wAn/+8AMv/qADP/6gA0/+oAPf/qAD//6gBD/+oAUP/1AFH/9QBV/+oABAAq/8QALP/lAC3/5wBF//gAAQA4ABYADAAG/88ACP/PABf/4wAg/8EAMf/uADL/9QAz//oANP/1AD3/9QA///oAQgALAFX/+gADACz/9QBF//UARv/wAAkABwALACz/6gAy//UANP/1AD3/9QBBAAsAQgAGAFAACwBRAAsAEAAG/94ACP/eAAn/6gAX/94AIP/eAC7/zgAv/+8AMf/1ADL/9QAz//UANP/1AD3/9QA///UARAAGAEcABgBV//UADgAXAAsAGf/1AB3/9QAl//UAJ//1ACz/8wAv/+QAMv/zADP/8wA0//MAPf/zAD//8wBD//kAVf/zAAQACf/eACD/0wAu/8QARQAGAAIANwAWADgAFgADACr/6gAu/+8AQgAWAAcAIP/wACr/vQAs/8gALf/KAC7/zABF//UARv/zAAICuAAEAAAC+AOYABQAEQAA/9MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/5f/0wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/qAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB3/m//PAAD/0//e//r/7//s/+oACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/7gAAAAAAAAAAAAD/3gAAAAAAAAAAAAD/0//MAAAAAAAA//UAAAAAAAAAAAAAAAD/6gAAAAAAAAAAAAAAAAAAAAAAAP/1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAW/5v/yAAA/73/6v/l//P/8wAAAAD/3gAAAAAAAAAAAAD/3v/MAAAAAAAA//UAAAAAAAAAAAAAAAD/9QAAAAAAAAAAAAAAAP/jAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/mwAW/+oAAAAA/8wAAP+y/7L/9f/1/+oAAP+XAAAAAAAAAAAAAAAAAAAAAP/qAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/7T/9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/z//UAAAAAAAAAAAAA//UAAAAA/+//sv/zAAAAAAAAAAD/8//zAAD/+gAAAAAAAAAAAAAAAP/q/7L/8wAAAAAAAAAA//P/8wAA//oAAAAAAAAAAAAAAAAAAAAA/+4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/8//6gALAAAAAAAAAAD/8//zAAAAAAAAAAD/0//v//wAAAAL//UAAAAAAAAAAAAA//r/+gAAAAAAAAAAAAAAAAAAAAEAHgACAAYABwAIABcAGQAaABsAIgAlACcAKQArAC8AMAAxADIANgA7ADwAPQA+AEEARABHAEgASQBQAFEAVgACABoABgAGAAEABwAHAAIACAAIAAEAFwAXAAMAGQAZAAQAGgAaAAUAGwAbAAYAIgAiAAcAJQAlAAgAJwAnAAgAKQApAAkAKwArAAoALwAvAAsAMAAwAAwAMQAxAA0AMgAyAA4ANgA2AA0AOwA8AA0APQA9AA8APgA+ABAAQQBBABEARABEABIARwBHABIASABIABMAUABRAAIAVgBWABAAAgAcAAIAAgAFAAYABgAOAAcABwAMAAgACAAOABcAFwABABkAGQAGAB0AHQAGACUAJQAGACcAJwAGACsAKwAHAC8ALwACADAAMAANADEAMQAPADIAMgAIADMAMwAJADQANAAIADUANQAEAD0APQAIAD8APwAJAEEAQQAQAEMAQwAKAEQARAADAEcARwADAEgASAALAEkASQAFAFAAUQAMAFMAVAAEAFUAVQAJAAAAAQAAAAoANABaAAJsYXRuAA50aGFpABwABAAAAAD//wACAAAAAgAEAAAAAP//AAIAAQACAANmcmFjABRmcmFjABpsaWdhACAAAAABAAAAAAABAAEAAAABAAIAAwAIAAgARAAEAAAAAQAIAAEALAACAAoAIAACAAYADgBNAAMACQAMAEwAAwAJAA4AAQAEAE4AAwAJAA4AAQACAAsADQAEAAAAAQAIAAEAGgABAAgAAgAGAAwAUwACADcAVAACADoAAQABADUAAA==";
+const FONT_BOLD_B64="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AGwAZAA6ACAAMgAwADEAMwBTAEMARwAgAEIAbwBsAGQAVgBlAHIAcwBpAG8AbgAgADEALgAwADAAMgBTAEMARwAtAEIAbwBsAGQAAAADAAAAAAAA/4UAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAKAB4ALAABbGF0bgAIAAQAAAAA//8AAQAAAAFrZXJuAAgAAAABAAAAAQAEAAIAAAACAAoG0gABAHoABAAAADgGkgDeBpwA3gDwASYBNAFCAUwBWgFoAYIBiAGeAcgB3gIMAhICGAJeAnQCvAKGArwC2gMIAxYDgAOKA/gEWgSoBNoFhgTgBPIFhgU0BT4FTAWGBYYGqgaqBZgFngXQBd4GgAYEBkYGgAaSBpwGnAaqAAIAEAACAAIAAAAGAAoAAQAMAA4ABgAQABEACQATABMACwAXABgADAAaABoADgAcAB0ADwAgACMAEQAlADEAFQA0ADkAIgA7AEIAKABEAEcAMABJAEkANABQAFEANQBWAFYANwAEACr/sAAs/6YALf+oAEX/4gANABf/sAAZ//YAHf/2ACX/9gAn//YAMf/UADL/1AAz/9QANP/UAD3/1AA//9QAQf/2AFX/1AADAAz/+wAN//QAEf/xAAMACv/7AAwACAAOAAoAAgAM//QADgAKAAMAC//2AA4ADgASAAoAAwAN//QADgAEABP/+AAGAAsACgAMAAoADQAKAA7/5gARABQAEwAFAAEADgAFAAUAKv+6ACz/sAAt/7IARf/iAEYACgAKACr/8AAs//YALf/yAC7/3AAv/9QARP/sAEX/8ABG/+cAR//sAEj/+wAFACD/4gAq//QALP/kAC3/5gAu/9gACwAX/9IAIP+oACwACgAtAA8ALwAKADL/9gAz//YANP/2AD3/9gA///YAVf/2AAEAL//2AAEAF//2ABEAFwAKABn/zgAd/84AJf/OACf/zgAr//AALP/sAC3/9gAy/+gAM//oADT/6AA9/+gAP//oAET/yABF/84AR//IAFX/6AAFACr/sAAs/7AALf+4AEL/7ABF/9AABAAs//IALf/0AC//7gAwAAoADQAG/8QACP/EAAn/yAAX/7UALv/UAC//9gAx/+wAMv/2ADP/9gA0//YAPf/2AD//9gBV//YABwAJ//YAIP/iACr/9AAs/+QALf/mAC7/2ABG//YACwAXAAoAGf/2AB3/9gAl//YAJ//2ACr/9gAs/+cALf/sAC//4gBE/+wAR//sAAMALP/xAC3/9gBF/+gAGgAG/7AAB//sAAj/sAAJ/84AF/+6ABn/9AAd//QAIP+oACX/9AAn//QAKgAUADH/3AAy/8QAM//EADT/xAA7/+AAPP/gAD3/xAA+/+AAP//EAED/4ABB/9wAQv/gAFD/7ABR/+wAVf/EAAIAIP/wAC7/8gAbAAb/pgAI/6YACf+wABf/sAAZ/+QAHf/kACD/0AAj//IAJf/kACf/5AAsABQALQAMAC8AFAAx/9IAMv/OADP/zgA0/84AO//uADz/7gA9/84APv/uAD//zgBA/+4AQf/2AEL/7gBG//QAVf/OABgABv+oAAj/qAAJ/8QAF/+yABn/5gAd/+YAIP/cACP/9AAl/+YAJ//mACwADAAtAAoALwAUADL/0AAz/9AANP/QADv/8AA8//AAPf/QAD7/8AA//9AAQP/wAEL/8ABV/9AAEwAH//EAGf/YAB3/2AAl/9gAJ//YACv/8gAuAAoAMv/cADP/3AA0/9wAPf/cAD//3ABD//YARP/KAEX/0wBH/8oAUP/xAFH/8QBV/9wADAAJ/7oAIP+yACP/7gAsABQALQAUADv/yAA8/8gAPv/IAED/yABC/8gARf/xAEb/5wABACMACgAEABf/9gBE//oARv/wAEf/+gAQAAb/zAAHAAoACP/MAAn/7AAqAB4AMv/sADP/9gA0/+wANQAOAD3/7AA///YAUAAKAFEACgBTAA4AVAAOAFX/9gACAAIAFABJABQAAwACABQAOAAUAEkAFAAOAAf/9gAZ//EAHf/xACX/8QAn//EAMv/sADP/7AA0/+wAPf/sAD//7ABD/+wAUP/2AFH/9gBV/+wABAAq/8oALP/oAC3/6gBF//kAAQA4ABQADAAG/9QACP/UABf/5gAg/8gAMf/wADL/9gAz//sANP/2AD3/9gA///sAQgAKAFX/+wADACz/9gBF//YARv/yAAkABwAKACz/7AAy//YANP/2AD3/9gBBAAoAQgAFAFAACgBRAAoAEAAG/+IACP/iAAn/7AAX/+IAIP/iAC7/0wAv//EAMf/2ADL/9gAz//YANP/2AD3/9gA///YARAAFAEcABQBV//YADgAXAAoAGf/2AB3/9gAl//YAJ//2ACz/9AAv/+cAMv/0ADP/9AA0//QAPf/0AD//9ABD//oAVf/0AAQACf/iACD/2AAu/8oARQAFAAIANwAUADgAFAADACr/7AAu//EAQgAUAAcAIP/yACr/xAAs/84ALf/QAC7/0gBF//YARv/0AAICuAAEAAAC+AOYABQAEQAA/9gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/6L/2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/sAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABr/pv/UAAD/2P/i//v/8f/u/+wACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/8AAAAAAAAAAAAAD/4gAAAAAAAAAAAAD/2P/SAAAAAAAA//YAAAAAAAAAAAAAAAD/7AAAAAAAAAAAAAAAAAAAAAAAAP/2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU/6b/zgAA/8T/7P/o//T/9AAAAAD/4gAAAAAAAAAAAAD/4v/SAAAAAAAA//YAAAAAAAAAAAAAAAD/9gAAAAAAAAAAAAAAAP/mAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/pgAU/+wAAAAA/9IAAP+6/7r/9v/2/+wAAP+iAAAAAAAAAAAAAAAAAAAAAP/sAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/7z/9gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/0//YAAAAAAAAAAAAA//YAAAAA//H/uv/0AAAAAAAAAAD/9P/0AAD/+wAAAAAAAAAAAAAAAP/s/7r/9AAAAAAAAAAA//T/9AAA//sAAAAAAAAAAAAAAAAAAAAA//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/9T/7AAKAAAAAAAAAAD/9P/0AAAAAAAAAAD/2P/x//wAAAAK//YAAAAAAAAAAAAA//v/+wAAAAAAAAAAAAAAAAAAAAEAHgACAAYABwAIABcAGQAaABsAIgAlACcAKQArAC8AMAAxADIANgA7ADwAPQA+AEEARABHAEgASQBQAFEAVgACABoABgAGAAEABwAHAAIACAAIAAEAFwAXAAMAGQAZAAQAGgAaAAUAGwAbAAYAIgAiAAcAJQAlAAgAJwAnAAgAKQApAAkAKwArAAoALwAvAAsAMAAwAAwAMQAxAA0AMgAyAA4ANgA2AA0AOwA8AA0APQA9AA8APgA+ABAAQQBBABEARABEABIARwBHABIASABIABMAUABRAAIAVgBWABAAAgAcAAIAAgAFAAYABgAOAAcABwAMAAgACAAOABcAFwABABkAGQAGAB0AHQAGACUAJQAGACcAJwAGACsAKwAHAC8ALwACADAAMAANADEAMQAPADIAMgAIADMAMwAJADQANAAIADUANQAEAD0APQAIAD8APwAJAEEAQQAQAEMAQwAKAEQARAADAEcARwADAEgASAALAEkASQAFAFAAUQAMAFMAVAAEAFUAVQAJAAAAAQAAAAoANABaAAJsYXRuAA50aGFpABwABAAAAAD//wACAAAAAgAEAAAAAP//AAIAAQACAANmcmFjABRmcmFjABpsaWdhACAAAAABAAAAAAABAAEAAAABAAIAAwAIAAgARAAEAAAAAQAIAAEALAACAAoAIAACAAYADgBNAAMACQAMAEwAAwAJAA4AAQAEAE4AAwAJAA4AAQACAAsADQAEAAAAAQAIAAEAGgABAAgAAgAGAAwAUwACADcAVAACADoAAQABADUAAA==";
+const PDF_FONT="SCG"; // embedded SCG typeface
+
+function offscreenChart(group){
+  return new Promise((resolve)=>{
+    const cv=document.createElement('canvas');
+    cv.width=1400; cv.height=560;
+    cv.style.position='fixed'; cv.style.left='-9999px'; document.body.appendChild(cv);
+    const col=GROUPS[group].color;
+    const ch=new Chart(cv.getContext('2d'),{
+      type:'line',
+      data:{labels:L, datasets:[{label:group+' average', data:DATA.groupavg[group],
+        borderColor:col, backgroundColor:col+'22', borderWidth:3, pointRadius:0, tension:.32, fill:true, spanGaps:true}]},
+      options:{responsive:false, animation:false, devicePixelRatio:2,
+        plugins:{legend:{labels:{color:'#234',font:{size:20}}}},
+        scales:{x:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#567',font:{size:15},maxTicksLimit:12}},
+          y:{grid:{color:'rgba(0,0,0,.08)'},ticks:{color:'#567',font:{size:15},callback:v=>v+'k'}}}}
+    });
+    setTimeout(()=>{ const url=cv.toDataURL('image/png',1.0); ch.destroy(); cv.remove(); resolve(url); }, 60);
+  });
+}
+
+async function buildPDF(){
+  const btn=document.getElementById('pdfBtn'); btn.disabled=true; const lbl=btn.innerHTML; btn.innerHTML='Building&hellip;';
+  try{
+    const { jsPDF }=window.jspdf;
+    const doc=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+    // register embedded font
+    doc.addFileToVFS('SCG-Regular.ttf',FONT_REG_B64);
+    doc.addFont('SCG-Regular.ttf',PDF_FONT,'normal');
+    doc.addFileToVFS('SCG-Bold.ttf',FONT_BOLD_B64);
+    doc.addFont('SCG-Bold.ttf',PDF_FONT,'bold');
+    const F=(w)=>doc.setFont(PDF_FONT,w||'normal');
+
+    const W=210,H=297,M=14;
+    const INK=[20,40,52], DIM=[90,110,120], FAINT=[140,160,168];
+    const CORAL=[255,91,110], GREEN=[46,180,130], RED=[230,70,90];
+    const COLW={PP:[255,126,138],PE:[60,160,200],PVC:[210,168,40]};
+
+    // draw a small up/down/flat triangle as vector (no glyph dependency)
+    function arrow(dir,cx,cy,c){ // dir: 1 up, -1 down, 0 flat
+      doc.setFillColor(c[0],c[1],c[2]); const s=1.15;
+      if(dir>0) doc.triangle(cx-s,cy+s, cx+s,cy+s, cx,cy-s,'F');
+      else if(dir<0) doc.triangle(cx-s,cy-s, cx+s,cy-s, cx,cy+s,'F');
+      else doc.circle(cx,cy,0.7,'F');
+    }
+    // right-aligned "arrow + number" combo, kept inside cell. returns nothing.
+    function chgCell(v, suffix, rightX, baseY, dimIfZero){
+      if(v==null){ doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]); F('normal'); doc.text('-',rightX,baseY,{align:'right'}); return; }
+      const up=v>0,dn=v<0; const c=up?GREEN:(dn?RED:FAINT);
+      const txt=Math.abs(v).toLocaleString(undefined,{minimumFractionDigits:(suffix==='%'?2:0),maximumFractionDigits:(suffix==='%'?2:0)})+(suffix||'');
+      F('normal'); doc.setTextColor(c[0],c[1],c[2]); doc.setFontSize(7.4);
+      doc.text(txt,rightX,baseY,{align:'right'});
+      const tw=doc.getTextWidth(txt);
+      arrow(up?1:(dn?-1:0), rightX-tw-2.4, baseY-1.1, c);
+    }
+
+    function header(title,sub){
+      doc.setFillColor(13,39,51); doc.rect(0,0,W,26,'F');
+      F('bold'); doc.setFontSize(16); doc.setTextColor(255,255,255);
+      doc.text('Vietnam Resin Market Report',M,16);
+      F('normal'); doc.setFontSize(9); doc.setTextColor(180,205,212);
+      doc.text('JUN 9, 2026',W-M,12,{align:'right'});
+      doc.setFontSize(7.5); doc.setTextColor(150,175,185); doc.text('PE / PP / PVC  DAILY PRICES',W-M,17,{align:'right'});
+      F('bold'); doc.setFontSize(12); doc.setTextColor(INK[0],INK[1],INK[2]); doc.text(title,M,36);
+      if(sub){F('normal');doc.setFontSize(8.5);doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]);doc.text(sub,M,41);}
+    }
+    function footer(n){
+      doc.setDrawColor(225); doc.setLineWidth(.2); doc.line(M,H-12,W-M,H-12);
+      F('normal'); doc.setFontSize(7.5); doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]);
+      doc.text('Vietnam Resin Report - Jun 9, 2026',M,H-7);
+      doc.text('Page '+n+' / 4',W-M,H-7,{align:'right'});
+      doc.text('Prices: VND/kg incl. VAT  |  Regional: USD/ton',W/2,H-7,{align:'center'});
+    }
+
+    /* ---------- PAGE 1 ---------- */
+    header('Market Overview','Daily assessment of Vietnam PE / PP / PVC resin prices');
+    let y=48;
+    const OV=[{g:'PP',sub:'Sharpest drop',col:COLW.PP},{g:'PE',sub:'Still sliding',col:COLW.PE},{g:'PVC',sub:'Imports cut, domestic flat',col:COLW.PVC}];
+    OV.forEach(o=>{
+      const r=REPORTS[o.g];
+      doc.setFillColor(o.col[0],o.col[1],o.col[2]); doc.circle(M+1.5,y-1.4,1.4,'F');
+      F('bold'); doc.setFontSize(11); doc.setTextColor(o.col[0],o.col[1],o.col[2]);
+      doc.text(o.g,M+5,y); const gw=doc.getTextWidth(o.g);
+      F('normal'); doc.setFontSize(9); doc.setTextColor(DIM[0],DIM[1],DIM[2]);
+      doc.text('- '+o.sub,M+5+gw+1.5,y);
+      y+=5.5; doc.setFontSize(8.7); doc.setTextColor(70,90,100);
+      r.summary.forEach(b=>{
+        const lines=doc.splitTextToSize(b,W-2*M-6);
+        doc.setFillColor(o.col[0],o.col[1],o.col[2]); doc.circle(M+3,y-1.1,.7,'F');
+        doc.text(lines,M+6,y); y+=lines.length*4.3+1.4;
+      });
+      y+=3.5;
+    });
+    y+=1; F('bold'); doc.setFontSize(10.5); doc.setTextColor(INK[0],INK[1],INK[2]);
+    doc.text('Domestic Average - VND/kg',M,y); y+=5;
+    const cardW=(W-2*M-2*6)/3, cardH=24;
+    [['PP',S.PP],['PE',S.PE],['PVC',S.PVC]].forEach((it,i)=>{
+      const x=M+i*(cardW+6);
+      doc.setFillColor(244,248,250); doc.setDrawColor(225); doc.roundedRect(x,y,cardW,cardH,2,2,'FD');
+      F('bold'); doc.setFontSize(7.5); doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]); doc.text(it[0]+' AVG PRICE',x+4,y+6);
+      F('bold'); doc.setFontSize(15); doc.setTextColor(INK[0],INK[1],INK[2]); doc.text(it[1].avg.toLocaleString('en-US'),x+4,y+14);
+      chgCell(it[1].delta,null,x+cardW-4,y+20);
+      F('normal'); doc.setFontSize(7); doc.setTextColor(DIM[0],DIM[1],DIM[2]); doc.text('vs last',x+4,y+20);
+    });
+    y+=cardH+5;
+    const halfW=(W-2*M-6)/2;
+    doc.setFillColor(244,248,250); doc.setDrawColor(225); doc.roundedRect(M,y,halfW,20,2,2,'FD');
+    F('bold');doc.setFontSize(7.5);doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]);doc.text('PRODUCTS CHANGED',M+4,y+6);
+    F('bold');doc.setFontSize(13);doc.setTextColor(INK[0],INK[1],INK[2]);doc.text(S.changed+' / '+S.total,M+4,y+13);
+    F('normal');doc.setFontSize(8);doc.setTextColor(DIM[0],DIM[1],DIM[2]);doc.text('All moved down, mainly PP',M+4,y+18);
+    const x2=M+halfW+6;
+    doc.setFillColor(244,248,250); doc.roundedRect(x2,y,halfW,20,2,2,'FD');
+    F('bold');doc.setFontSize(7.5);doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]);doc.text('LARGEST DROP',x2+4,y+6);
+    F('bold');doc.setFontSize(13);doc.setTextColor(RED[0],RED[1],RED[2]);
+    doc.text(Math.abs(S.largest).toLocaleString(),x2+4+4,y+13); arrow(-1,x2+4+1.4,y+13-1.3,RED);
+    F('normal');doc.setFontSize(7.3);doc.setTextColor(DIM[0],DIM[1],DIM[2]);
+    doc.text(doc.splitTextToSize(S.largest_items,halfW-8),x2+4,y+18);
+    y+=26;
+    F('bold'); doc.setFontSize(10.5); doc.setTextColor(INK[0],INK[1],INK[2]); doc.text('Regional References - $/ton',M,y); y+=5;
+    const REG=[['SEA - HD Film/Yarn','1,310-1,320',-30],['SEA - LL Film','1,270',-30],['SEA - LL C6','1,420',-30],['SEA - LD Film','1,520',-30],
+      ['SEA - PP Yarn/Inj','1,240',-30],['SEA - PP BOPP','1,270',-20],['Formosa PVC to VN','810-820',-120],['Cheapest oil PVC to VN','720',-90]];
+    const rcW=(W-2*M-3*5)/4, rcH=18;
+    REG.forEach((r,i)=>{ const cx=M+(i%4)*(rcW+5), cy=y+Math.floor(i/4)*(rcH+5);
+      doc.setFillColor(247,250,251); doc.setDrawColor(228); doc.roundedRect(cx,cy,rcW,rcH,2,2,'FD');
+      F('bold');doc.setFontSize(6.6);doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]);
+      doc.text(doc.splitTextToSize(r[0].toUpperCase(),rcW-4),cx+3,cy+5);
+      F('bold');doc.setFontSize(11);doc.setTextColor(INK[0],INK[1],INK[2]);doc.text(r[1],cx+3,cy+12);
+      chgCell(r[2],null,cx+rcW-3,cy+16);
+    });
+    footer(1);
+
+    /* ---------- PAGES 2-4 ---------- */
+    const order=['PP','PE','PVC'];
+    for(let pi=0; pi<order.length; pi++){
+      const g=order[pi];
+      doc.addPage();
+      header(g+' - Price Chart & Product Table', DATA.products[g].length+' grades  -  '+L[0]+' to '+L[L.length-1]);
+      let yy=46;
+      const img=await offscreenChart(g);
+      const imgW=W-2*M, imgH=imgW*(560/1400);
+      doc.addImage(img,'PNG',M,yy,imgW,imgH); yy+=imgH+6;
+      const rows=DATA.meta[g].map(m=>{
+        const s=m.series; const nn=s.map((v,i)=>[v,i]).filter(p=>p[0]!=null);
+        const latest=nn.length?nn[nn.length-1][0]:null;
+        const prev=nn.length>=2?nn[nn.length-2][0]:null;
+        const chg=(latest!=null&&prev!=null)?Math.round((latest-prev)*1000):0;
+        const pct=(l,b)=>(l==null||b==null||b===0)?null:Math.round((l-b)/b*10000)/100;
+        return {p:m.p, v:latest, c:chg, vsl:pct(latest,s[L.length-2]),
+          pw:pct(latest,m.pwBase), ytd:pct(latest,m.ytdBase), yoy:pct(latest,m.yoyBase)};
+      });
+      // columns: name(l) then 6 right-aligned numeric. widths sum to content width (182)
+      const cw=[54,22,22,26,22,20,16];  // = 182
+      const heads=['Grade','Price','Chg','vs Jun 8','Pre-war','YTD','YOY'];
+      const aligns=['l','r','r','r','r','r','r'];
+      const totalW=cw.reduce((a,b)=>a+b,0); const x0=M; const rowH=6.1;
+      // x positions: left edge of each column
+      const xL=[]; let acc=x0; cw.forEach(w=>{xL.push(acc);acc+=w;});
+      // header band
+      doc.setFillColor(13,39,51); doc.rect(x0,yy,totalW,7,'F');
+      F('bold'); doc.setFontSize(7.6); doc.setTextColor(255,255,255);
+      heads.forEach((h,i)=>{ const tx=aligns[i]==='l'?xL[i]+2:xL[i]+cw[i]-2; doc.text(h,tx,yy+4.7,{align:aligns[i]==='l'?'left':'right'}); });
+      yy+=7;
+      rows.forEach((r,idx)=>{
+        if(idx%2===0){doc.setFillColor(247,250,251);doc.rect(x0,yy,totalW,rowH,'F');}
+        const by=yy+4.1;
+        // grade (clip to fit)
+        F('normal'); doc.setFontSize(7.4); doc.setTextColor(INK[0],INK[1],INK[2]);
+        let nm=r.p; while(doc.getTextWidth(nm)>cw[0]-3 && nm.length>4){ nm=nm.slice(0,-1); }
+        if(nm!==r.p) nm=nm.slice(0,-1)+'.';
+        doc.text(nm,xL[0]+2,by);
+        // price (ink, right)
+        doc.setTextColor(INK[0],INK[1],INK[2]); F('normal'); doc.setFontSize(7.4);
+        doc.text(r.v!=null?Math.round(r.v*1000).toLocaleString('en-US'):'-',xL[1]+cw[1]-2,by,{align:'right'});
+        // change abs (zero shows clean dash)
+        chgCell(r.c===0?null:r.c,null,xL[2]+cw[2]-2,by);
+        // pct columns
+        chgCell(r.vsl,'%',xL[3]+cw[3]-2,by);
+        chgCell(r.pw,'%',xL[4]+cw[4]-2,by);
+        chgCell(r.ytd,'%',xL[5]+cw[5]-2,by);
+        chgCell(r.yoy,'%',xL[6]+cw[6]-2,by);
+        yy+=rowH;
+      });
+      doc.setDrawColor(225); doc.setLineWidth(.2); doc.rect(x0,yy-rows.length*rowH-7,totalW,rows.length*rowH+7);
+      footer(pi+2);
+    }
+    doc.save('Vietnam_Resin_Report_Jun9_2026.pdf');
+  }catch(err){ console.error(err); alert('PDF generation failed: '+err.message); }
+  finally{ btn.disabled=false; btn.innerHTML=lbl; }
+}
+document.getElementById('pdfBtn').onclick=buildPDF;
+
+
+
+updRangeLabels(); updCmpHead(); buildChart(); renderTable();
+document.querySelector('thead th[data-k="v"] .ar').innerHTML='&#9660;';
+</script>
+</body>
+</html>
