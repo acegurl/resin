@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Setup Guide — Vietnam Plastic Resin Market dashboard</title>
+<style>
+  body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;max-width:820px;margin:0 auto;padding:40px 22px;line-height:1.65;color:#16323e;background:#f4f8fa}
+  h1{font-size:28px;letter-spacing:-.5px} h1 span{color:#e0455c}
+  h2{margin-top:34px;font-size:19px;border-bottom:2px solid #e6eef1;padding-bottom:6px}
+  h3{margin-top:22px;font-size:15px;color:#0d4a5e}
+  code{background:#e6eef1;padding:2px 6px;border-radius:5px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+  .file{background:#fff;border:1px solid #dde7ea;border-radius:10px;padding:14px 16px;margin:10px 0}
+  .file b{color:#0d4a5e}
+  ol,ul{padding-left:22px} li{margin:7px 0}
+  .note{background:#fff7e6;border:1px solid #ffe2a8;border-radius:10px;padding:12px 16px;font-size:14px;margin:14px 0}
+  .warn{background:#ffeef0;border:1px solid #ffc9d1;border-radius:10px;padding:12px 16px;font-size:14px;margin:14px 0}
+  .step{background:#fff;border:1px solid #dde7ea;border-radius:10px;padding:16px 18px;margin:12px 0}
+  kbd{background:#16323e;color:#fff;border-radius:4px;padding:1px 7px;font-size:12px}
+</style></head><body>
+
+<h1>Vietnam Plastic Resin Market <span>— setup &amp; weekly update guide</span></h1>
+<p>This dashboard now reads its numbers from a separate <code>data.json</code> file. You host the page once; each week you only replace <code>data.json</code>. Everyone who has the link sees the new data on refresh — you never send a file again.</p>
+
+<h2>What's in this folder</h2>
+<div class="file"><b>index.html</b> — the dashboard. Host it once; it almost never changes.</div>
+<div class="file"><b>data.json</b> — this week's data. This is the only file you replace each week.</div>
+<div class="file"><b>converter.html</b> — your weekly tool. Open it in any browser, drag your Excel in, and it makes a fresh <code>data.json</code>. Nothing is installed or uploaded; it all runs locally in your browser.</div>
+<div class="file"><b>README.html</b> — this guide.</div>
+
+<div class="warn"><b>Important:</b> the dashboard must be opened over <code>http://</code> or <code>https://</code> (i.e. from a host), <u>not</u> by double-clicking <code>index.html</code> from your desktop. Browsers block <code>data.json</code> loading from <code>file://</code> paths for security. That's exactly why we host it.</div>
+
+<h2>Part 1 — Host it once (GitHub Pages)</h2>
+<div class="step"><ol>
+  <li>Create a free account at <code>github.com</code> if you don't have one.</li>
+  <li>Click <kbd>+</kbd> (top-right) → <b>New repository</b>. Name it e.g. <code>resin-dashboard</code>. Tick <b>Add a README file</b>, then <b>Create repository</b>.</li>
+  <li>In the repo: <b>Add file</b> → <b>Upload files</b>. Drag in <b>index.html</b> and <b>data.json</b> (and optionally converter.html). Commit.</li>
+  <li>Go to <b>Settings</b> → <b>Pages</b> → under <b>Source</b> pick <b>Deploy from a branch</b>, branch <b>main</b>, folder <b>/ (root)</b>, <b>Save</b>.</li>
+  <li>Wait ~1 minute. You'll get a link like <code>https://YOURNAME.github.io/resin-dashboard/</code>. That's your permanent dashboard URL.</li>
+</ol></div>
+<div class="warn"><b>Privacy note:</b> a free GitHub Pages site is <u>public</u> — anyone with the link can view it. If the pricing data shouldn't be public, use a private host instead (e.g. Cloudflare Pages or Netlify with password protection), or GitHub's paid private Pages. The upload steps are nearly identical.</div>
+
+<h2>Part 2 — Show it inside SharePoint (optional)</h2>
+<p>SharePoint can't run this interactive page on its own, but it can <b>frame</b> the hosted page so your team opens it where they already work.</p>
+<div class="step"><ol>
+  <li>In SharePoint, open the team site → <b>New</b> → <b>Page</b> → pick a blank layout.</li>
+  <li>Click the <kbd>+</kbd> to add a web part → choose <b>Embed</b>.</li>
+  <li>Paste this, replacing the URL with your GitHub Pages link:<br>
+    <code>&lt;iframe src="https://YOURNAME.github.io/resin-dashboard/" width="100%" height="2200" style="border:0"&gt;&lt;/iframe&gt;</code></li>
+  <li><b>Publish</b> the page. Your team opens the SharePoint page and sees the live dashboard inside it.</li>
+</ol></div>
+<div class="note"><b>If the Embed web part is blocked or shows nothing:</b> your SharePoint admin needs to add your host (e.g. <code>github.io</code>) to the allowed embed domains (HTML Field Security / script settings). Send them this guide — that's a one-time tenant setting.</div>
+
+<h2>Part 3 — Your weekly update routine</h2>
+<div class="step"><ol>
+  <li>Update <code>Plastic_Resin.xlsx</code> on your computer as usual.</li>
+  <li>Open <b>converter.html</b> in your browser (double-click is fine for this tool).</li>
+  <li>If any narrative changed (overview bullets, the PE/PP/PVC reports, regional figures, "largest drop" note), edit the text in the expandable section. Otherwise skip.</li>
+  <li>Drag your updated <code>Plastic_Resin.xlsx</code> onto the drop box.</li>
+  <li>Click <b>Download data.json</b>.</li>
+  <li>Upload that new <code>data.json</code> to your repo, replacing the old one (GitHub: open the repo → <b>Add file</b> → <b>Upload files</b> → drop it → Commit).</li>
+</ol></div>
+<p>Within a minute, everyone's dashboard shows the new week on refresh. The dashboard's dates, the "View in PDF" export, and all percentages update automatically from the new file.</p>
+
+<h2>How the numbers are computed</h2>
+<ul>
+  <li><b>Prices &amp; changes</b> come straight from the <code>raw</code> sheet of your Excel (header on row 2, with <code>Group</code> and <code>Product</code> columns and dated columns).</li>
+  <li><b>Pre-war / YTD / YOY</b> baselines are picked automatically: pre-war = 26 Feb 2026, YTD = prior 31 Dec, YOY = same date one year earlier. These shift correctly as time passes.</li>
+  <li><b>The chart window</b> is the most recent ~54 dated columns.</li>
+  <li><b>Narrative text</b> (overview, reports, regional, "largest drop" note) is editorial — you control it in the converter; the numbers never depend on it.</li>
+</ul>
+
+<div class="note">Keep <code>converter.html</code> bookmarked. That, plus your Excel, is all you need each week.</div>
+
+</body></html>
