@@ -30,6 +30,11 @@
   .wrap{max-width:1180px;margin:0 auto}
   .masthead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:22px}
   .title-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .report-date-wrap{display:inline-flex;align-items:center;gap:8px;background:rgba(8,26,34,.55);border:1px solid var(--cardEdge);border-radius:10px;padding:5px 10px 5px 12px}
+  .report-date-wrap label{font-size:10px;letter-spacing:1.2px;color:var(--ink-faint);font-weight:700}
+  .report-date-wrap select{background:transparent;border:none;color:var(--ink);font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;padding:3px 2px;max-width:170px}
+  .report-date-wrap select:focus{outline:none}
+  .report-date-wrap select option{background:#0d2733;color:var(--ink)}
   .pdf-btn{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-weight:600;font-size:13px;letter-spacing:.3px;color:var(--ink);background:linear-gradient(180deg,rgba(255,91,110,.18),rgba(255,91,110,.08));border:1px solid rgba(255,91,110,.45);border-radius:10px;padding:9px 15px;cursor:pointer;transition:.18s;white-space:nowrap}
   .pdf-btn:hover{background:linear-gradient(180deg,rgba(255,91,110,.3),rgba(255,91,110,.15));border-color:var(--coral);transform:translateY(-1px)}
   .pdf-btn:disabled{opacity:.6;cursor:wait}
@@ -176,6 +181,10 @@
   <div class="masthead">
     <div class="title-wrap">
       <h1>Vietnam Plastic Resin <span>Market</span></h1>
+      <div class="report-date-wrap">
+        <label for="reportDate">REPORT</label>
+        <select id="reportDate" title="Choose which day's report to view"></select>
+      </div>
       <button class="pdf-btn" id="pdfBtn" title="Download a 4-page A4 PDF">
         <span class="pdf-ic">&#8595;</span> View in PDF
       </button>
@@ -728,34 +737,64 @@ document.getElementById('pdfBtn').onclick=buildPDF;
 
 
 /* ---- boot: load data.json then render everything ---- */
-async function init(){
-  const wrap=document.querySelector('.wrap');
-  try{
-    const res=await fetch('data.json?_='+Date.now(), {cache:'no-store'});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    DATA=await res.json();
-  }catch(err){
-    document.getElementById('overview').innerHTML=
-      '<div style="color:var(--coral);font-size:14px;line-height:1.6">'+
-      '<b>Couldn&rsquo;t load data.json.</b><br>'+
-      'Make sure a file named <code>data.json</code> sits next to this page, and that the page is opened over http(s) (not a file:// path).<br>'+
-      '<span style="color:var(--ink-faint);font-size:12.5px">Technical detail: '+err.message+'</span></div>';
-    return;
-  }
+function showLoadError(msg, detail){
+  document.getElementById('overview').innerHTML=
+    '<div style="color:var(--coral);font-size:14px;line-height:1.6">'+
+    '<b>'+msg+'</b><br>'+
+    'Make sure the dashboard is opened over http(s) (not a file:// path), and that the data files sit alongside it.<br>'+
+    (detail?'<span style="color:var(--ink-faint);font-size:12.5px">Technical detail: '+detail+'</span>':'')+'</div>';
+}
+
+// clear previously-painted sections so switching days doesn't duplicate
+function clearPainted(){
+  ['overview','statRow','regGrid','tblBody'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='';});
+  if(cmpSel){ cmpSel.innerHTML=''; }
+}
+
+function renderAll(){
   setupConstants();
-  // date defaults now that NL is known
   rStart=0; rEnd=NL-1; cmpIdx=NL-2;
+  activeGroup='PP'; overlay=null; sortKey='v'; sortDir=-1;
   paintStatic();
   setupDateControls();
   updRangeLabels(); updCmpHead(); buildChart(); renderTable();
   const ar=document.querySelector('thead th[data-k="v"] .ar'); if(ar) ar.innerHTML='&#9660;';
-  // stamp the dateline with the data's latest label if present
-  // surface dynamic dates
   const md=document.getElementById('mastDate'); if(md) md.textContent=DATA.dateUpper||'';
   const fr=document.getElementById('footRange'); if(fr) fr.textContent=DATA.rangeHuman||'';
   const rs=document.getElementById('rptStamp'); if(rs) rs.textContent='Vietnam Resin Report \u00b7 '+(DATA.dateHuman||'');
 }
-init();
+
+async function loadDay(file){
+  try{
+    const res=await fetch(file+'?_='+Date.now(), {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    DATA=await res.json();
+  }catch(err){ showLoadError('Couldn&rsquo;t load '+file, err.message); return; }
+  clearPainted();
+  renderAll();
+}
+
+async function boot(){
+  // Try the dated archive (data/index.json); fall back to a single data.json.
+  let index=null;
+  try{
+    const r=await fetch('data/index.json?_='+Date.now(), {cache:'no-store'});
+    if(r.ok) index=await r.json();
+  }catch(e){ /* no archive; fall back */ }
+
+  const sel=document.getElementById('reportDate');
+  if(index && Array.isArray(index.reports) && index.reports.length){
+    const items=index.reports.slice().sort((a,b)=>b.date.localeCompare(a.date)); // newest first
+    sel.innerHTML=items.map(it=>'<option value="data/'+it.file+'">'+(it.label||it.date)+'</option>').join('');
+    sel.parentElement.style.display='';
+    sel.onchange=()=>loadDay(sel.value);
+    await loadDay('data/'+items[0].file);
+  } else {
+    sel.parentElement.style.display='none';
+    await loadDay('data.json');
+  }
+}
+boot();
 </script>
 </body>
 </html>
