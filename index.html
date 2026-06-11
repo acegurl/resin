@@ -31,6 +31,13 @@
   .masthead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:22px}
   .title-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .report-date-wrap{display:inline-flex;align-items:center;gap:8px;background:rgba(8,26,34,.55);border:1px solid var(--cardEdge);border-radius:10px;padding:5px 10px 5px 12px}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+  .panel-head h2{margin:0}
+  .ov-date-wrap{display:inline-flex;align-items:center;gap:7px;background:rgba(8,26,34,.55);border:1px solid var(--cardEdge);border-radius:9px;padding:4px 8px 4px 10px}
+  .ov-date-wrap label{font-size:9.5px;letter-spacing:1.1px;color:var(--ink-faint);font-weight:700}
+  .ov-date-wrap select{background:transparent;border:none;color:var(--ink);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;padding:2px 1px;max-width:130px}
+  .ov-date-wrap select:focus{outline:none}
+  .ov-date-wrap select option{background:#0d2733;color:var(--ink)}
   .report-date-wrap label{font-size:10px;letter-spacing:1.2px;color:var(--ink-faint);font-weight:700}
   .report-date-wrap select{background:transparent;border:none;color:var(--ink);font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;padding:3px 2px;max-width:170px}
   .report-date-wrap select:focus{outline:none}
@@ -201,7 +208,13 @@
 
   <div class="grid top">
     <div class="panel">
-      <h2>Market Overview</h2>
+      <div class="panel-head">
+        <h2>Market Overview</h2>
+        <div class="ov-date-wrap" id="ovDateWrap">
+          <label for="ovReportDate">DATE</label>
+          <select id="ovReportDate" title="Choose which day's report to view"></select>
+        </div>
+      </div>
       <div id="overview"></div>
     </div>
     <div class="panel">
@@ -783,14 +796,22 @@ async function boot(){
   }catch(e){ /* no archive; fall back */ }
 
   const sel=document.getElementById('reportDate');
+  const ovSel=document.getElementById('ovReportDate');
+  const ovWrap=document.getElementById('ovDateWrap');
   if(index && Array.isArray(index.reports) && index.reports.length){
     const items=index.reports.slice().sort((a,b)=>b.date.localeCompare(a.date)); // newest first
-    sel.innerHTML=items.map(it=>'<option value="data/'+it.file+'">'+(it.label||it.date)+'</option>').join('');
-    sel.parentElement.style.display='';
-    sel.onchange=()=>loadDay(sel.value);
+    const opts=items.map(it=>'<option value="data/'+it.file+'">'+(it.label||it.date)+'</option>').join('');
+    sel.innerHTML=opts; ovSel.innerHTML=opts;
+    sel.parentElement.style.display=''; ovWrap.style.display='';
+    // either dropdown changes the day; keep both in sync
+    function pick(file){ sel.value=file; ovSel.value=file; loadDay(file); }
+    sel.onchange=()=>pick(sel.value);
+    ovSel.onchange=()=>pick(ovSel.value);
     await loadDay('data/'+items[0].file);
   } else {
+    // single-file mode (e.g. opened via file:// or no archive yet): hide pickers
     sel.parentElement.style.display='none';
+    ovWrap.style.display='none';
     await loadDay('data.json');
   }
 }
