@@ -297,7 +297,7 @@
     </table>
   </div>
 
-  <div class="section-label" style="margin-top:24px">Regional References &middot; $/ton <span class="stamp">as of Jun 9</span></div>
+  <div class="section-label" style="margin-top:24px">Regional References &middot; $/ton <span class="stamp" id="regStamp">as of Jun 9</span></div>
   <div class="reg-grid" id="regGrid"></div>
 
   <div class="foot">
@@ -775,6 +775,7 @@ function renderAll(){
   const md=document.getElementById('mastDate'); if(md) md.textContent=DATA.dateUpper||'';
   const fr=document.getElementById('footRange'); if(fr) fr.textContent=DATA.rangeHuman||'';
   const rs=document.getElementById('rptStamp'); if(rs) rs.textContent='Vietnam Resin Report \u00b7 '+(DATA.dateHuman||'');
+  const rgs=document.getElementById('regStamp'); if(rgs) rgs.textContent=DATA.dateHuman?('as of '+DATA.dateHuman):'';
 }
 
 async function loadDay(file){
