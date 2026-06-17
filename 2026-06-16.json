@@ -1,5 +1,6 @@
 {
  "labels": [
+  "3/30",
   "3/31",
   "4/1",
   "4/2",
@@ -52,11 +53,11 @@
   "6/11",
   "6/12",
   "6/15",
-  "6/16",
-  "6/17"
+  "6/16"
  ],
  "groupavg": {
   "PP": [
+   41.95,
    41.95,
    41.92,
    42.05,
@@ -109,10 +110,10 @@
    38.23,
    38.21,
    37.88,
-   37.76,
-   37.68
+   37.76
   ],
   "PE": [
+   45.63,
    45.6,
    45.69,
    45.7,
@@ -165,10 +166,10 @@
    40.81,
    40.76,
    40.66,
-   39.71,
-   39.69
+   39.71
   ],
   "PVC": [
+   32.78,
    32.73,
    32.56,
    32.51,
@@ -221,8 +222,7 @@
    24.43,
    24.26,
    23.33,
-   23.27,
-   23.25
+   23.27
   ]
  },
  "meta": {
@@ -230,6 +230,7 @@
    {
     "p": "PP yarn/injection I3110/T3034",
     "series": [
+     41.0,
      41.2,
      41.2,
      41.0,
@@ -282,16 +283,16 @@
      35.5,
      35.5,
      34.8,
-     34.5,
      34.5
     ],
     "pwBase": 25.8,
     "ytdBase": 24.8,
-    "yoyBase": 27.6
+    "yoyBase": 27.5
    },
    {
     "p": "PP yarn/inj 1146/105G",
     "series": [
+     40.5,
      40.5,
      40.5,
      40.5,
@@ -344,16 +345,16 @@
      34.0,
      34.0,
      33.6,
-     33.6,
      33.6
     ],
     "pwBase": 26.0,
     "ytdBase": 24.3,
-    "yoyBase": 26.9
+    "yoyBase": 26.8
    },
    {
     "p": "PP yarn F501N",
     "series": [
+     44.0,
      44.0,
      44.0,
      46.0,
@@ -406,7 +407,6 @@
      36.5,
      36.5,
      36.3,
-     36.3,
      36.3
     ],
     "pwBase": 25.8,
@@ -416,6 +416,7 @@
    {
     "p": "PP homo J700N/800N/900N",
     "series": [
+     45.5,
      45.5,
      45.5,
      45.5,
@@ -468,7 +469,6 @@
      37.0,
      37.0,
      37.0,
-     37.0,
      37.0
     ],
     "pwBase": 26.3,
@@ -478,6 +478,7 @@
    {
     "p": "PP yarn/injection P400S/P700J",
     "series": [
+     45.7,
      45.2,
      45.2,
      45.2,
@@ -530,7 +531,6 @@
      38.6,
      null,
      34.4,
-     34.4,
      34.4
     ],
     "pwBase": 25.6,
@@ -540,6 +540,7 @@
    {
     "p": "PP yarn S1003/T03",
     "series": [
+     38.0,
      38.0,
      37.8,
      37.8,
@@ -592,8 +593,7 @@
      35.0,
      35.0,
      35.0,
-     35.0,
-     34.7
+     35.0
     ],
     "pwBase": 25.5,
     "ytdBase": 24.5,
@@ -606,6 +606,7 @@
      41.5,
      41.5,
      41.5,
+     41.5,
      41.8,
      42.0,
      42.0,
@@ -653,7 +654,6 @@
      37.5,
      37.5,
      37.5,
-     37.3,
      37.3,
      37.3
     ],
@@ -670,6 +670,7 @@
      42.5,
      42.5,
      42.5,
+     42.5,
      43.0,
      43.0,
      43.0,
@@ -716,8 +717,7 @@
      39.2,
      39.2,
      39.2,
-     39.2,
-     39.0
+     39.2
     ],
     "pwBase": 26.2,
     "ytdBase": 25.7,
@@ -726,6 +726,7 @@
    {
     "p": "PP yarn 1102K-IRPC",
     "series": [
+     41.5,
      41.7,
      41.7,
      41.7,
@@ -778,8 +779,7 @@
      39.0,
      39.0,
      39.0,
-     39.0,
-     38.8
+     39.0
     ],
     "pwBase": 26.2,
     "ytdBase": 25.6,
@@ -788,6 +788,7 @@
    {
     "p": "PP yarn GY130",
     "series": [
+     39.7,
      39.7,
      39.5,
      39.5,
@@ -840,7 +841,6 @@
      37.0,
      37.0,
      37.0,
-     36.5,
      36.5
     ],
     "pwBase": 25.6,
@@ -853,67 +853,68 @@
      37.0,
      37.0,
      37.0,
-     37.5,
-     37.5,
-     37.5,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     37.5,
-     37.5,
-     37.5,
-     37.5,
      37.0,
+     37.5,
+     37.5,
+     37.5,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     37.5,
+     37.5,
+     37.5,
+     37.5,
      37.0
     ],
     "pwBase": 25.5,
     "ytdBase": 25.4,
-    "yoyBase": 27.6
+    "yoyBase": 27.5
    },
    {
     "p": "PP non-woven H563S",
     "series": [
      41.5,
      41.5,
+     41.5,
      41.2,
      41.2,
      41.5,
@@ -964,16 +965,16 @@
      39.0,
      39.0,
      39.0,
-     38.5,
      38.5
     ],
     "pwBase": 26.5,
     "ytdBase": 26.5,
-    "yoyBase": 28.6
+    "yoyBase": 28.5
    },
    {
     "p": "PP copo J340N/440N/640N",
     "series": [
+     46.5,
      46.5,
      46.5,
      47.5,
@@ -1025,7 +1026,6 @@
      39.5,
      39.5,
      39.5,
-     39.2,
      39.2,
      39.2
     ],
@@ -1037,6 +1037,7 @@
     "p": "PP block copo 36MK10R/BJ550",
     "series": [
      44.5,
+     44.5,
      44.3,
      44.3,
      44.8,
@@ -1087,7 +1088,6 @@
      40.0,
      40.0,
      40.0,
-     39.5,
      39.5,
      39.5
     ],
@@ -1102,6 +1102,7 @@
      45.0,
      45.0,
      45.0,
+     45.0,
      53.5,
      53.5,
      53.5,
@@ -1150,7 +1151,6 @@
      48.0,
      48.0,
      48.0,
-     47.5,
      47.5
     ],
     "pwBase": 30.5,
@@ -1164,6 +1164,7 @@
      43.5,
      43.5,
      43.5,
+     43.5,
      45.5,
      45.5,
      45.5,
@@ -1212,8 +1213,7 @@
      43.0,
      43.0,
      43.0,
-     43.0,
-     42.5
+     43.0
     ],
     "pwBase": 28.4,
     "ytdBase": 28.6,
@@ -1228,6 +1228,7 @@
      43.5,
      43.5,
      43.5,
+     43.5,
      44.5,
      44.5,
      44.5,
@@ -1274,8 +1275,7 @@
      41.5,
      41.5,
      41.5,
-     41.5,
-     41.2
+     41.5
     ],
     "pwBase": 28.3,
     "ytdBase": 28.5,
@@ -1292,6 +1292,7 @@
      37.2,
      37.2,
      37.2,
+     37.2,
      37.0,
      37.0,
      37.0,
@@ -1332,7 +1333,6 @@
      35.2,
      35.2,
      35.2,
-     33.0,
      33.0,
      33.0,
      33.0,
@@ -1359,6 +1359,7 @@
      38.5,
      38.5,
      38.5,
+     38.5,
      38.2,
      38.2,
      38.2,
@@ -1394,7 +1395,6 @@
      37.0,
      37.0,
      37.0,
-     35.5,
      35.5,
      35.5,
      35.5,
@@ -1410,6 +1410,7 @@
    {
     "p": "LDPE Film 2426K/2426H",
     "series": [
+     55.0,
      55.0,
      55.5,
      55.5,
@@ -1462,7 +1463,6 @@
      50.0,
      49.5,
      49.5,
-     47.5,
      47.5
     ],
     "pwBase": 31.8,
@@ -1472,6 +1472,7 @@
    {
     "p": "LDPE Film 260GG",
     "series": [
+     54.8,
      54.8,
      55.3,
      55.3,
@@ -1524,7 +1525,6 @@
      49.2,
      48.7,
      48.7,
-     45.7,
      45.7
     ],
     "pwBase": 31.8,
@@ -1534,6 +1534,7 @@
    {
     "p": "LDPE Film 4025AS/1925AS",
     "series": [
+     54.0,
      54.0,
      54.5,
      54.5,
@@ -1586,7 +1587,6 @@
      48.5,
      48.5,
      48.2,
-     45.5,
      45.5
     ],
     "pwBase": 31.7,
@@ -1596,6 +1596,7 @@
    {
     "p": "LDPE Film 4024WN",
     "series": [
+     54.0,
      54.0,
      54.5,
      54.5,
@@ -1648,7 +1649,6 @@
      48.2,
      48.3,
      48.0,
-     45.5,
      45.5
     ],
     "pwBase": 31.7,
@@ -1658,6 +1658,7 @@
    {
     "p": "LDPE Film FT6236",
     "series": [
+     53.5,
      53.5,
      53.5,
      53.5,
@@ -1710,7 +1711,6 @@
      48.2,
      48.0,
      47.5,
-     45.3,
      45.3
     ],
     "pwBase": 31.1,
@@ -1720,6 +1720,7 @@
    {
     "p": "HDPE Blow 5502BN",
     "series": [
+     40.5,
      40.5,
      41.0,
      41.0,
@@ -1772,12 +1773,11 @@
      38.3,
      38.3,
      38.0,
-     38.0,
      38.0
     ],
     "pwBase": 27.2,
     "ytdBase": 26.0,
-    "yoyBase": 26.3
+    "yoyBase": 26.2
    },
    {
     "p": "HDPE Film FJ0952",
@@ -1787,6 +1787,7 @@
      43.7,
      43.7,
      43.7,
+     43.7,
      44.0,
      44.0,
      44.0,
@@ -1834,7 +1835,6 @@
      38.5,
      38.5,
      38.5,
-     38.0,
      38.0
     ],
     "pwBase": 27.9,
@@ -1844,6 +1844,7 @@
    {
     "p": "HDPE Film TR144 / bimodal TR155",
     "series": [
+     43.5,
      43.2,
      43.2,
      43.2,
@@ -1896,7 +1897,6 @@
      41.5,
      41.5,
      41.5,
-     41.0,
      41.0
     ],
     "pwBase": 27.5,
@@ -1911,6 +1911,7 @@
      43.5,
      43.5,
      43.5,
+     43.5,
      43.8,
      43.8,
      43.8,
@@ -1958,16 +1959,16 @@
      38.5,
      38.5,
      38.5,
-     38.0,
      38.0
     ],
     "pwBase": 27.8,
     "ytdBase": 27.1,
-    "yoyBase": 27.1
+    "yoyBase": 27.0
    },
    {
     "p": "HDPE Yarn 5000S",
     "series": [
+     44.0,
      44.5,
      44.5,
      44.5,
@@ -2020,7 +2021,6 @@
      42.5,
      42.5,
      42.2,
-     41.5,
      41.5
     ],
     "pwBase": 28.5,
@@ -2030,6 +2030,7 @@
    {
     "p": "HDPE Film H5604F",
     "series": [
+     45.8,
      45.6,
      45.6,
      45.6,
@@ -2082,7 +2083,6 @@
      41.7,
      41.7,
      41.7,
-     null,
      null
     ],
     "pwBase": 28.4,
@@ -2092,6 +2092,7 @@
    {
     "p": "HDPE Yarn",
     "series": [
+     45.8,
      46.3,
      46.3,
      46.3,
@@ -2144,8 +2145,7 @@
      42.5,
      42.5,
      42.5,
-     41.5,
-     null
+     41.5
     ],
     "pwBase": 29.1,
     "ytdBase": 26.3,
@@ -2154,6 +2154,7 @@
    {
     "p": "LLDPE Film L1220F",
     "series": [
+     45.5,
      45.4,
      45.4,
      45.4,
@@ -2206,8 +2207,7 @@
      38.0,
      38.0,
      38.0,
-     38.0,
-     null
+     38.0
     ],
     "pwBase": 27.9,
     "ytdBase": 24.7,
@@ -2216,6 +2216,7 @@
    {
     "p": "LLDPE Film 20211",
     "series": [
+     39.5,
      39.5,
      39.3,
      39.6,
@@ -2268,7 +2269,6 @@
      35.0,
      35.0,
      35.0,
-     35.0,
      35.0
     ],
     "pwBase": 26.0,
@@ -2278,6 +2278,7 @@
    {
     "p": "LLDPE Film 222WJ",
     "series": [
+     42.5,
      42.5,
      42.3,
      42.3,
@@ -2330,7 +2331,6 @@
      36.0,
      36.0,
      35.8,
-     35.5,
      35.5
     ],
     "pwBase": 27.0,
@@ -2364,6 +2364,7 @@
      43.0,
      43.0,
      43.0,
+     43.0,
      42.5,
      42.5,
      42.0,
@@ -2392,8 +2393,7 @@
      40.5,
      40.5,
      40.5,
-     40.5,
-     40.3
+     40.5
     ],
     "pwBase": 27.5,
     "ytdBase": 27.3,
@@ -2402,6 +2402,7 @@
    {
     "p": "LLDPE Film FD21HS/FD21HN",
     "series": [
+     41.5,
      41.5,
      41.5,
      41.5,
@@ -2454,7 +2455,6 @@
      36.0,
      36.0,
      36.0,
-     35.5,
      35.5
     ],
     "pwBase": 26.7,
@@ -2464,6 +2464,7 @@
    {
     "p": "LLDPE Film 218WJ",
     "series": [
+     42.5,
      42.5,
      42.3,
      42.3,
@@ -2516,7 +2517,6 @@
      36.0,
      36.0,
      36.0,
-     35.5,
      35.5
     ],
     "pwBase": 27.0,
@@ -2526,6 +2526,7 @@
    {
     "p": "LLDPE Film 218BJ",
     "series": [
+     42.6,
      42.6,
      42.6,
      42.6,
@@ -2578,7 +2579,6 @@
      36.2,
      36.2,
      36.2,
-     35.7,
      35.7
     ],
     "pwBase": 27.1,
@@ -2588,6 +2588,7 @@
    {
     "p": "LLDPE Film 218NJ",
     "series": [
+     42.5,
      42.5,
      42.5,
      42.3,
@@ -2640,16 +2641,16 @@
      36.0,
      36.0,
      35.8,
-     35.5,
      35.5
     ],
     "pwBase": 27.0,
     "ytdBase": 25.7,
-    "yoyBase": 29.2
+    "yoyBase": 29.1
    },
    {
     "p": "LLDPE Film QH2018N",
     "series": [
+     40.5,
      39.5,
      39.5,
      39.5,
@@ -2702,7 +2703,6 @@
      35.8,
      35.8,
      35.8,
-     35.5,
      35.5
     ],
     "pwBase": 26.7,
@@ -2720,6 +2720,7 @@
      39.0,
      39.0,
      39.0,
+     39.0,
      38.5,
      38.5,
      38.5,
@@ -2765,13 +2766,12 @@
      28.5,
      28.0,
      28.0,
-     26.0,
      26.0,
      26.0
     ],
     "pwBase": 21.0,
     "ytdBase": 19.5,
-    "yoyBase": 20.8
+    "yoyBase": 20.7
    },
    {
     "p": "PVC PR1000",
@@ -2787,6 +2787,7 @@
      33.5,
      33.5,
      33.5,
+     33.5,
      32.0,
      32.0,
      32.0,
@@ -2828,8 +2829,7 @@
      25.0,
      25.0,
      24.0,
-     24.0,
-     23.8
+     24.0
     ],
     "pwBase": 20.6,
     "ytdBase": 19.0,
@@ -2838,6 +2838,7 @@
    {
     "p": "PVC S1000 Sinopec",
     "series": [
+     31.5,
      31.5,
      31.2,
      31.2,
@@ -2890,7 +2891,6 @@
      23.5,
      23.5,
      23.0,
-     22.7,
      22.7
     ],
     "pwBase": 20.2,
@@ -2900,6 +2900,7 @@
    {
     "p": "PVC Powder PM66R AGC",
     "series": [
+     35.5,
      35.5,
      35.5,
      35.5,
@@ -2952,7 +2953,6 @@
      25.3,
      24.5,
      22.5,
-     22.5,
      22.5
     ],
     "pwBase": 20.2,
@@ -2962,6 +2962,7 @@
    {
     "p": "PVC SP660",
     "series": [
+     35.8,
      35.8,
      35.5,
      35.5,
@@ -3014,8 +3015,7 @@
      25.3,
      25.0,
      24.0,
-     24.0,
-     24.5
+     24.0
     ],
     "pwBase": 20.3,
     "ytdBase": 18.2,
@@ -3024,6 +3024,7 @@
    {
     "p": "PVC SG660",
     "series": [
+     36.5,
      36.0,
      35.7,
      35.7,
@@ -3076,8 +3077,7 @@
      25.3,
      25.0,
      24.0,
-     24.0,
-     23.5
+     24.0
     ],
     "pwBase": 20.4,
     "ytdBase": 18.3,
@@ -3086,6 +3086,7 @@
    {
     "p": "PVC SE950 Shintech",
     "series": [
+     30.5,
      30.5,
      30.5,
      30.5,
@@ -3138,16 +3139,16 @@
      24.0,
      23.7,
      23.0,
-     22.7,
      22.7
     ],
     "pwBase": 20.3,
     "ytdBase": 18.6,
-    "yoyBase": 20.4
+    "yoyBase": 20.3
    },
    {
     "p": "PVC SG-5 Erdos",
     "series": [
+     29.0,
      29.0,
      29.0,
      28.5,
@@ -3200,7 +3201,6 @@
      23.0,
      23.0,
      22.5,
-     22.5,
      22.5
     ],
     "pwBase": 20.2,
@@ -3210,6 +3210,7 @@
    {
     "p": "PVC SG-5 Zhongtai",
     "series": [
+     28.5,
      28.5,
      28.2,
      28.2,
@@ -3262,7 +3263,6 @@
      22.7,
      22.7,
      22.3,
-     22.3,
      22.3
     ],
     "pwBase": 20.2,
@@ -3272,6 +3272,7 @@
    {
     "p": "PVC SG-5 Yihua",
     "series": [
+     28.0,
      28.0,
      27.5,
      27.5,
@@ -3324,7 +3325,6 @@
      22.2,
      22.2,
      22.0,
-     22.0,
      22.0
     ],
     "pwBase": 20.0,
@@ -3338,6 +3338,7 @@
    {
     "product": "PP yarn/injection I3110/T3034",
     "series": [
+     41.0,
      41.2,
      41.2,
      41.0,
@@ -3390,13 +3391,13 @@
      35.5,
      35.5,
      34.8,
-     34.5,
      34.5
     ]
    },
    {
     "product": "PP yarn/inj 1146/105G",
     "series": [
+     40.5,
      40.5,
      40.5,
      40.5,
@@ -3449,13 +3450,13 @@
      34.0,
      34.0,
      33.6,
-     33.6,
      33.6
     ]
    },
    {
     "product": "PP yarn F501N",
     "series": [
+     44.0,
      44.0,
      44.0,
      46.0,
@@ -3508,13 +3509,13 @@
      36.5,
      36.5,
      36.3,
-     36.3,
      36.3
     ]
    },
    {
     "product": "PP homo J700N/800N/900N",
     "series": [
+     45.5,
      45.5,
      45.5,
      45.5,
@@ -3567,13 +3568,13 @@
      37.0,
      37.0,
      37.0,
-     37.0,
      37.0
     ]
    },
    {
     "product": "PP yarn/injection P400S/P700J",
     "series": [
+     45.7,
      45.2,
      45.2,
      45.2,
@@ -3626,13 +3627,13 @@
      38.6,
      null,
      34.4,
-     34.4,
      34.4
     ]
    },
    {
     "product": "PP yarn S1003/T03",
     "series": [
+     38.0,
      38.0,
      37.8,
      37.8,
@@ -3685,8 +3686,7 @@
      35.0,
      35.0,
      35.0,
-     35.0,
-     34.7
+     35.0
     ]
    },
    {
@@ -3696,6 +3696,7 @@
      41.5,
      41.5,
      41.5,
+     41.5,
      41.8,
      42.0,
      42.0,
@@ -3743,7 +3744,6 @@
      37.5,
      37.5,
      37.5,
-     37.3,
      37.3,
      37.3
     ]
@@ -3757,6 +3757,7 @@
      42.5,
      42.5,
      42.5,
+     42.5,
      43.0,
      43.0,
      43.0,
@@ -3803,13 +3804,13 @@
      39.2,
      39.2,
      39.2,
-     39.2,
-     39.0
+     39.2
     ]
    },
    {
     "product": "PP yarn 1102K-IRPC",
     "series": [
+     41.5,
      41.7,
      41.7,
      41.7,
@@ -3862,13 +3863,13 @@
      39.0,
      39.0,
      39.0,
-     39.0,
-     38.8
+     39.0
     ]
    },
    {
     "product": "PP yarn GY130",
     "series": [
+     39.7,
      39.7,
      39.5,
      39.5,
@@ -3921,7 +3922,6 @@
      37.0,
      37.0,
      37.0,
-     36.5,
      36.5
     ]
    },
@@ -3931,56 +3931,56 @@
      37.0,
      37.0,
      37.0,
-     37.5,
-     37.5,
-     37.5,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.0,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     38.3,
-     37.5,
-     37.5,
-     37.5,
-     37.5,
      37.0,
+     37.5,
+     37.5,
+     37.5,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.0,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     38.3,
+     37.5,
+     37.5,
+     37.5,
+     37.5,
      37.0
     ]
    },
@@ -3989,6 +3989,7 @@
     "series": [
      41.5,
      41.5,
+     41.5,
      41.2,
      41.2,
      41.5,
@@ -4039,7 +4040,6 @@
      39.0,
      39.0,
      39.0,
-     38.5,
      38.5
     ]
    },
@@ -4048,6 +4048,7 @@
     "series": [
      46.5,
      46.5,
+     46.5,
      47.5,
      47.5,
      47.5,
@@ -4097,7 +4098,6 @@
      39.5,
      39.5,
      39.5,
-     39.2,
      39.2,
      39.2
     ]
@@ -4106,6 +4106,7 @@
     "product": "PP block copo 36MK10R/BJ550",
     "series": [
      44.5,
+     44.5,
      44.3,
      44.3,
      44.8,
@@ -4156,7 +4157,6 @@
      40.0,
      40.0,
      40.0,
-     39.5,
      39.5,
      39.5
     ]
@@ -4168,6 +4168,7 @@
      45.0,
      45.0,
      45.0,
+     45.0,
      53.5,
      53.5,
      53.5,
@@ -4216,7 +4217,6 @@
      48.0,
      48.0,
      48.0,
-     47.5,
      47.5
     ]
    },
@@ -4227,6 +4227,7 @@
      43.5,
      43.5,
      43.5,
+     43.5,
      45.5,
      45.5,
      45.5,
@@ -4275,8 +4276,7 @@
      43.0,
      43.0,
      43.0,
-     43.0,
-     42.5
+     43.0
     ]
    },
    {
@@ -4288,6 +4288,7 @@
      43.5,
      43.5,
      43.5,
+     43.5,
      44.5,
      44.5,
      44.5,
@@ -4334,8 +4335,7 @@
      41.5,
      41.5,
      41.5,
-     41.5,
-     41.2
+     41.5
     ]
    },
    {
@@ -4349,6 +4349,7 @@
      37.2,
      37.2,
      37.2,
+     37.2,
      37.0,
      37.0,
      37.0,
@@ -4389,7 +4390,6 @@
      35.2,
      35.2,
      35.2,
-     33.0,
      33.0,
      33.0,
      33.0,
@@ -4413,6 +4413,7 @@
      38.5,
      38.5,
      38.5,
+     38.5,
      38.2,
      38.2,
      38.2,
@@ -4448,7 +4449,6 @@
      37.0,
      37.0,
      37.0,
-     35.5,
      35.5,
      35.5,
      35.5,
@@ -4461,6 +4461,7 @@
    {
     "product": "LDPE Film 2426K/2426H",
     "series": [
+     55.0,
      55.0,
      55.5,
      55.5,
@@ -4513,13 +4514,13 @@
      50.0,
      49.5,
      49.5,
-     47.5,
      47.5
     ]
    },
    {
     "product": "LDPE Film 260GG",
     "series": [
+     54.8,
      54.8,
      55.3,
      55.3,
@@ -4572,13 +4573,13 @@
      49.2,
      48.7,
      48.7,
-     45.7,
      45.7
     ]
    },
    {
     "product": "LDPE Film 4025AS/1925AS",
     "series": [
+     54.0,
      54.0,
      54.5,
      54.5,
@@ -4631,13 +4632,13 @@
      48.5,
      48.5,
      48.2,
-     45.5,
      45.5
     ]
    },
    {
     "product": "LDPE Film 4024WN",
     "series": [
+     54.0,
      54.0,
      54.5,
      54.5,
@@ -4690,13 +4691,13 @@
      48.2,
      48.3,
      48.0,
-     45.5,
      45.5
     ]
    },
    {
     "product": "LDPE Film FT6236",
     "series": [
+     53.5,
      53.5,
      53.5,
      53.5,
@@ -4749,13 +4750,13 @@
      48.2,
      48.0,
      47.5,
-     45.3,
      45.3
     ]
    },
    {
     "product": "HDPE Blow 5502BN",
     "series": [
+     40.5,
      40.5,
      41.0,
      41.0,
@@ -4808,7 +4809,6 @@
      38.3,
      38.3,
      38.0,
-     38.0,
      38.0
     ]
    },
@@ -4820,6 +4820,7 @@
      43.7,
      43.7,
      43.7,
+     43.7,
      44.0,
      44.0,
      44.0,
@@ -4867,13 +4868,13 @@
      38.5,
      38.5,
      38.5,
-     38.0,
      38.0
     ]
    },
    {
     "product": "HDPE Film TR144 / bimodal TR155",
     "series": [
+     43.5,
      43.2,
      43.2,
      43.2,
@@ -4926,7 +4927,6 @@
      41.5,
      41.5,
      41.5,
-     41.0,
      41.0
     ]
    },
@@ -4938,6 +4938,7 @@
      43.5,
      43.5,
      43.5,
+     43.5,
      43.8,
      43.8,
      43.8,
@@ -4985,13 +4986,13 @@
      38.5,
      38.5,
      38.5,
-     38.0,
      38.0
     ]
    },
    {
     "product": "HDPE Yarn 5000S",
     "series": [
+     44.0,
      44.5,
      44.5,
      44.5,
@@ -5044,13 +5045,13 @@
      42.5,
      42.5,
      42.2,
-     41.5,
      41.5
     ]
    },
    {
     "product": "HDPE Film H5604F",
     "series": [
+     45.8,
      45.6,
      45.6,
      45.6,
@@ -5103,13 +5104,13 @@
      41.7,
      41.7,
      41.7,
-     null,
      null
     ]
    },
    {
     "product": "HDPE Yarn",
     "series": [
+     45.8,
      46.3,
      46.3,
      46.3,
@@ -5162,13 +5163,13 @@
      42.5,
      42.5,
      42.5,
-     41.5,
-     null
+     41.5
     ]
    },
    {
     "product": "LLDPE Film L1220F",
     "series": [
+     45.5,
      45.4,
      45.4,
      45.4,
@@ -5221,13 +5222,13 @@
      38.0,
      38.0,
      38.0,
-     38.0,
-     null
+     38.0
     ]
    },
    {
     "product": "LLDPE Film 20211",
     "series": [
+     39.5,
      39.5,
      39.3,
      39.6,
@@ -5280,13 +5281,13 @@
      35.0,
      35.0,
      35.0,
-     35.0,
      35.0
     ]
    },
    {
     "product": "LLDPE Film 222WJ",
     "series": [
+     42.5,
      42.5,
      42.3,
      42.3,
@@ -5339,7 +5340,6 @@
      36.0,
      36.0,
      35.8,
-     35.5,
      35.5
     ]
    },
@@ -5370,6 +5370,7 @@
      43.0,
      43.0,
      43.0,
+     43.0,
      42.5,
      42.5,
      42.0,
@@ -5398,13 +5399,13 @@
      40.5,
      40.5,
      40.5,
-     40.5,
-     40.3
+     40.5
     ]
    },
    {
     "product": "LLDPE Film FD21HS/FD21HN",
     "series": [
+     41.5,
      41.5,
      41.5,
      41.5,
@@ -5457,13 +5458,13 @@
      36.0,
      36.0,
      36.0,
-     35.5,
      35.5
     ]
    },
    {
     "product": "LLDPE Film 218WJ",
     "series": [
+     42.5,
      42.5,
      42.3,
      42.3,
@@ -5516,13 +5517,13 @@
      36.0,
      36.0,
      36.0,
-     35.5,
      35.5
     ]
    },
    {
     "product": "LLDPE Film 218BJ",
     "series": [
+     42.6,
      42.6,
      42.6,
      42.6,
@@ -5575,13 +5576,13 @@
      36.2,
      36.2,
      36.2,
-     35.7,
      35.7
     ]
    },
    {
     "product": "LLDPE Film 218NJ",
     "series": [
+     42.5,
      42.5,
      42.5,
      42.3,
@@ -5634,13 +5635,13 @@
      36.0,
      36.0,
      35.8,
-     35.5,
      35.5
     ]
    },
    {
     "product": "LLDPE Film QH2018N",
     "series": [
+     40.5,
      39.5,
      39.5,
      39.5,
@@ -5693,7 +5694,6 @@
      35.8,
      35.8,
      35.8,
-     35.5,
      35.5
     ]
    }
@@ -5708,6 +5708,7 @@
      39.0,
      39.0,
      39.0,
+     39.0,
      38.5,
      38.5,
      38.5,
@@ -5753,7 +5754,6 @@
      28.5,
      28.0,
      28.0,
-     26.0,
      26.0,
      26.0
     ]
@@ -5772,6 +5772,7 @@
      33.5,
      33.5,
      33.5,
+     33.5,
      32.0,
      32.0,
      32.0,
@@ -5813,13 +5814,13 @@
      25.0,
      25.0,
      24.0,
-     24.0,
-     23.8
+     24.0
     ]
    },
    {
     "product": "PVC S1000 Sinopec",
     "series": [
+     31.5,
      31.5,
      31.2,
      31.2,
@@ -5872,13 +5873,13 @@
      23.5,
      23.5,
      23.0,
-     22.7,
      22.7
     ]
    },
    {
     "product": "PVC Powder PM66R AGC",
     "series": [
+     35.5,
      35.5,
      35.5,
      35.5,
@@ -5931,13 +5932,13 @@
      25.3,
      24.5,
      22.5,
-     22.5,
      22.5
     ]
    },
    {
     "product": "PVC SP660",
     "series": [
+     35.8,
      35.8,
      35.5,
      35.5,
@@ -5990,13 +5991,13 @@
      25.3,
      25.0,
      24.0,
-     24.0,
-     24.5
+     24.0
     ]
    },
    {
     "product": "PVC SG660",
     "series": [
+     36.5,
      36.0,
      35.7,
      35.7,
@@ -6049,13 +6050,13 @@
      25.3,
      25.0,
      24.0,
-     24.0,
-     23.5
+     24.0
     ]
    },
    {
     "product": "PVC SE950 Shintech",
     "series": [
+     30.5,
      30.5,
      30.5,
      30.5,
@@ -6108,13 +6109,13 @@
      24.0,
      23.7,
      23.0,
-     22.7,
      22.7
     ]
    },
    {
     "product": "PVC SG-5 Erdos",
     "series": [
+     29.0,
      29.0,
      29.0,
      28.5,
@@ -6167,13 +6168,13 @@
      23.0,
      23.0,
      22.5,
-     22.5,
      22.5
     ]
    },
    {
     "product": "PVC SG-5 Zhongtai",
     "series": [
+     28.5,
      28.5,
      28.2,
      28.2,
@@ -6226,13 +6227,13 @@
      22.7,
      22.7,
      22.3,
-     22.3,
      22.3
     ]
    },
    {
     "product": "PVC SG-5 Yihua",
     "series": [
+     28.0,
      28.0,
      27.5,
      27.5,
@@ -6285,7 +6286,6 @@
      22.2,
      22.2,
      22.0,
-     22.0,
      22.0
     ]
    }
@@ -6293,149 +6293,151 @@
  },
  "summary": {
   "PP": {
-   "avg": 37680,
-   "delta": -80
+   "avg": 37760,
+   "delta": -120
   },
   "PE": {
-   "avg": 39690,
-   "delta": -20
+   "avg": 39710,
+   "delta": -950
   },
   "PVC": {
-   "avg": 23250,
-   "delta": -20
+   "avg": 23270,
+   "delta": -60
   },
-  "changed": 9,
+  "changed": 23,
   "total": 50,
-  "largest": -500,
-  "largest_items": "PP 1126NK, PVC SG660"
+  "largest": -3000,
+  "largest_items": "LDPE Film 260GG"
  },
  "editorial": {
   "overview": {
    "PP": {
-    "sub": "Cuts slow as margins thin",
+    "sub": "Sideways but heavy, exports lean on Asia",
     "bullets": [
-     "IRPC's July cargo fell 90-120: homo to 1,260, Film 1126NK to 1,350 CFR.",
-     "Jinneng yarn eased to ~1,180 CIF; NSRP local equates to ~1,130-1,140 CIF.",
-     "Domestic NSRP 114G 33,500 June / 33,000 July (32,800 low); T3034 flat 34,000."
+     "NSRP exported approx 6,000-7,000t homo to China and 8,000-9,000t to India this month.",
+     "Lotte yarn finalized 1,170 CIF; Jinneng China still high at 1,210; PP 114G ~33,200-33,500 VND/kg.",
+     "ICIS: Vietnam yarn/inj -20 to 1,150-1,190 CFR; regional random copo off 60-100 USD/ton."
     ]
    },
    "PE": {
-    "sub": "Sellers cut into thin trade",
+    "sub": "Lotte sets market low, sentiment cools",
     "bullets": [
-     "Petrochina LLDPE to 1,100 (deals 1,070-1,080); Lotte UL814 down 150 to 1,160.",
-     "Lotte LDPE LF512/410/311 finalized at 1,300 CIF, among the market lows.",
-     "Lotte Titan held HDPE Film 1,280, trimmed blow to 1,320; few deals done."
+     "Lotte Hyundai cut finalized LDPE to 1,300 CIF over the weekend; HDPE FL7000 at 1,180.",
+     "US-Iran peace deal and possible Hormuz reopening weigh on sentiment; PE seen easing further.",
+     "Domestic LDPE 40,000-44,500 with wide gaps; Chinese LLDPE the floor at 31,500 VND/kg."
     ]
    },
    "PVC": {
-    "sub": "AGC cuts again, oil-based slides",
+    "sub": "July offers pile in, domestic slides",
     "bullets": [
-     "AGC trimmed K66/K58 another 20 on Jun 17 to 730-740 CIF for 500t+ lots.",
-     "Yihua SG-5 to 21,500; oil-based PVC down to 22,500-23,000 VND/kg.",
-     "SCG SG660 to 23,600 (-400); Formosa S65 still above 25,000, not priced to compete."
+     "SCG's July offer: SP660 765, SG660 775 CIF, down 55-60 vs last month (750 to large buyers).",
+     "AGC Vina cut domestic PM66R approx 2,500-2,800 VND/kg to ~21,816-22,248 incl. VAT.",
+     "Imports: Formosa S65 780, AGC K66 750-760, Sinopec/LG 700, Shintech 690 CIF."
     ]
    }
   },
   "regional": [
    {
-    "l": "IRPC PP Homo to VN",
-    "v": "1,260",
-    "d": -105
+    "l": "SCG PVC SP660 to VN",
+    "v": "765",
+    "d": -55
    },
    {
-    "l": "IRPC PP 1126NK to VN",
-    "v": "1,350",
-    "d": -105
+    "l": "SCG PVC SG660 to VN",
+    "v": "775",
+    "d": -60
    },
    {
-    "l": "Jinneng PP Yarn (CIF)",
-    "v": "1,180",
-    "d": -35
+    "l": "Formosa PVC S65 to VN",
+    "v": "780",
+    "d": 0
    },
    {
-    "l": "Petrochina LLDPE to VN",
-    "v": "1,100",
-    "d": -25
+    "l": "AGC PVC K66 to VN",
+    "v": "750–760",
+    "d": 0
    },
    {
-    "l": "Lotte HDPE Film to VN",
-    "v": "1,280",
+    "l": "Sinopec/LG PVC to VN",
+    "v": "700",
+    "d": 0
+   },
+   {
+    "l": "Shintech PVC to VN",
+    "v": "690",
     "d": 0
    },
    {
     "l": "Lotte LDPE to VN",
     "v": "1,300",
-    "d": 0
+    "d": -100
    },
    {
-    "l": "AGC PVC K66 to VN",
-    "v": "730–740",
-    "d": -20
-   },
-   {
-    "l": "SCG PVC SG660 (VND)",
-    "v": "23,600",
-    "d": -400
+    "l": "Lotte PP Yarn to VN",
+    "v": "1,170",
+    "d": -30
    }
   ],
-  "changedNote": "9 of 50 moved (8 down, 1 up), led by PP & PVC"
+  "changedNote": "23 of 50 moved down, led by LDPE"
  },
  "reports": {
   "PE": {
    "summary": [
-    "International PE offers softened further; sellers cut to clear inventory while buyers held back and trading stayed thin.",
-    "Petrochina LLDPE to 1,100 (deals 1,070-1,080); Lotte UL814 -150 to 1,160; LDPE LF512/410/311 finalized 1,300 CIF.",
-    "Lotte Titan held HDPE Film 1,280 and trimmed blow to 1,320; domestic HDPE blow (LSP) 38,800 south / 39,500 north."
+    "Lotte Hyundai cut finalized LDPE to 1,300 USD/ton CIF over the weekend — near the market low — with HDPE FL7000 at 1,180.",
+    "US-Iran peace deal and a possible Hormuz reopening are cooling resin sentiment; participants expect PE to ease further.",
+    "Domestic LDPE offers vary widely (44,000-44,500 North vs ~40,000 South clearance); Chinese LLDPE the floor at 31,500 VND/kg."
    ],
    "paras": [
-    "International PE offers to Vietnam softened further this week as buyers held back and sellers cut prices to clear circulating inventory. With most distributors trying to draw stock down to low levels and avoid holding high-cost cargo, many commercial sellers accepted sharp discounts despite limited spot availability. Trading stayed thin, with buyers largely indifferent and declining to bid at current offer levels. Unless otherwise noted, import prices below are CIF Vietnam in USD/ton.",
-    "LLDPE:",
-    "The cheapest LLDPE on the market is Chinese-origin material. Petrochina's LLDPE Film was offered at USD 1,100/ton, down 20–30 USD/ton week-on-week, with some domestic buyers reporting that deals could close materially lower, around USD 1,070–1,080/ton. Lotte Chemical Korea's LLDPE injection grade UL814 fell sharply, closing to Vietnamese buyers at USD 1,160/ton — down 150 USD/ton from early June. Separately, an unconfirmed report suggests Sabic (Saudi Arabia) may continue selling off unsold LLDPE grades (July 2026 lot) at just USD 1,100/ton during June, though this still requires verification.",
-    "HDPE:",
-    "Lotte Titan Malaysia had offered July cargo at USD 1,280/ton for HDPE Film and USD 1,330/ton for HDPE blow last week. This week the distributor held HDPE Film flat at USD 1,280/ton and trimmed HDPE blow by 10 USD/ton to USD 1,320/ton, while signaling openness to further negotiation — yet almost no deals were recorded as buyers stayed on the sidelines. In practice, numerous HDPE Film/yarn grades from Lotte Hyundai, SK Chemical and Hanwha (Korea) and from STL and BASF (China) have sold into Vietnam at USD 1,150–1,200/ton, and one major northern manufacturer said it received HDPE Film quotes from commercial sellers starting as low as USD 1,120/ton.",
-    "LDPE:",
-    "Closing sale prices for Lotte Hyundai Korea's LDPE Film grades LF512, LF410 and LF311 reached Vietnamese buyers at USD 1,300/ton for July delivery — among the lowest in the market and a source of strong competitive pressure.",
-    "Domestic market (VND/kg, VAT included):",
-    "LSP has nearly cleared its PP and PE inventory after focusing on exports during the recent one-month furnace shutdown. This week LSP offered only a small volume of HDPE blow — 38,800 VND/kg in the south and 39,500 VND/kg in the north — with few deals concluded; some commercial sellers continued to quote LSP PE well below those levels, and LSP's distribution office was also marketing Chinese-origin HDPE. Spreads between distributors remain wide: HDPE yarn 3301 (SK Chemical, Korea) was offered at 36,500 VND/kg and HDPE yarn MF5000 (Lotte Hyundai, Korea) at 37,500 VND/kg, down 500 VND/kg from late last week. Middle Eastern HDPE Film was commonly quoted at 37,000–38,000 VND/kg, while one large customer reportedly imported HDPE FS7000 (STL, China) at just 34,800 VND/kg — though smaller buyers were still seeing offers around 36,000 VND/kg.",
-    "In LDPE, a leading distributor offered LDPE Film 260GG (Lotte Titan, Malaysia) at 45,000 VND/kg, below most commercial offers; LDPE 2426H (Petrochina, China) was commonly quoted at 44,000–44,500 VND/kg, though some sell-off deals were recorded at just 40,000–40,500 VND/kg. In LLDPE, even premium Middle Eastern grades such as Sabic's 218WJ and Qamar's FD21HS traded at 35,000 VND/kg, while Chinese LLDPE Film was offered at 34,500 VND/kg but had been transacting since last week around 33,000 VND/kg or lower."
+    "Early last week, the offer price of LDPE Film LF512 from South Korea's Lotte Hyundai to Vietnam was announced at 1470 USD/ton/CIF; by the end of the week, the finalized selling price was recorded at 1400 USD/ton/CIF.",
+    "However, according to updates today, June 15, right on the previous weekend, Lotte Hyundai continued to lower the finalized selling price of LDPE Film for some large customers in Vietnam down to 1300 USD/ton/CIF, almost the lowest in the market and creating very strong competitive pressure. The finalized import price of Lotte Hyundai's HDPE Film FL7000 was also recorded at 1180 USD/ton/CIF, equivalent to Chinese BASF's HDPE Film.",
+    "Domestically, the offer price of LDPE among suppliers is recording a very large discrepancy. For example, with Chinese Petrochina's LDPE 2426H, today in the North, the popular offer price was recorded around 44,000-44,500 VND/kg/ with VAT; however, in the South, a seller was recorded \"clearing stock\" with a volume of about 100 tons at only 38,500 VND/kg/ excluding VAT, accepting sales at 40,000-40,500 VND/kg/ with VAT. This is currently the lowest price in the market for LDPE.",
+    "For LLDPE, \"premium\" items originating from the Middle East such as Sabic's 218WJ, Qamar's FD21HS... are still commonly traded around 33,500 VND/kg/ with VAT, moving sideways compared to the end of last week. According to market sources, many buyers bid the price down to below 33,000 VND/kg/ with VAT, but in reality, no seller has been recorded accepting sales at this price mark. The cheapest is still Chinese-origin LLDPE Film when recorded with transaction prices at 33,000 VND/kg/ with VAT, some buyers even revealed signing imports for Chinese Petrochina's LLDPE Film at 31,500 VND/kg/ with VAT...",
+    "The offer price level of various HDPE types is commonly fluctuating from 36,000-39,000 VND/kg/ with VAT; in which HDPE Film/blow originating from the US and China sit in the low-price segment, and not many sellers have been recorded adjusting prices compared to the end of last week...",
+    "According to market sources, the fact that the US and Iran have just agreed on a peace agreement (although both Washington and Tehran have not yet published the agreement text) and the possibility of reopening the Strait of Hormuz in the near future are having a relatively strong impact on the resin trading sentiment early this week. Most market participants assess that the prices of plastic resins in general, and PE in particular, are expected to cool down more clearly.",
+    "Especially in Southeast Asia, prolonged weak demand has reduced buyers' interest in imported goods. Meanwhile, the supply is improving, especially with more South Korean goods offered back to Southeast Asia, keeping the short-term outlook for PE still quite gloomy."
    ]
   },
   "PP": {
    "summary": [
-    "PP offers fell again, led by Thai and Chinese cuts, though homopolymer's decline began to slow as margins thinned.",
-    "IRPC's July cargo down 90-120: homo 1,260, 1126NK 1,350 CFR; Jinneng yarn ~1,180 CIF; NSRP local ~1,130-1,140.",
-    "Domestic: NSRP 114G 33,500 June / 33,000 July (32,800 low); BSR T3034 flat 34,000; copo 36,000-38,000 VND/kg."
+    "ICIS put Vietnam PP yarn/inj at 1,150-1,190 CFR (-20); regional homo/copo/random all fell, random copo -60-100 USD/ton.",
+    "NSRP exported approx 6,000-7,000t homo to China (1,180-1,200) and 8,000-9,000t to India (1,260-1,280); Lotte yarn finalized 1,170.",
+    "Domestic mostly sideways and cautious: PP 114G ~33,200-33,500, T3034 ~34,000; Korean off-grade copo 30,500-31,500 VND/kg."
    ],
    "paras": [
-    "PP offers to Vietnam fell further this week, led by sharp cuts on Thai and Chinese cargo, though the decline in PP homopolymer began to slow as producers and distributors tried to defend already-thin margins. Higher-priced specialty grades kept easing while buying interest stayed weak, and both sides preferred to keep inventories low rather than carry stock. Import prices below are in USD/ton on the basis indicated (CFR, CIF or FOB).",
-    "Imported offers (USD/ton):",
-    "IRPC (Thailand) offered its July 2026 PP and PS cargo at sharply lower levels, down 90–120 USD/ton from early June: PP homopolymer fell to USD 1,260/ton CFR Ho Chi Minh City, PP Film 1126NK to USD 1,350/ton CFR, PP 1100RC to USD 1,310/ton CFR, and B1111 extrusion to USD 1,370/ton CFR. Even after the cuts, IRPC remained relatively high versus the broader market. From Korea, a Lotte Chemical distributor offered PP Film H4540 at USD 1,330/ton CIF — 20 USD/ton below IRPC's film — while Lotte Chemical's raffia grades M9600 and L270A stayed elevated at USD 1,500/ton CIF, little changed on the month; Lotte Hyundai had earlier closed PP yarn to some Vietnamese buyers as low as USD 1,170/ton CIF.",
-    "Chinese material remained the cheapest: Jinneng's PP yarn/injection eased to USD 1,140/ton FOB China (roughly USD 1,180/ton CIF Vietnam), down 35 USD/ton week-on-week, with BOPP correspondingly at USD 1,150/ton FOB; general Chinese PP offers fell 30–40 USD/ton to USD 1,180–1,190/ton FOB, yet still drew little interest. Domestically referenced levels were lower still — NSRP's PP yarn for the local market equated to about USD 1,130–1,140/ton CIF — and with more Korean cargo on offer, PP homopolymer deals slipped to USD 1,170–1,180/ton CIF.",
-    "Domestic market (VND/kg, VAT included):",
-    "Marubeni, NSRP's lead distributor, offered NSRP PP 114G at 33,500 VND/kg for June delivery and 33,000 VND/kg for July, though buyers stayed cautious in placing orders; the lowest commercial deal for 114G since late last week was recorded at 32,800 VND/kg. BSR's PP T3034, after a steep drop the prior week, held flat at 34,000 VND/kg.",
-    "In copolymer, PP copo — including Hyosung Vina's domestic output and imported material — traded broadly at 36,000–38,000 VND/kg. Lotte Korea's raffia grade M9600 ranged 46,000–47,000 VND/kg, while PP Film from Korea, India and Thailand was common at 41,000–42,000 VND/kg, down from the prior week."
+    "According to ICIS pricing published on the last trading day of last week, June 12, the price level of PP yarn/injection in Vietnam last week decreased by an additional 20 USD/ton, down to 1150-1190 USD/ton/CFR. Broadening to the entire Southeast Asia and China region, prices of all PP homo, copo, and random types last week also decreased, with the decrease margin commonly from 10-40 USD/ton, PP random copo decreased sharply by 60-100 USD/ton.",
+    "In Southeast Asia, buyers' interest in imported PP was limited; stagnant end-product demand and weak domestic prices continued to put heavy pressure on purchasing sentiment. Many buyers have stocked up enough inventory to meet production for June and July, so they are hesitant to buy more, especially when perceiving that prices may continue to fall; meanwhile, some suppliers and traders still want to sell to clear their inventories.",
+    "Also last week, through a synthesis of market sources, large distributors of Nghi Son Refinery and Petrochemical (NSRP) Vietnam exported approximately 6,000-7,000 tons of PP homo to the Chinese market, with finalized prices ranging from 1180-1200 USD/ton/CIF. Some other sources said that, besides China, from the beginning of June until now, NSRP also exported approximately 8,000-9,000 tons of PP to the Indian market, with an average price of 1260-1280 USD/ton/CIF.",
+    "On the import side, today, June 15, some buyers shared that they received finalized import quotes for Lotte Hyundai's PP yarn at 1170 USD/ton/CIF. However, new offers from China remain cautious and keep prices relatively high. For example, for PP yarn, the offer price from a Jinneng distributor to Vietnam remains at 1210 USD/ton/CIF, higher than the aforementioned Hyundai-origin goods...",
+    "Not many import offers for PP from other origins have been recorded on the first trading day of the new week. However, information about the US and Iran having just agreed on a peace agreement (although both Washington and Tehran have not yet published the agreement text) and the possibility of reopening the Strait of Hormuz in the near future have led to assessments that prices of plastic resins in general, and PP in particular, will cool down more clearly.",
+    "Even so, in domestic trading today, not many sellers have been recorded adjusting PP prices compared to the end of last week. Market sentiment remains cautious, as both sellers and buyers want to further observe the price trend of the new week before deciding to adjust.",
+    "\"For domestic PP plastic trading companies, most have cleared a relatively large amount of inventory recently and currently only hold a low level of inventory for rotation, applying a fast buy-fast sell tactic and accepting thin margins\" – a source said.",
+    "In fact, late last week, in the North, some transactions for NSRP's PP 114G were recorded at 33,000 VND/kg/ with VAT, and even large-volume container buyers could finalize imports at a price of 22,800 VND/kg/ with VAT. This is almost the cheapest PP yarn item in the market at this time. Today, many commercial sellers still keep the offer price of PP 114G at a higher level, around 33,200-33,500 VND/kg/ with VAT.",
+    "BSR's PP T3034 goods last week also decreased very sharply to the level of 34,000 VND/kg/ with VAT. Entering the beginning of this week, offer prices from distributors mainly moved sideways.",
+    "Regarding PP copo and random, in the North, a distributor in the middle of this week offered South Korea Lotte's PP random copo J560s at 37,000 VND/kg/ with VAT, a sharp drop of up to 8,000 VND/kg compared to their own offer price in the middle of May. The offer price dropped deeply in the context where many other sellers continuously lowered prices to compete, and also because South Korean off-grade (OG) PP copo goods have lowered transaction prices down to only 30,500-31,500 VND/kg/ with VAT.",
+    "In the South, the selling offer price of PP copo (calculated generally for all origins) is commonly fluctuating in the range of 36,000-38,000 VND/kg/ with VAT, decreasing sharply compared to last week. South Korea Lotte's PP coating M9600 goods last week had the lowest offer at 48,000 VND/kg/ with VAT, but entering this week continued to decrease, with the lowest recorded finalized selling price at 46,000 VND/kg/ with VAT. Hyosung Vina's PP random originating from Vietnam is offered in the range of about 46,000-47,000 VND/kg/ with VAT...",
+    "Overall, although LSP has stopped production and only has a little PP copo inventory remaining (out of PP homo), our country's domestic PP homo supply is still in oversupply, because the production output from the remaining domestic plants remains strong. Import PP shipments from South Korea are gradually increasing again, keeping competition fierce."
    ]
   },
   "PVC": {
    "summary": [
-    "PVC weakened with import and domestic cuts into thin demand; carbide-based held up better than oil-based grades.",
-    "AGC cut K66/K58 a further 20 on Jun 17 morning to 730-740 CIF for 500t+ orders, though buyers stayed cautious.",
-    "Domestic: Yihua SG-5 21,500; oil-based 22,500-23,000; SCG SG660 23,600 (-400); AGC Vina PM66R ~21,816-22,248 incl VAT."
+    "SCG offered July to Vietnam: SP660 765, SG660 775 CIF (-55-60 m/m), with finalized quotes as low as 750 to large buyers.",
+    "July import slate: Formosa S65 780, AGC K66 750-760 (740 for 1,000t+), Sinopec/LG 700, Shintech SE950 690 CIF.",
+    "AGC Vina cut domestic PM66R approx 2,500-2,800 VND/kg to ~21,816-22,248 incl. VAT; commercial oil-based PVC at 22,500-23,000."
    ],
    "paras": [
-    "PVC offers to Vietnam also weakened this week, with import sellers and domestic distributors alike cutting prices into thin demand. Carbide-based (coal) PVC held its value better than oil-based grades, which saw the steepest commercial cuts, while buyers committed only cautiously even at the lower levels. Import prices below are CIF Vietnam in USD/ton.",
-    "Imported offers (USD/ton):",
-    "AGC Group had offered PVC K66 (July 2026 lot) from its Vinythai (Thailand, AVT) and Asahimas (Indonesia, ASC) plants at USD 750–760/ton CIF depending on volume, with orders above 1,000 tons quoted at USD 740/ton CIF — though the cargo had drawn limited buying. On the morning of 17 June, the distributor announced a further 20 USD/ton discount on all K66 and K58 grades for customers taking 500 tons or more, cutting AGC's PVC to USD 730–740/ton CIF; even so, few buyers were ready to commit to 500-ton-plus lots at that level.",
-    "Domestic market (VND/kg, VAT included):",
-    "On the commercial market, a leading distributor offered Yihua's PVC SG-5 at 21,500 VND/kg at Yen Vien (Hanoi), down 200 VND/kg week-on-week for end-June delivery — evidence that carbide-based PVC has held up better and traded more steadily than oil-based material. Oil-based PVC, by contrast, saw heavier cuts, with offers commonly down to 22,500–23,000 VND/kg, only about 1,000 VND/kg above carbide-based grades; one large distributor offered AGC Vinythai's PVC 266RC (Thailand) as low as 22,200 VND/kg in both the north and south.",
-    "Among other Thai cargo, a large northern distributor offered SCG's PVC SG660 at 23,600 VND/kg, down 400 VND/kg from last week, though trade was slow; Formosa Taiwan's PVC S65 was still offered above 25,000 VND/kg but aimed mainly at long-standing customers rather than priced to compete broadly. Separately, AGC's local plant AGC Vina (ACNV) offered PVC PM66R (July 2026 lot) to the domestic market at 20,400–20,600 VND/kg excluding VAT for medium and small buyers and 20,200 VND/kg excluding VAT for the largest — equivalent to 21,816–22,248 VND/kg with 8% VAT, for delivery in the south."
+    "Late last week, Thailand's SCG announced offer prices for July PVC shipments to Vietnamese buyers. Accordingly, the offer price for SP660 is at 765 USD/ton/CIF, and the offer price for SG660 is at 775 USD/ton/CIF, which is 55-60 USD/ton lower compared to the finalized selling price last month. Some large domestic customers said they received finalized quotes from SCG at 750 USD/ton/CIF, however, they remain cautious and are not in a hurry to sign for large quantities.",
+    "Last week, several major manufacturers in Asia also offered July PVC to Vietnam. Among them, Formosa Taiwan offered PVC S65 at 780 USD/ton/CIF (subject to a 5% import tax); the offer price for PVC K66 from AGC Group’s two plants, Vinythai Thailand (AVT) and Ashahimas Indonesia (ASC), was at 750-760 USD/ton/CIF depending on the volume, with large purchases over 1000 tons offered at 740 USD/ton/CIF; the finalized import price of oil-based PVC from Sinopec, LG Chem, and Hygain China was recorded at 700 USD/ton/CIF; the finalized selling price of PVC SE950/ SE1000 from America’s Shintech was at 690 USD/ton/CIF...",
+    "Domestically, according to today's update, late last week, domestic manufacturer AGC Vina (ACVN) offered July 2026 PVC prices to the domestic market. The offer price for PVC PM66R is at 20,400-20,600 VND/kg/ excluding VAT for medium-to-small customers (depending on volume); the offer price is 20,200 VND/kg/ excluding VAT for the largest customers. Calculating the full 8% VAT, ACVN's offer price this month is around 21,816-22,248 VND/kg/ with VAT. Goods are delivered in the South. Compared to last month, ACVN’s PVC offer price this month dropped sharply by 2,500-2,800 VND/kg.",
+    "The remaining PVC manufacturer in Vietnam, TPC Vina, has not offered new shipment prices yet. However, in the commercial market, trading units with leftover inventories also continuously lowered prices to clear stock.",
+    "In the commercial market, today's selling offer prices for oil-based PVC of various origins (such as China's Sinopec, America's Shintech, or Thailand's SCG...) are commonly in the range of 22,500-23,000 VND/kg/ with VAT. Buyers are still only signing contracts moderately in small quantities because ACVN's domestic PVC price has dropped to 22,000 VND/kg/ with VAT, and also because the price outlook for July PVC is highly likely to continue decreasing as the rainy season approaches.",
+    "In the North, a distributor today also lowered the offer price for Thai SCG's PVC SG660 down to 23,600 VND/kg/ with VAT, a decrease of 400 VND/kg compared to last week, but trading remains very slow. Meanwhile, coal-based PVC SG-5 originating from China maintains its lowest offer price at 21,500 VND/kg/ with VAT, moving sideways or decreasing insignificantly compared to the end of last week..."
    ]
   }
  },
- "generatedAt": "2026-06-17T20:32:20.551573Z",
- "latestLabel": "6/17",
- "dateHuman": "Jun 17, 2026",
- "dateUpper": "JUN 17, 2026",
- "dateFile": "0617",
- "rangeHuman": "Mar–Jun 17, 2026"
+ "generatedAt": "2026-06-17T20:32:20.542962Z",
+ "latestLabel": "6/16",
+ "dateHuman": "Jun 16, 2026",
+ "dateUpper": "JUN 16, 2026",
+ "dateFile": "0616",
+ "rangeHuman": "Mar–Jun 16, 2026"
 }
