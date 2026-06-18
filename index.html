@@ -598,7 +598,9 @@ async function buildPDF(){
       .replace(/~\s*/g,'approx ')                     // tilde (incl. mapped almost-equal) not in font -> "approx "
       .replace(/\u00B7/g,'-')                         // middle dot -> hyphen
       .replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"') // smart quotes
-      .replace(/\u2026/g,'...');                       // ellipsis
+      .replace(/\u2026/g,'...')                        // ellipsis
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // strip combining accents (Vietnamese etc.)
+      .replace(/\u0111/g,'d').replace(/\u0110/g,'D');  // đ/Đ -> d/D (not a combining form)
     const T=(txt,x,yv,opts)=>doc.text(Array.isArray(txt)?txt.map(SAFE):SAFE(txt),x,yv,opts);
 
     const W=210,H=297,M=14;
