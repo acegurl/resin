@@ -561,19 +561,26 @@ const PDF_FONT="SCG"; // embedded SCG typeface
 function offscreenChart(group){
   return new Promise((resolve)=>{
     const cv=document.createElement('canvas');
-    cv.width=1400; cv.height=560;
+    cv.width=1100; cv.height=440;
     cv.style.position='fixed'; cv.style.left='-9999px'; document.body.appendChild(cv);
     const col=GROUPS[group].color;
     const ch=new Chart(cv.getContext('2d'),{
       type:'line',
       data:{labels:L, datasets:[{label:group+' average', data:DATA.groupavg[group],
         borderColor:col, backgroundColor:col+'22', borderWidth:3, pointRadius:0, tension:.32, fill:true, spanGaps:true}]},
-      options:{responsive:false, animation:false, devicePixelRatio:2,
+      options:{responsive:false, animation:false, devicePixelRatio:1.5,
         plugins:{legend:{labels:{color:'#234',font:{size:20}}}},
         scales:{x:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#567',font:{size:15},maxTicksLimit:12}},
           y:{grid:{color:'rgba(0,0,0,.08)'},ticks:{color:'#567',font:{size:15},callback:v=>v+'k'}}}}
     });
-    setTimeout(()=>{ const url=cv.toDataURL('image/png',1.0); ch.destroy(); cv.remove(); resolve(url); }, 60);
+    setTimeout(()=>{
+      // Encode as JPEG, stepping quality down if the image is large, so the
+      // assembled PDF stays comfortably under budget regardless of chart fill.
+      let q=0.82, url=cv.toDataURL('image/jpeg',q);
+      const cap=140*1024; // ~140KB per chart -> 3 charts well under 2MB with fonts+vectors
+      while(url.length*0.75>cap && q>0.4){ q-=0.12; url=cv.toDataURL('image/jpeg',q); }
+      ch.destroy(); cv.remove(); resolve(url);
+    }, 60);
   });
 }
 
@@ -581,7 +588,7 @@ async function buildPDF(){
   const btn=document.getElementById('pdfBtn'); btn.disabled=true; const lbl=btn.innerHTML; btn.innerHTML='Building&hellip;';
   try{
     const { jsPDF }=window.jspdf;
-    const doc=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+    const doc=new jsPDF({unit:'mm',format:'a4',orientation:'portrait',compress:true});
     // register embedded font
     doc.addFileToVFS('SCG-Regular.ttf',FONT_REG_B64);
     doc.addFont('SCG-Regular.ttf',PDF_FONT,'normal');
@@ -709,8 +716,8 @@ async function buildPDF(){
       header(g+' - Price Chart & Product Table', DATA.products[g].length+' grades  -  '+L[0]+' to '+L[L.length-1]);
       let yy=46;
       const img=await offscreenChart(g);
-      const imgW=W-2*M, imgH=imgW*(560/1400);
-      doc.addImage(img,'PNG',M,yy,imgW,imgH); yy+=imgH+6;
+      const imgW=W-2*M, imgH=imgW*(440/1100);
+      doc.addImage(img,'JPEG',M,yy,imgW,imgH); yy+=imgH+6;
       const rows=DATA.meta[g].map(m=>{
         const s=m.series; const nn=s.map((v,i)=>[v,i]).filter(p=>p[0]!=null);
         const latest=nn.length?nn[nn.length-1][0]:null;
