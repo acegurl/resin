@@ -564,6 +564,9 @@ function offscreenChart(group){
     cv.width=1100; cv.height=440;
     cv.style.position='fixed'; cv.style.left='-9999px'; document.body.appendChild(cv);
     const col=GROUPS[group].color;
+    // JPEG has no alpha, so a transparent canvas would encode as black. Paint the
+    // canvas white first to restore the white chart background in the PDF.
+    const whiteBg={id:'whiteBg',beforeDraw:(c)=>{const x=c.ctx;x.save();x.globalCompositeOperation='destination-over';x.fillStyle='#ffffff';x.fillRect(0,0,c.width,c.height);x.restore();}};
     const ch=new Chart(cv.getContext('2d'),{
       type:'line',
       data:{labels:L, datasets:[{label:group+' average', data:DATA.groupavg[group],
@@ -571,7 +574,8 @@ function offscreenChart(group){
       options:{responsive:false, animation:false, devicePixelRatio:1.5,
         plugins:{legend:{labels:{color:'#234',font:{size:20}}}},
         scales:{x:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#567',font:{size:15},maxTicksLimit:12}},
-          y:{grid:{color:'rgba(0,0,0,.08)'},ticks:{color:'#567',font:{size:15},callback:v=>v+'k'}}}}
+          y:{grid:{color:'rgba(0,0,0,.08)'},ticks:{color:'#567',font:{size:15},callback:v=>v+'k'}}}},
+      plugins:[whiteBg]
     });
     setTimeout(()=>{
       // Encode as JPEG, stepping quality down if the image is large, so the
