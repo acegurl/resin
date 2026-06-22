@@ -668,16 +668,15 @@ async function buildPDF(){
     header('Market Overview','Daily assessment of Vietnam PE / PP / PVC resin prices');
     let y=48;
     const ED=DATA.editorial||{}; const OVED=ED.overview||{};
-    const OV=['PP','PE','PVC'].map(g=>({g, sub:(OVED[g]&&OVED[g].sub)||'', col:COLW[g]}));
+    const OV=['PP','PE','PVC'].map(g=>({g, sub:(OVED[g]&&OVED[g].sub)||'', bullets:(OVED[g]&&OVED[g].bullets)||[], col:COLW[g]}));
     OV.forEach(o=>{
-      const r=REPORTS[o.g];
       doc.setFillColor(o.col[0],o.col[1],o.col[2]); doc.circle(M+1.5,y-1.4,1.4,'F');
       F('bold'); doc.setFontSize(11); doc.setTextColor(o.col[0],o.col[1],o.col[2]);
       T(o.g,M+5,y); const gw=doc.getTextWidth(o.g);
       F('normal'); doc.setFontSize(9); doc.setTextColor(DIM[0],DIM[1],DIM[2]);
       T('- '+o.sub,M+5+gw+1.5,y);
       y+=5.5; doc.setFontSize(8.7); doc.setTextColor(70,90,100);
-      r.summary.forEach(b=>{
+      o.bullets.forEach(b=>{
         const lines=doc.splitTextToSize(SAFE(b),W-2*M-6);
         doc.setFillColor(o.col[0],o.col[1],o.col[2]); doc.circle(M+3,y-1.1,.7,'F');
         T(lines,M+6,y); y+=lines.length*4.3+1.4;
