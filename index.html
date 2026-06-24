@@ -19,7 +19,7 @@
     --coral:#e23a4e; --coral-soft:#c0354a;
     --amber:#d59320; --green:#1ba37a;
     --dec:#e23a4e; --inc:#1ba37a;   /* decrease=red(up arrow), increase=green(down arrow) */
-    --pp:#e23a4e; --pe:#1f9cc4; --pvc:#d59320;
+    --pp:#0070C0; --pe:#C00000; --pvc:#00B050;
     --mono:'SCG',ui-monospace,'SF Mono',Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -49,7 +49,7 @@
   .pdf-btn:disabled{opacity:.6;cursor:wait}
   .pdf-btn .pdf-ic{font-size:14px;font-weight:700}
   .masthead h1{font-weight:800;font-size:clamp(22px,3.4vw,34px);letter-spacing:-.5px;line-height:1.05}
-  .masthead h1 span{color:var(--pe)}
+  .masthead h1 span{color:var(--ink)}
   .dateline{text-align:right}
   .dateline .d{font-family:var(--mono);font-size:13px;color:var(--ink-dim);letter-spacing:1px}
   .dateline .sub{font-size:11.5px;color:var(--ink-faint);margin-top:3px;letter-spacing:.4px;text-transform:uppercase}
@@ -333,13 +333,13 @@ function setupConstants(){
   L = DATA.labels;
   NL = L.length;
   GROUPS = {
-    PP:{color:'#ff7e8a', avg:S.PP.avg, delta:S.PP.delta, label:'PP'},
-    PE:{color:'#5fd0e6', avg:S.PE.avg, delta:S.PE.delta, label:'PE'},
-    PVC:{color:'#ffc857', avg:S.PVC.avg, delta:S.PVC.delta, label:'PVC'}
+    PP:{color:'#0070C0', avg:S.PP.avg, delta:S.PP.delta, label:'PP'},
+    PE:{color:'#C00000', avg:S.PE.avg, delta:S.PE.delta, label:'PE'},
+    PVC:{color:'#00B050', avg:S.PVC.avg, delta:S.PVC.delta, label:'PVC'}
   };
   REPORTS = DATA.reports;
   const ED = DATA.editorial || {};
-  const COLMAP={PP:'#ff7e8a',PE:'#5fd0e6',PVC:'#ffc857'};
+  const COLMAP={PP:'#0070C0',PE:'#C00000',PVC:'#00B050'};
   const ovsrc = ED.overview || {};
   OVERVIEW = ['PP','PE','PVC'].filter(g=>ovsrc[g]).map(g=>({
     col:COLMAP[g], title:g, sub:ovsrc[g].sub||'',
@@ -534,7 +534,7 @@ function setupDateControls(){
 }
 
 /* ---- report modal ---- */
-const RPTCOL={PP:'#ff7e8a',PE:'#5fd0e6',PVC:'#ffc857'};
+const RPTCOL={PP:'#0070C0',PE:'#C00000',PVC:'#00B050'};
 const rptOverlay=document.getElementById('rptOverlay');
 const rptBody=document.getElementById('rptBody');
 let rptGroup='PP';
@@ -623,7 +623,7 @@ async function buildPDF(){
     const W=210,H=297,M=14;
     const INK=[20,40,52], DIM=[90,110,120], FAINT=[140,160,168];
     const CORAL=[255,91,110], GREEN=[46,180,130], RED=[230,70,90];
-    const COLW={PP:[255,126,138],PE:[60,160,200],PVC:[210,168,40]};
+    const COLW={PP:[0,112,192],PE:[192,0,0],PVC:[0,176,80]};
 
     // draw a small up/down/flat triangle as vector (no glyph dependency)
     function arrow(dir,cx,cy,c){ // dir: 1 up, -1 down, 0 flat
