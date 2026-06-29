@@ -81,9 +81,7 @@
   .ov-body li{list-style:none;font-size:13.2px;line-height:1.55;padding-left:18px;position:relative;margin:5px 0;opacity:.92}
   .ov-body li::before{content:'';position:absolute;left:3px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--secCol,var(--coral-soft));opacity:.95}
 
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:15px}
-  .stats.row2{grid-template-columns:repeat(3,1fr)}
-  .stats.row3{grid-template-columns:1fr}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}
   @media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)} .stats.row2{grid-template-columns:repeat(2,1fr)} .stats.row3{grid-template-columns:1fr}}
   .stat{background:rgba(20,50,65,.02);border:1px solid rgba(20,50,65,.12);border-left:3px solid transparent;border-radius:13px;padding:15px 15px 14px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
@@ -729,12 +727,18 @@ async function buildPDF(){
     y+=1; F('bold'); doc.setFontSize(10.5); doc.setTextColor(INK[0],INK[1],INK[2]);
     T('Domestic Average - VND/kg',M,y); y+=5;
     const cardW=(W-2*M-2*6)/3, cardH=24;
-    [['PP',S.PP],['PE',S.PE],['PVC',S.PVC]].forEach((it,i)=>{
+    // Display group averages (PP, PE, PVC) instead of old structure
+    const groupData = [
+      ['PP', DATA.groupavg?.PP?.[DATA.groupavg.PP.length-1] || 0, (DATA.groupavg?.PP?.[DATA.groupavg.PP.length-1] || 0) - (DATA.groupavg?.PP?.[DATA.groupavg.PP.length-2] || 0)],
+      ['PE', DATA.groupavg?.PE?.[DATA.groupavg.PE.length-1] || 0, (DATA.groupavg?.PE?.[DATA.groupavg.PE.length-1] || 0) - (DATA.groupavg?.PE?.[DATA.groupavg.PE.length-2] || 0)],
+      ['PVC', DATA.groupavg?.PVC?.[DATA.groupavg.PVC.length-1] || 0, (DATA.groupavg?.PVC?.[DATA.groupavg.PVC.length-1] || 0) - (DATA.groupavg?.PVC?.[DATA.groupavg.PVC.length-2] || 0)]
+    ];
+    groupData.forEach((it,i)=>{
       const x=M+i*(cardW+6);
       doc.setFillColor(244,248,250); doc.setDrawColor(225); doc.roundedRect(x,y,cardW,cardH,2,2,'FD');
       F('bold'); doc.setFontSize(7.5); doc.setTextColor(FAINT[0],FAINT[1],FAINT[2]); doc.text(it[0]+' AVG PRICE',x+4,y+6);
-      F('bold'); doc.setFontSize(15); doc.setTextColor(INK[0],INK[1],INK[2]); doc.text(it[1].avg.toLocaleString('en-US'),x+4,y+14);
-      chgCell(it[1].delta,null,x+cardW-4,y+20);
+      F('bold'); doc.setFontSize(15); doc.setTextColor(INK[0],INK[1],INK[2]); doc.text(Math.round(it[1]).toLocaleString('en-US'),x+4,y+14);
+      chgCell(it[2],null,x+cardW-4,y+20);
       F('normal'); doc.setFontSize(7); doc.setTextColor(DIM[0],DIM[1],DIM[2]); doc.text('vs last',x+4,y+20);
     });
     y+=cardH+5;
