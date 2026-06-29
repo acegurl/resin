@@ -19,7 +19,7 @@
     --coral:#e23a4e; --coral-soft:#c0354a;
     --amber:#d59320; --green:#1ba37a;
     --dec:#e23a4e; --inc:#1ba37a;   /* decrease=red(up arrow), increase=green(down arrow) */
-    --pp:#0070C0; --pe:#C00000; --pvc:#00B050;
+    --pp:#0070C0; --pe:#C00000; --pvc:#7030A0; --ll:#00B050;
     --mono:'SCG',ui-monospace,'SF Mono',Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -81,15 +81,22 @@
   .ov-body li{list-style:none;font-size:13.2px;line-height:1.55;padding-left:18px;position:relative;margin:5px 0;opacity:.92}
   .ov-body li::before{content:'';position:absolute;left:3px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--secCol,var(--coral-soft));opacity:.95}
 
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-  .stat{background:rgba(20,50,65,.04);border:1px solid rgba(20,50,65,.09);border-radius:13px;padding:15px 15px 14px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
-  .stat:hover{border-color:var(--cardEdge);transform:translateY(-2px)}
-  .stat.active{border-color:var(--coral);box-shadow:0 0 0 1px var(--coral) inset}
-  .stat .lbl{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
-  .stat .big{font-family:var(--mono);font-weight:700;font-size:clamp(20px,3vw,27px);color:var(--ink);margin-top:7px;line-height:1}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:15px}
+  .stats.row2{grid-template-columns:repeat(3,1fr)}
+  .stats.row3{grid-template-columns:1fr}
+  @media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)} .stats.row2{grid-template-columns:repeat(2,1fr)} .stats.row3{grid-template-columns:1fr}}
+  .stat{background:rgba(20,50,65,.02);border:1px solid rgba(20,50,65,.12);border-left:3px solid transparent;border-radius:13px;padding:15px 15px 14px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+  .stat[data-g*="PP"]{border-left-color:#0070C0;border-color:rgba(0,112,192,.25);background:rgba(0,112,192,.04)}
+  .stat[data-g*="HD"]{border-left-color:#C00000;border-color:rgba(192,0,0,.25);background:rgba(192,0,0,.04)}
+  .stat[data-g*="LL"]{border-left-color:#00B050;border-color:rgba(0,176,80,.25);background:rgba(0,176,80,.04)}
+  .stat:hover{border-color:rgba(20,50,65,.25);transform:translateY(-2px);background:rgba(20,50,65,.05)}
+  .stat.active{border-color:var(--ink-faint);box-shadow:0 0 0 1px var(--ink-faint) inset}
+  .stat .lbl{font-family:'SCG',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .stat .big{font-family:'SCG',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(20px,3vw,27px);color:var(--ink);margin-top:7px;line-height:1}
   .stat .unit{font-size:11px;color:var(--ink-faint);font-weight:500}
   .stat .delta{margin-top:8px;font-size:12px;font-family:var(--mono);display:flex;align-items:center;gap:5px}
-  .stats-2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px}
+  .stats-2{display:none;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px}
   .stat .note{font-size:11.5px;color:var(--ink-dim);margin-top:7px;line-height:1.4}
 
   /* unified change token: arrow + value. up=red, down=green */
@@ -104,10 +111,14 @@
 
   .chart-panel{margin-top:14px}
   .chart-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:6px}
-  .seg{display:inline-flex;background:rgba(20,50,65,.05);border:1px solid rgba(20,50,65,.12);border-radius:11px;padding:4px;gap:3px}
-  .seg button{font-weight:600;font-size:12.5px;color:var(--ink-dim);background:none;border:none;padding:7px 15px;border-radius:8px;cursor:pointer;transition:.18s;letter-spacing:.4px}
-  .seg button.on{color:#ffffff}
-  .seg button.on.pp{background:var(--pp)} .seg button.on.pe{background:var(--pe)} .seg button.on.pvc{background:var(--pvc)}
+  .seg{display:inline-flex;background:rgba(20,50,65,.05);border:1px solid rgba(20,50,65,.12);border-radius:11px;padding:4px;gap:3px;flex-wrap:wrap}
+  .seg button{font-family:'SCG',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-weight:600;font-size:12.5px;color:var(--ink-dim);background:rgba(20,50,65,.05);border:1px solid rgba(20,50,65,.15);padding:8px 16px;border-radius:10px;cursor:pointer;transition:.18s;letter-spacing:.4px}
+  .seg button:hover{background:rgba(20,50,65,.08);border-color:rgba(20,50,65,.25)}
+  .seg button.on{color:#ffffff;font-weight:700;background:rgba(20,50,65,.05);border-color:transparent}
+  .seg button[data-g*="PP"].on{background:#0070C0}
+  .seg button[data-g*="HD"].on{background:#C00000}
+  .seg button[data-g*="LL"].on{background:#00B050}
+  .seg button[data-g*="PVC"].on{background:#7030A0}
   .chart-meta{font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
   .chart-box{position:relative;height:300px;margin-top:8px}
   .pick-hint{font-size:11.5px;color:var(--ink-faint);margin-top:4px}
@@ -220,7 +231,7 @@
       <div id="overview"></div>
     </div>
     <div class="panel">
-      <h2>Domestic Average &middot; VND/kg</h2>
+      <h2>VND/kg</h2>
       <div class="stats" id="statRow"></div>
       <div class="stats-2">
         <div class="stat" style="cursor:default">
@@ -247,11 +258,15 @@
 
   <div class="panel chart-panel">
     <div class="chart-head">
-      <h2 style="margin:0">Price Trend &middot; group average</h2>
+      <h2 style="margin:0">Price Trend &middot; subcategory average</h2>
       <div class="seg" id="grpSeg">
-        <button data-g="PP" class="on pp">PP</button>
-        <button data-g="PE" class="pe">PE</button>
-        <button data-g="PVC" class="pvc">PVC</button>
+        <button data-g="PP injection" class="on">PP injection</button>
+        <button data-g="PP yarn">PP yarn</button>
+        <button data-g="PP copo">PP copo</button>
+        <button data-g="HD blow">HD blow</button>
+        <button data-g="HD film">HD film</button>
+        <button data-g="HD yarn">HD yarn</button>
+        <button data-g="LL film">LL film</button>
       </div>
     </div>
     <div class="chart-meta" id="chartMeta"></div>
@@ -332,11 +347,33 @@ function setupConstants(){
   S = DATA.summary;
   L = DATA.labels;
   NL = L.length;
-  GROUPS = {
-    PP:{color:'#0070C0', avg:S.PP.avg, delta:S.PP.delta, label:'PP'},
-    PE:{color:'#C00000', avg:S.PE.avg, delta:S.PE.delta, label:'PE'},
-    PVC:{color:'#00B050', avg:S.PVC.avg, delta:S.PVC.delta, label:'PVC'}
+  
+  // Initialize GROUPS from subcategory summary data
+  GROUPS = {};
+  const subCatColors={
+    'PP injection':'#0070C0', 'PP yarn':'#0070C0', 'PP copo':'#0070C0',
+    'HD blow':'#C00000', 'HD film':'#C00000', 'HD yarn':'#C00000', 'HD injection':'#C00000',
+    'LL film':'#00B050', 'PVC':'#7030A0'
   };
+  
+  if(S.subcats) {
+    Object.keys(S.subcats).forEach(cat=>{
+      if(S.subcats[cat]){
+        GROUPS[cat]={
+          color:subCatColors[cat]||'#999999',
+          avg:S.subcats[cat].avg,
+          delta:S.subcats[cat].delta,
+          label:cat
+        };
+      }
+    });
+  }
+  
+  // Set active group to first available
+  if(!activeGroup && Object.keys(GROUPS).length>0) {
+    activeGroup=Object.keys(GROUPS)[0];
+  }
+  
   REPORTS = DATA.reports;
   const ED = DATA.editorial || {};
   const COLMAP={PP:'#0070C0',PE:'#C00000',PVC:'#00B050'};
@@ -348,7 +385,7 @@ function setupConstants(){
   REGIONAL = (ED.regional||[]).map(r=>({l:r.l, v:r.v, d:r.d}));
 }
 
-let activeGroup='PP', sortKey='v', sortDir=-1, overlay=null;
+let activeGroup=null, sortKey='v', sortDir=-1, overlay=null;
 let rStart=0, rEnd=0, cmpIdx=0;
 
 /* ---- unified change token builder ---- */
@@ -388,10 +425,19 @@ OVERVIEW.forEach((o,i)=>{
 });
 
 const sr=document.getElementById('statRow');
-Object.entries(GROUPS).forEach(([g,o])=>{
+// Order: PP group (4 cards in row 1), HD group (3 cards in row 2), LL/PVC (row 3)
+const groupOrder=['PP injection','PP yarn','PP copo','HD injection','HD blow','HD film','HD yarn','LL film','PVC'];
+const cardColors={'PP injection':'#0070C0','PP yarn':'#0070C0','PP copo':'#0070C0','HD injection':'#C00000',
+  'HD blow':'#C00000','HD film':'#C00000','HD yarn':'#C00000','LL film':'#00B050','PVC':'#7030A0'};
+const sortedEntries=groupOrder.map(g=>[g,GROUPS[g]]).filter(([g,o])=>o);
+
+sortedEntries.forEach(([g,o])=>{
   const card=document.createElement('div');
   card.className='stat'+(g===activeGroup?' active':''); card.dataset.g=g;
-  card.innerHTML='<div class="lbl">'+o.label+' avg price</div>'+
+  const borderColor=cardColors[g]||'#999';
+  card.style.borderColor=borderColor;
+  card.style.borderWidth='2px';
+  card.innerHTML='<div class="lbl">'+o.label.toUpperCase()+'</div>'+
     '<div class="big">'+o.avg.toLocaleString('en-US')+'</div>'+
     '<div class="delta">'+chgToken(o.delta, Math.abs(o.delta).toLocaleString()+' vs last', false)+'</div>';
   card.onclick=()=>selectGroup(g);
@@ -797,7 +843,7 @@ function clearPainted(){
 function renderAll(){
   setupConstants();
   rStart=0; rEnd=NL-1; cmpIdx=NL-2;
-  activeGroup='PP'; overlay=null; sortKey='v'; sortDir=-1;
+  overlay=null; sortKey='v'; sortDir=-1;
   paintStatic();
   setupDateControls();
   updRangeLabels(); updCmpHead(); buildChart(); renderTable();
