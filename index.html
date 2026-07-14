@@ -65,8 +65,7 @@
   .section-label .stamp{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--ink-faint);text-transform:none}
 
   .grid{display:grid;gap:14px}
-  .top{grid-template-columns:1.05fr 1.35fr;align-items:stretch}
-  @media(max-width:860px){.top{grid-template-columns:1fr}}
+  .top{grid-template-columns:1fr;align-items:stretch}
 
   .ov-row{padding:13px 0;border-bottom:1px solid rgba(20,50,65,.08)}
   .ov-row:last-child{border-bottom:none;padding-bottom:2px}
@@ -218,7 +217,7 @@
   </div>
 
   <div class="grid top">
-    <div class="panel">
+    <div class="panel" style="display:none">
       <div class="panel-head">
         <h2>Market Overview</h2>
         <div class="ov-date-wrap" id="ovDateWrap">
