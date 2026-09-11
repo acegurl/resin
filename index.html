@@ -287,10 +287,11 @@
   </div>
 
   <div class="panel tbl-panel">
-    <div class="chart-head"><h2 style="margin:0" id="tblTitle">Products</h2></div>
+    <div class="chart-head"><h2 style="margin:0" id="tblTitle">Domestic Prices</h2></div>
     <div class="tbl-tools">
       <div class="seg tblseg" id="matSeg">
-        <button data-m="PP" class="on">PP</button>
+        <button data-m="ALL" class="on">All</button>
+        <button data-m="PP">PP</button>
         <button data-m="PE">PE</button>
         <button data-m="PVC">PVC</button>
       </div>
@@ -579,9 +580,11 @@ function computeRow(m){
     vsl:vsl, pw:pct(latest,m.pwBase), ytd:pct(latest,m.ytdBase), yoy:pct(latest,m.yoyBase),
     series:m.series, noToday:false};
 }
-let tblMat='PP', tblSub=null;
+let tblMat='ALL', tblSub=null;
 function currentTableRows(){
-  let metas = DATA.meta[tblMat] ? DATA.meta[tblMat].slice() : [];
+  let metas;
+  if(tblMat==='ALL'){ metas=[].concat(DATA.meta.PP||[], DATA.meta.PE||[], DATA.meta.PVC||[]); }
+  else { metas = DATA.meta[tblMat] ? DATA.meta[tblMat].slice() : []; }
   if(tblSub) metas=metas.filter(m=>m.sub===tblSub);
   return metas;
 }
@@ -625,8 +628,7 @@ function renderTable(){
       '<td>'+sparkSVG(r.series,gc)+'</td></tr>';
   }).join('');
   tbody.querySelectorAll('tr').forEach(tr=>{tr.onclick=()=>{overlay=overlay===tr.dataset.p?null:tr.dataset.p;buildChart();renderTable();};});
-  const label = tblSub ? tblSub : tblMat;
-  document.getElementById('tblTitle').textContent=label+' Products ('+rows.length+')';
+  document.getElementById('tblTitle').textContent='Domestic Prices';
 }
 
 /* ---- group switching (chart subcategory tabs) ---- */
@@ -652,6 +654,7 @@ function syncFilterButtons(){
 function buildSubSeg(){
   // subcategory chips available within the current material
   const seg=document.getElementById('subSeg'); if(!seg) return;
+  if(tblMat==='ALL'){ seg.innerHTML=''; seg.style.display='none'; return; }
   const subs=SUBCAT_ORDER.filter(s=> (DATA.submat&&DATA.submat[s]===tblMat));
   let html='<button data-s="">All grades</button>';
   html+=subs.map(s=>'<button data-s="'+s+'">'+s+'</button>').join('');
@@ -1014,7 +1017,7 @@ function renderAll(){
   setupConstants();
   rStart=(DATA.chartStart!=null?DATA.chartStart:0); rEnd=NL-1; cmpIdx=NL-2;
   overlay=null; sortKey='v'; sortDir=-1;
-  tblMat='PP'; tblSub=null;
+  tblMat='ALL'; tblSub=null;
   paintStatic();
   buildSubSeg();
   setupDateControls();
