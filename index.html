@@ -153,10 +153,8 @@
 
   .reg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
   @media(max-width:760px){.reg-grid{grid-template-columns:repeat(2,1fr)}}
-  .imp-table td:nth-child(4){font-family:var(--mono);text-align:right;font-weight:600;color:var(--ink)}
-  .imp-table td:nth-child(5){text-align:right;font-family:var(--mono)}
-  .imp-table td:nth-child(1){font-weight:600}
-  .imp-tag{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle}
+  #impPanel td:nth-child(4){font-family:var(--mono);text-align:right;font-weight:600;color:var(--ink)}
+  #impPanel td:nth-child(5){text-align:right;font-family:var(--mono)}
   .reg{background:rgba(20,50,65,.04);border:1px solid rgba(20,50,65,.10);border-radius:13px;padding:14px 15px}
   .reg .rl{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-dim);font-weight:600}
   .reg .rv{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.3vw,20px);color:var(--ink);margin-top:9px}
@@ -232,8 +230,8 @@
       <div id="overview"></div>
     </div>
     <div class="panel">
-      <h2>Daily Average</h2>
-      <div class="stats" id="statRow"></div>
+      <h2 style="display:none">Daily Average</h2>
+      <div class="stats" id="statRow" style="display:none"></div>
       <div class="stats-2" style="display:none">
         <div class="stat" style="cursor:default">
           <div class="lbl">Products Changed</div>
@@ -320,26 +318,26 @@
     </table>
   </div>
 
-  <div class="section-label" style="margin-top:24px">Regional References &middot; $/ton</div>
-  <div class="reg-grid" id="regGrid"></div>
+  <div class="section-label" style="margin-top:24px;display:none">Regional References &middot; $/ton</div>
+  <div class="reg-grid" id="regGrid" style="display:none"></div>
 
-  <div class="panel imp-panel" id="impPanel" style="margin-top:24px">
-    <div class="chart-head"><h2 style="margin:0">Import Prices &middot; USD/ton</h2></div>
+  <div class="panel tbl-panel imp-panel" id="impPanel" style="margin-top:24px">
+    <div class="chart-head"><h2 style="margin:0" id="impTitle">Import Prices</h2></div>
     <div class="tbl-tools">
       <div class="seg tblseg" id="impMatSeg">
         <button data-m="ALL" class="on">All</button>
         <button data-m="PE">PE</button>
         <button data-m="PVC">PVC</button>
       </div>
-      <input class="search" id="impSearch" placeholder="Search products or origin&hellip;">
+      <input class="search" id="impSearch" placeholder="Search grades&hellip;">
     </div>
-    <table class="imp-table">
+    <table>
       <thead><tr>
-        <th data-k="product">Product</th>
-        <th data-k="origin">Origin</th>
-        <th data-k="market">Market / Price type</th>
-        <th data-k="price" style="text-align:right">Price (USD/ton)</th>
-        <th data-k="cmp" style="text-align:right">vs prior</th>
+        <th data-k="product">Grade</th>
+        <th data-k="origin" style="text-align:left">Origin</th>
+        <th data-k="market" style="text-align:left">Market / Price type</th>
+        <th data-k="price" style="text-align:right">Price</th>
+        <th data-k="cmp" style="text-align:right">vs last</th>
       </tr></thead>
       <tbody id="impBody"></tbody>
     </table>
@@ -499,13 +497,14 @@ function renderImports(){
       cmp='<span style="color:'+col+'">'+arrow+String(r.delta).replace(/^\+/,'+')+'</span>'+
           (r.cmpNote&&r.cmpNote!=='nan'?'<span class="muted" style="font-size:11px"> ('+r.cmpNote+')</span>':'');
     }
-    return '<tr><td><span class="imp-tag" style="background:'+c+'"></span>'+(r.product||'')+'</td>'+
-      '<td style="color:var(--ink-dim)">'+(r.origin||'')+'</td>'+
-      '<td style="color:var(--ink-dim);font-size:12px">'+(r.market||'')+'</td>'+
+    return '<tr><td><span class="tag" style="background:'+c+'"></span>'+
+      '<span style="color:'+c+';font-weight:600">'+(r.product||'')+'</span></td>'+
+      '<td style="color:var(--ink-dim);text-align:left">'+(r.origin||'')+'</td>'+
+      '<td style="color:var(--ink-dim);text-align:left;font-size:12px">'+(r.market||'')+'</td>'+
       '<td>'+(r.price||'')+'</td>'+
       '<td>'+cmp+'</td></tr>';
   }).join('');
-  document.querySelector('#impPanel h2').textContent='Import Prices \u00b7 USD/ton ('+rows.length+')';
+  document.getElementById('impTitle').textContent='Import Prices ('+rows.length+')';
 }
 document.querySelectorAll('#impMatSeg button').forEach(b=>b.onclick=()=>{
   impMat=b.dataset.m;
