@@ -133,6 +133,7 @@
   .tblseg button:hover{background:rgba(20,50,65,.06)}
   .tblseg#matSeg button.on{color:#fff;background:var(--ink)}
   .tblseg#impMatSeg button.on{color:#fff;background:var(--ink)}
+  .tblseg#impDateSeg button.on{color:#fff;background:var(--ink)}
   .tblseg#subSeg button.on{color:#fff;background:#0070C0}
   .viewopts{display:inline-flex;gap:14px;align-items:center;margin-left:auto}
   .viewopts label{display:inline-flex;align-items:center;gap:5px;font-family:'SCG',system-ui,sans-serif;font-size:12.5px;font-weight:600;color:var(--ink-dim);cursor:pointer;letter-spacing:.3px}
@@ -337,8 +338,10 @@
   <div class="panel tbl-panel imp-panel" id="impPanel" style="margin-top:24px">
     <div class="chart-head"><h2 style="margin:0" id="impTitle">Import Prices</h2></div>
     <div class="tbl-tools">
+      <div class="seg tblseg" id="impDateSeg"></div>
       <div class="seg tblseg" id="impMatSeg">
         <button data-m="ALL" class="on">All</button>
+        <button data-m="PP">PP</button>
         <button data-m="PE">PE</button>
         <button data-m="PVC">PVC</button>
       </div>
@@ -491,7 +494,7 @@ function renderSentiment(){
       '<span><span class="smat" style="color:'+c+'">'+it.mat+'</span> \u2014 '+(it.headline||'')+'</span></li>';
   }).join('');
 }
-let impMat='ALL';
+let impMat='ALL', impDate=null;
 function impMaterialOf(name){
   const p=(name||'').toUpperCase();
   if(p.indexOf('PVC')>=0) return 'PVC';
@@ -504,6 +507,22 @@ function parseDelta(d){
   const s=String(d).replace(/[^0-9+\-]/g,' ').trim().split(/\s+/)[0];
   const n=parseInt(s,10);
   return isNaN(n)?null:n;
+}
+function impDateKey(s){ if(!s) return -1; const p=String(s).split('/'); return (+p[0])*100+(+p[1]); }
+function buildImpDateSeg(){
+  const seg=document.getElementById('impDateSeg'); if(!seg) return;
+  const list=(DATA.imports||[]);
+  const uniq=[...new Set(list.map(im=>im.offerDate).filter(Boolean))].sort((a,b)=>impDateKey(b)-impDateKey(a));
+  if(!uniq.length){ seg.style.display='none'; return; }
+  seg.style.display='';
+  // default to latest
+  if(impDate===null) impDate=(DATA.importLatest||uniq[0]);
+  seg.innerHTML='<button data-d="ALL">All dates</button>'+
+    uniq.map(d=>'<button data-d="'+d+'">'+d+'</button>').join('');
+  seg.querySelectorAll('button').forEach(b=>{
+    b.classList.toggle('on', b.dataset.d===String(impDate));
+    b.onclick=()=>{ impDate=b.dataset.d; renderImports(); };
+  });
 }
 let impSortKey='product', impSortDir=1;
 function impPriceNum(v){
@@ -519,8 +538,11 @@ function renderImports(){
   const panel=document.getElementById('impPanel');
   if(!list.length){ if(panel) panel.style.display='none'; return; }
   if(panel) panel.style.display='';
+  buildImpDateSeg();
+  document.querySelectorAll('#impDateSeg button').forEach(b=>b.classList.toggle('on',b.dataset.d===String(impDate)));
   const q=(document.getElementById('impSearch').value||'').trim().toLowerCase();
   let rows=list.map(im=>({...im, mat:impMaterialOf(im.product)}));
+  if(impDate && impDate!=='ALL') rows=rows.filter(r=>r.offerDate===impDate);
   if(impMat!=='ALL') rows=rows.filter(r=>r.mat===impMat);
   if(q) rows=rows.filter(r=>(r.product||'').toLowerCase().includes(q)||(r.origin||'').toLowerCase().includes(q));
   // sort
