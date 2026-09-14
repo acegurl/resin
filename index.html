@@ -151,7 +151,7 @@
   tbody .muted{color:var(--ink-faint);opacity:.55}
   .spark{display:block}
   .tag{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
-  @media(max-width:920px){.tbl-panel{overflow-x:auto} .tbl-panel table{min-width:820px}}
+  @media(max-width:960px){.tbl-panel,.imp-panel{overflow-x:auto;-webkit-overflow-scrolling:touch} .tbl-panel table,.imp-panel table{min-width:760px}}
 
   .reg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
   @media(max-width:760px){.reg-grid{grid-template-columns:repeat(2,1fr)}}
@@ -201,6 +201,83 @@
   .rpt-body p{font-size:13.3px;line-height:1.62;color:#26424f;margin:10px 0}
   .rpt-body .divider{height:1px;background:linear-gradient(90deg,var(--accent),transparent);opacity:.4;margin:16px 0 4px}
   .foot{margin-top:22px;font-size:11px;color:var(--ink-faint);text-align:center;line-height:1.6;letter-spacing:.3px}
+
+  /* ============ RESPONSIVE : TABLET ============ */
+  @media(max-width:820px){
+    .panel{padding:17px 16px;border-radius:14px}
+    .stats{grid-template-columns:repeat(2,1fr);gap:9px}
+    .stat{padding:13px 13px 12px}
+    .stat .big{font-size:clamp(19px,5vw,24px)}
+    .chart-box{height:260px}
+    .daterow{padding:12px;gap:12px}
+    .ctl{flex:1 1 auto}
+    .reg-grid{grid-template-columns:repeat(3,1fr)}
+    .rpt-tabs button{padding:8px 13px;font-size:12.5px}
+  }
+
+  /* ============ RESPONSIVE : PHONE ============ */
+  @media(max-width:560px){
+    body{padding:11px}
+    .masthead{align-items:flex-start;gap:10px;margin-bottom:16px}
+    .title-wrap{gap:10px;width:100%}
+    .masthead h1{font-size:clamp(19px,7vw,26px)}
+    .report-date-wrap{padding:4px 8px 4px 10px}
+    .report-date-wrap select{font-size:12px;max-width:130px}
+    .pdf-btn{padding:8px 12px;font-size:12px}
+    .dateline{text-align:left;width:100%}
+    .legend-note{justify-content:flex-start;flex-wrap:wrap;gap:10px}
+
+    .panel{padding:15px 13px;border-radius:13px}
+    .panel h2{font-size:11.5px;letter-spacing:1.2px;margin-bottom:13px}
+    .section-label{font-size:11.5px;letter-spacing:1.1px}
+
+    /* Daily-average cards: single column, larger touch targets */
+    .stats{grid-template-columns:1fr;gap:8px}
+    .stat{padding:14px 15px}
+    .stat .big{font-size:26px}
+
+    /* Full report + sentiment stack */
+    .report-cta{flex-direction:column;align-items:stretch;gap:9px}
+    .rc-label{margin-bottom:2px}
+    .rc-btns{width:100%}
+    .rc-btn{padding:13px 0;font-size:13px}
+    .sent-list li{font-size:13px}
+
+    /* Chart: taller aspect for readability, controls stack */
+    .chart-head{gap:9px}
+    .chart-head h2{font-size:12px}
+    .chart-box{height:230px}
+    .seg{width:100%;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+    .seg button{white-space:nowrap;padding:8px 12px;font-size:12px}
+    .daterow{flex-direction:column;align-items:stretch;padding:12px}
+    .ctl{width:100%}
+    .ctl .row{flex-wrap:wrap}
+
+    /* Table filters full width & scrollable */
+    .tbl-tools{gap:7px}
+    .tblseg{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+    .tblseg button{white-space:nowrap;padding:7px 12px}
+    .viewopts{margin-left:0;width:100%;gap:16px}
+    .search{min-width:0;width:100%}
+
+    /* Regional cards: 2-up, tighter */
+    .reg-grid{grid-template-columns:repeat(2,1fr);gap:9px}
+    .reg{padding:12px 13px}
+    .reg .rv{font-size:clamp(15px,4.5vw,18px)}
+
+    /* Report modal fills screen */
+    .rpt-overlay{padding:0;align-items:flex-end}
+    .rpt-modal{width:100%;max-height:92vh;border-radius:16px 16px 0 0}
+    .rpt-tabs{flex-wrap:wrap}
+
+    .foot{font-size:10.5px;margin-top:18px}
+  }
+
+  /* very narrow phones */
+  @media(max-width:380px){
+    .reg-grid{grid-template-columns:1fr}
+    .stat .big{font-size:24px}
+  }
 </style>
 </head>
 <body>
