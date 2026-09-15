@@ -415,7 +415,7 @@
   <div class="panel tbl-panel imp-panel" id="impPanel" style="margin-top:24px">
     <div class="chart-head"><h2 style="margin:0" id="impTitle">Import Prices</h2></div>
     <div class="tbl-tools">
-      <div class="seg tblseg" id="impDateSeg"></div>
+      <div class="seg tblseg" id="impDateSeg" style="display:none"></div>
       <div class="seg tblseg" id="impMatSeg">
         <button data-m="ALL" class="on">All</button>
         <button data-m="PP">PP</button>
@@ -571,7 +571,7 @@ function renderSentiment(){
       '<span><span class="smat" style="color:'+c+'">'+it.mat+'</span> \u2014 '+(it.headline||'')+'</span></li>';
   }).join('');
 }
-let impMat='ALL', impDate=null;
+let impMat='ALL';
 function impMaterialOf(name){
   const p=(name||'').toUpperCase();
   if(p.indexOf('PVC')>=0) return 'PVC';
@@ -584,22 +584,6 @@ function parseDelta(d){
   const s=String(d).replace(/[^0-9+\-]/g,' ').trim().split(/\s+/)[0];
   const n=parseInt(s,10);
   return isNaN(n)?null:n;
-}
-function impDateKey(s){ if(!s) return -1; const p=String(s).split('/'); return (+p[0])*100+(+p[1]); }
-function buildImpDateSeg(){
-  const seg=document.getElementById('impDateSeg'); if(!seg) return;
-  const list=(DATA.imports||[]);
-  const uniq=[...new Set(list.map(im=>im.offerDate).filter(Boolean))].sort((a,b)=>impDateKey(b)-impDateKey(a));
-  if(!uniq.length){ seg.style.display='none'; return; }
-  seg.style.display='';
-  // default to latest
-  if(impDate===null) impDate=(DATA.importLatest||uniq[0]);
-  seg.innerHTML='<button data-d="ALL">All dates</button>'+
-    uniq.map(d=>'<button data-d="'+d+'">'+d+'</button>').join('');
-  seg.querySelectorAll('button').forEach(b=>{
-    b.classList.toggle('on', b.dataset.d===String(impDate));
-    b.onclick=()=>{ impDate=b.dataset.d; renderImports(); };
-  });
 }
 let impSortKey='product', impSortDir=1;
 function impPriceNum(v){
@@ -615,11 +599,8 @@ function renderImports(){
   const panel=document.getElementById('impPanel');
   if(!list.length){ if(panel) panel.style.display='none'; return; }
   if(panel) panel.style.display='';
-  buildImpDateSeg();
-  document.querySelectorAll('#impDateSeg button').forEach(b=>b.classList.toggle('on',b.dataset.d===String(impDate)));
   const q=(document.getElementById('impSearch').value||'').trim().toLowerCase();
   let rows=list.map(im=>({...im, mat:impMaterialOf(im.product)}));
-  if(impDate && impDate!=='ALL') rows=rows.filter(r=>r.offerDate===impDate);
   if(impMat!=='ALL') rows=rows.filter(r=>r.mat===impMat);
   if(q) rows=rows.filter(r=>(r.product||'').toLowerCase().includes(q)||(r.origin||'').toLowerCase().includes(q));
   // sort
@@ -636,11 +617,10 @@ function renderImports(){
     const c=impColor(r.mat);
     const dn=parseDelta(r.delta);
     let cmp='<span class="muted">&mdash;</span>';
-    if(r.delta!=null && String(r.delta).trim()!=='' && String(r.delta)!=='nan'){
+    if(r.delta!=null && String(r.delta).trim()!=='' && String(r.delta)!=='nan' && String(r.delta)!=='-'){
       const arrow = dn==null ? '' : (dn>0?'&#9650; ':(dn<0?'&#9660; ':''));
       const col = dn==null ? 'var(--ink-dim)' : (dn>0?'var(--inc)':(dn<0?'var(--dec)':'var(--ink-dim)'));
-      cmp='<span style="color:'+col+'">'+arrow+String(r.delta).replace(/^\+/,'+')+'</span>'+
-          (r.cmpNote&&r.cmpNote!=='nan'?'<span class="muted" style="font-size:11px"> ('+r.cmpNote+')</span>':'');
+      cmp='<span style="color:'+col+'">'+arrow+String(r.delta).replace(/^\+/,'+')+'</span>';
     }
     return '<tr><td><span class="tag" style="background:'+c+'"></span>'+
       '<span style="color:'+c+';font-weight:600">'+(r.product||'')+'</span></td>'+
