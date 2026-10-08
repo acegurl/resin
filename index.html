@@ -470,7 +470,8 @@ function setupConstants(){
   NL = L.length;
   GROUPS = {};
   SUBCAT_ORDER.forEach(cat=>{
-    if(S[cat]) GROUPS[cat]={color:SUBCAT_COLORS[cat]||'#0070C0', avg:S[cat].avg, delta:S[cat].delta, label:cat};
+    // skip subcategories with no data (avg null) so empty cards never render/crash
+    if(S[cat] && S[cat].avg!=null) GROUPS[cat]={color:SUBCAT_COLORS[cat]||'#0070C0', avg:S[cat].avg, delta:S[cat].delta, label:cat};
   });
   if(!GROUPS[activeGroup]) activeGroup=Object.keys(GROUPS)[0];
   REPORTS = DATA.reports;
@@ -528,8 +529,8 @@ Object.entries(GROUPS).forEach(([g,o])=>{
   const card=document.createElement('div');
   card.className='stat'+(g===activeGroup?' active':''); card.dataset.g=g;
   card.innerHTML='<div class="lbl"><span class="cdot" style="background:'+o.color+'"></span>'+o.label.toUpperCase()+'</div>'+
-    '<div class="big">'+o.avg.toLocaleString('en-US')+'</div>'+
-    '<div class="delta">'+chgToken(o.delta, Math.abs(o.delta).toLocaleString()+' vs last', false)+'</div>';
+    '<div class="big">'+(o.avg!=null?o.avg.toLocaleString('en-US'):'&mdash;')+'</div>'+
+    '<div class="delta">'+chgToken(o.delta||0, Math.abs(o.delta||0).toLocaleString()+' vs last', false)+'</div>';
   card.onclick=()=>selectGroup(g);
   sr.appendChild(card);
 });
